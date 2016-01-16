@@ -1,0 +1,26 @@
+{
+  "name": "weat-proto",
+  "description": "Front-end bower packages",
+  "main": "Main.ejs",
+  "authors": [
+    "Ben Saff",
+    "Kevin Utz",
+    "Harrison Gottlieb",
+    "Dan Forsyth"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "knockout": "~3.4.0"
+  }
+}

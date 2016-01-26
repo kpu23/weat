@@ -7,6 +7,8 @@ var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/weat", function(err, db) {
     if(!err) {
         console.log("Connected to Mongo!");
+    } else {
+        console.log(err);
     }
 });
 

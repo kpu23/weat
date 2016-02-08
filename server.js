@@ -5,9 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-//var login = require('./routes/login');
-
+var routes = require('./routes/index-controller');
+var account = require('./routes/account-controller');
+var restaurant = require('./routes/restaurant-controller');
 var app = express();
 
 // view engine setup
@@ -22,7 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
 
 app.use('/', routes);
-//app.use('/login', login);
+app.use('/account', account);
+app.use('/', restaurant);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

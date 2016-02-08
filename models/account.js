@@ -13,10 +13,10 @@ mongoose.connect("mongodb://localhost:27017/weat", function(err, db) {
 });
 
 // create user schema
-var userSchema  = mongoose.Schema({
+var accountSchema  = mongoose.Schema({
     "email" : String,
     "password" : String
 });
 
 // create model if not exists
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('account', accountSchema);

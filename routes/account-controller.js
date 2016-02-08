@@ -1,6 +1,7 @@
 var express = require('express');
-var User = require("../models/account");
+var Account = require("../models/account");
 var router = express.Router();
+var passport = require('passport');
 
 router.route("/signup")
   .get(function(req,res) {
@@ -9,7 +10,7 @@ router.route("/signup")
   .post(function(req,res){
       var response = {};
       // Mongo command to check if user exists.
-      User.find({'email': req.body.email}, function (err, data) {
+      Account.find({'email': req.body.email}, function (err, data) {
           console.log(data);
           if (err) {
               response = {"error": true, "message": "Error fetching data"};
@@ -18,18 +19,18 @@ router.route("/signup")
               response = {"error": false, "message": "Sorry, that email is already in use."};
               res.json(response);
           } else {
-              // Create User
-              var user = new User();
+              // Create Account
+              var account = new Account();
               // fetch email and password from REST request.
               // Add strict validation when you use this in Production.
-              user.email = req.body.email;
+              account.email = req.body.email;
               // Hash the password using SHA1 algorithm.
-              user.password =  require('crypto')
+              account.password =  require('crypto')
                 .createHash('sha1')
                 .update(req.body.password)
                 .digest('base64');
 
-              user.save(function(err) {
+              account.save(function(err) {
                   // save() will run insert() command of MongoDB.
                   // it will add new data in collection.
                   if (err) {
@@ -44,7 +45,7 @@ router.route("/signup")
   });
 
 router.route("/signin")
-  .get(function(req, res) {
+  .get(passport.authenticate('local', { failureRedirect: '/signin' }), function(req, res) {
       res.render('account/signin',{title: 'weat: sign-in'});
   })
   .post(function(req, res) {

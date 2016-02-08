@@ -20,7 +20,7 @@ router.route("/restaurants")
         response = {"error": false, "message": "Sorry, that email is already in use."};
         res.json(response);
       } else {
-        // Create User
+        // Create Account
         var user = new User();
         // fetch email and password from REST request.
         // Add strict validation when you use this in Production.

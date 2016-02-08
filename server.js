@@ -4,10 +4,27 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var Account = require('./models/account');
 
+// set-up auth
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+      Account.findOne({ email: email }, function (err, account) {
+          if (err) { return done(err); }
+          if (!account) { return done(null, false); }
+          if (!account.verifyPassword(password)) { return done(null, false); }
+          return done(null, user);
+      });
+  }
+));
+
+// import routes
 var routes = require('./routes/index-controller');
 var account = require('./routes/account-controller');
 var restaurant = require('./routes/restaurant-controller');
+
 var app = express();
 
 // view engine setup

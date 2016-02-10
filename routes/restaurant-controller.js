@@ -9,7 +9,7 @@ router.route("/restaurants")
   .get(function(req,res) {
     var restaurants = Restaurant.find();
     restaurants = [{name: "TESST"},{name: "TESST2"}];
-    res.render('AllRestaurants',{title: 'weat: all restaurants', restaurants: restaurants});
+    res.render('Restaurants',{title: 'weat: all restaurants', restaurants: restaurants});
   })
   .post(function(req,res){
     var response = {};

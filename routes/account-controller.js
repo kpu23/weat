@@ -44,9 +44,9 @@ router.route("/signup")
       });
   });
 
-router.route("/signin")
-  .get(passport.authenticate('local', { failureRedirect: '/signin' }), function(req, res) {
-      res.render('account/signin',{title: 'weat: sign-in'});
+router.route("/login")
+  .get( function(req, res) {
+      res.render('account/login',{title: 'weat: sign-in'});
   })
   .post(function(req, res) {
       //todo

@@ -3,10 +3,13 @@
  */
 var express = require('express');
 var router = express.Router();
+var Restaurant = require('../models/restaurant');
 
 router.route("/restaurants")
   .get(function(req,res) {
-    res.render('restaurant/AllRestaurants',{title: 'weat: all restaurants'});
+    var restaurants = Restaurant.find();
+    restaurants = [{name: "TESST"},{name: "TESST2"}];
+    res.render('AllRestaurants',{title: 'weat: all restaurants', restaurants: restaurants});
   })
   .post(function(req,res){
     var response = {};

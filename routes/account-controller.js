@@ -3,9 +3,9 @@ var Account = require("../models/account");
 var router = express.Router();
 var passport = require('passport');
 
-router.route("/signup")
+router.route("/register")
   .get(function(req,res) {
-      res.render('account/signup',{title: 'weat: sign-up'});
+      res.render('account/register',{title: 'weat: register'});
   })
   .post(function(req,res){
       var response = {};

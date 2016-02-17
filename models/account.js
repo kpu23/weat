@@ -1,19 +1,20 @@
 /**
  * Created by ben on 1/16/2016.
  */
-var mongoose = require('mongoose');
-
-// connect to the db
-mongoose.connect("mongodb://localhost:27017/weat", function(err, db) {
-    if(!err) {
-        console.log("Connected to Mongo!");
-    } else {
-        console.log(err);
-    }
-});
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema,
+  ObjectId = Schema.ObjectId;;
 
 // create user schema
-var accountSchema  = mongoose.Schema({
+var accountSchema  = Schema({
+    "firstName": String,
+    "lastName" : String,
+    "userType" : String,
+    "ethnicity" : String,
+    "age" : Number,
+    "dob" : Date,
+    "restaurantId" : ObjectId,
+    "paymentDetailId" : ObjectId,
     "email" : String,
     "password" : String
 });

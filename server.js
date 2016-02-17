@@ -7,6 +7,16 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var Account = require('./models/account');
+var mongoose = require('mongoose');
+
+// connect to the db
+mongoose.connect("mongodb://localhost:27017/weat", function(err, db) {
+    if(!err) {
+        console.log("Connected to Mongo!");
+    } else {
+        console.log(err);
+    }
+});
 
 // set-up auth
 passport.use(new LocalStrategy(

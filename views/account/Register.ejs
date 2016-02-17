@@ -9,17 +9,39 @@
                         <h3 class="form-signin-heading">Register</h3>
                         <hr class="colorgraph">
                         <br>
-                        <input type="text" class="form-control" name="firstname" placeholder="First Name" required="" autofocus="" />
-                        <input type="text" class="form-control" name="lastname" placeholder="Last Name" required="" />
+                        
+                        <input type="text" class="form-control" name="firstname" placeholder="First Name*" required="" autofocus="" />
+                        
+                        <input type="text" class="form-control" name="lastname" placeholder="Last Name*" required="" />
+                        
                         <br>
-                        <input type="email" class="form-control" name="email" placeholder="Email" required=""/>
-                        <input type="text" class="form-control" name="username" placeholder="Username" required=""/>
-                        <input type="password" class="form-control" name="Password" placeholder="Password" required=""/>  
+                        
+                        <input type="email" class="form-control" name="email" placeholder="Email*" required=""/>
+                        
+                        <input type="text" class="form-control" name="username" placeholder="Username*" required=""/>
+                        
+                        <input type="password" class="form-control" name="Password" placeholder="Password*" required=""/>  
+                        
                         <br>
-                        <input type="date" class="form-control" name="dob" placeholder="Date of Birth" required=""/>  
-                        <input type="text" class="form-control" name="gender" placeholder="Gender" required=""/>  
+                        
+                        <input type="date" class="form-control" name="dob" placeholder="Date of Birth*" required=""/>  
+                        
+                        <div class="form-group">
+                        <label for="sel1"></label>
+                        <select class="form-control" id="sel1">
+                            <option>Gender*</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            </select>
+                        </div> 
+                        <input type="text" class="form-control" name="ethnicity" placeholder="Ethnicity" required=""/>  
+                        <input type="text" class="form-control" name="occuption" placeholder="Occupation" required=""/> 
                         <br>
-                        <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Register</button>
+                        <div class="black_text">
+                        * Denotes a Required Field
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block"  
+                        name="Submit" value="Login" type="Submit">Register</button>
                         <br>
                     </form>     
                 </div>

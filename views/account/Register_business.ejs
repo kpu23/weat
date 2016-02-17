@@ -1,0 +1,54 @@
+<% include ../layouts/header %>
+
+<!-- Register -->
+<header class="intro">
+        <div class="intro-body">
+            <div class = "container">
+                <div class="wrapper">
+                    <form action="" method="post" name="Login_Form" class="form-signin">       
+                        <h3 class="form-signin-heading">Register</h3>
+                        <hr class="colorgraph">
+                        <br>
+                        
+                        <input type="text" class="form-control" name="firstname" placeholder="First Name" required="" autofocus="" />
+                        
+                        <input type="text" class="form-control" name="lastname" placeholder="Last Name" required="" />
+                        
+                        <br>
+                        
+                        <input type="email" class="form-control" name="email" placeholder="Email" required=""/>
+                        
+                        <input type="text" class="form-control" name="username" placeholder="Username" required=""/>
+                        
+                        <input type="password" class="form-control" name="Password" placeholder="Password" required=""/>  
+                        
+                        <br>
+
+                        <input type="text" class="form-control" name="business_name" placeholder="Business Name" required="" />
+                        
+                        <input type="phone" class="form-control" name="phone_number" placeholder="Business Phone Number" required="" autofocus="" />
+                        
+                        <input type="phone" class="form-control" name="location" placeholder="City" required="" autofocus="" />
+                        
+                        <div class="form-group">
+                        <label for="sel1"></label>
+                        <select class="form-control" id="sel1">
+                            <option>Resaurant Category</option>
+                            <option>American</option>
+                            <option>Mexican</option>
+                            <option>Asian</option>
+                            <option>Italian</option>
+                            </select>
+                        </div> 
+                        
+                        <br>
+                        
+                        <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Register</button>
+                        <br>
+                    </form>     
+                </div>
+            </div>
+        </div>
+</header>
+
+<script src="/scripts/main.js"></script>

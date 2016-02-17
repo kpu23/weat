@@ -10,8 +10,10 @@ var restaurantSchema  = mongoose.Schema({
   "type" : String,
   "location" : String,
   "phone" : String,
-  "siteURL" : String
+  "siteURL" : String,
+  "status": Boolean,
+  "foodtype": Array
 });
 
 // create model if not exists
-module.exports = mongoose.model('restaurant', restaurantSchema);
+module.exports = mongoose.model('restaurants', restaurantSchema);

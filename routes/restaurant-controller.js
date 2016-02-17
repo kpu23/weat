@@ -7,9 +7,47 @@ var Restaurant = require('../models/restaurant');
 
 router.route("/restaurants")
   .get(function(req,res) {
-    var restaurants = Restaurant.find();
-    restaurants = [{name: "TESST"},{name: "TESST2"}];
-    res.render('Restaurants',{title: 'weat: all restaurants', restaurants: restaurants});
+    if(typeof(req.query.q) != "undefined")
+    {
+      console.log("get request: " + req.query.q);
+      //var searchTerm = req.query.q;
+      //var searchResults = Restaurant.find( {status: 1, $or: [{name: searchTerm}, {foodtype: searchTerm}]});
+      //console.log(searchResults._collection.collection);  
+      var restaurants = [{name: req.query.q}];
+      res.render("Restaurants", {title: "test", restaurants: restaurants})
+    }
+    else
+    {
+
+     /*var newRest = new Restaurant(); 
+      newRest.name = "savas";
+      newRest.status = 1;
+      newRest.location = "philly";
+      newRest.foodtype = ["pizza", "cheesesteak"];
+      console.log(newRest);
+      newRest.save();*/
+
+      
+     console.log("here");
+
+      Restaurant.find(function (error, results){
+        if(error){
+          return console.error(error);
+        }
+        else
+        {
+          console.log("Results: ");
+          console.log(results);
+          res.render('Restaurants',{title: 'weat: all restaurants', restaurants: results});
+        }
+      });
+      //console.log(restaurants);
+      
+    }
+    
+    
+    //restaurants = [{name: "TESST"},{name: "TESST2"}];
+   
   })
   .post(function(req,res){
     var response = {};

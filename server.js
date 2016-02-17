@@ -34,6 +34,7 @@ passport.use(new LocalStrategy(
 var routes = require('./routes/index-controller');
 var account = require('./routes/account-controller');
 var restaurant = require('./routes/restaurant-controller');
+var customer = require('./routes/customer-controller');
 
 var app = express();
 
@@ -51,6 +52,7 @@ app.use('/bower_components', express.static(path.join(__dirname, '/bower_compone
 app.use('/', routes);
 app.use('/', account);
 app.use('/', restaurant);
+app.use('/', customer);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

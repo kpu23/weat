@@ -12,7 +12,10 @@ var restaurantSchema  = mongoose.Schema({
   "phone" : String,
   "siteURL" : String,
   "status": Boolean,
-  "foodtype": Array
+  "foodtype": Array,
+  "mainFoodType": String,
+  "longDescription": String,
+  "imgPath": String
 });
 
 // create model if not exists

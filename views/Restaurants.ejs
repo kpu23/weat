@@ -3,6 +3,7 @@
 <!-- Restaurants -->
 <!-- Page Content -->
     <div class="container">
+<% if(restaurants != null){ %>
 <% restaurants.forEach(function(restaurant) { %>
         <div class="row">
             <div class="col-md-7">
@@ -14,10 +15,14 @@
                 <h3><%= restaurant.name %></h3>
                 <h4><%= restaurant.mainFoodType %></h4>
                 <p><%= restaurant.longDescription %></p>
-                <a class="btn btn-primary" href="/menu">View Menu</a>
+                <a class="btn btn-primary" href=<%= restaurant.name + "/menu"  %> >View Menu</a>
             </div>
         </div>
     <hr>
-<% })%>
+<% })} else {%>
+
+<p> Sorry! No results found. </p>
+
+<%}%>
 
 <script src="/scripts/main.js"></script>

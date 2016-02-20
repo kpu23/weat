@@ -4,17 +4,35 @@
 var express = require('express');
 var router = express.Router();
 var Restaurant = require('../models/restaurant');
+var Title = 'weat: all restaurants';
+
+
 
 router.route("/restaurants")
   .get(function(req,res) {
     if(typeof(req.query.q) != "undefined")
     {
       console.log("get request: " + req.query.q);
-      //var searchTerm = req.query.q;
-      //var searchResults = Restaurant.find( {status: 1, $or: [{name: searchTerm}, {foodtype: searchTerm}]});
+      var searchTerm = req.query.q.toLowerCase();
+
+      var results = Restaurant.find( {status: 1, $or: [{name: searchTerm}, {foodtype: searchTerm}]}, function (error, results){
+        if(error){
+          return console.error(error);
+        } 
+
+        //not sure how to check if empty...
+        
+        if(results)
+        {
+          console.log("Results: ");
+          console.log(results);
+          console.log(typeof(results));
+          res.render('Restaurants',{title: Title, restaurants: results});
+        }
+      });
       //console.log(searchResults._collection.collection);  
-      var restaurants = [{name: req.query.q}];
-      res.render("Restaurants", {title: "test", restaurants: restaurants})
+      //var restaurants = [{name: req.query.q}];
+      //res.render("Restaurants", {title: "test", restaurants: restaurants})
     }
     else
     {
@@ -38,7 +56,7 @@ router.route("/restaurants")
         {
           console.log("Results: ");
           console.log(results);
-          res.render('Restaurants',{title: 'weat: all restaurants', restaurants: results});
+          res.render('Restaurants',{title: Title, restaurants: results});
         }
       });
       //console.log(restaurants);

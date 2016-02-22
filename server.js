@@ -35,6 +35,7 @@ var routes = require('./routes/index-controller');
 var account = require('./routes/account-controller');
 var restaurant = require('./routes/restaurant-controller');
 var customer = require('./routes/customer-controller');
+var restaurantMenu = require('./routes/restaurant-menu-controller');
 
 var app = express();
 
@@ -53,6 +54,7 @@ app.use('/', routes);
 app.use('/', account);
 app.use('/', restaurant);
 app.use('/', customer);
+app.use('/', restaurantMenu);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

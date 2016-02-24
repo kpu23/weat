@@ -18,4 +18,4 @@ var mealItemSchema  = Schema({
 });
 
 // create model if not exists
-module.exports = mongoose.model('mealItem', mealItemSchema);
+module.exports = mongoose.model('mealitem', mealItemSchema);

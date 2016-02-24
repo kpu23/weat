@@ -10,7 +10,7 @@ i eat you eat weat
  - Clone this repository ([instructions](https://help.github.com/articles/cloning-a-repository/)) and navigate to the checked out directory
  - Run `npm install`
  - Run `bower install`
- - Run `nodemon .\bin\www` to build the project
+ - Run `nodemon` to build the project
  - Nodemon will recompile source files as they change and refresh the server
 
 ### Commit Style

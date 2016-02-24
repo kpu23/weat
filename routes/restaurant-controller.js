@@ -102,6 +102,9 @@ router.route("/restaurants/:restaurant")
         }
         
       });
+      console.log(result);
+      //console.log(result[0]);
+      res.render("restaurant-menu", {title: pageTitle, restaurant: result});
     }
   });
 

@@ -11,6 +11,6 @@ var itemOptionSchema  = mongoose.Schema({
 });
 
 // create model if not exists
-module.exports = mongoose.model('itemOptions', itemOptionSchema);
+module.exports = mongoose.model('itemoptions', itemOptionSchema);
 
 //TODO This idea is weird. We may need a new schema

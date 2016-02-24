@@ -14,4 +14,4 @@ var menuCategorySchema  = mongoose.Schema({
 });
 
 // create model if not exists
-module.exports = mongoose.model('menuCategory', menuCategorySchema);
+module.exports = mongoose.model('menucategories', menuCategorySchema);

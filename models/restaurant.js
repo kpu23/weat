@@ -15,7 +15,8 @@ var restaurantSchema  = mongoose.Schema({
   "foodtype": Array,
   "mainFoodType": String,
   "longDescription": String,
-  "imgPath": String
+  "imgPath": String,
+  "displayName": String
 });
 
 // create model if not exists

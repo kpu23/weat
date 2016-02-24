@@ -4,6 +4,8 @@
 var express = require('express');
 var router = express.Router();
 var Restaurant = require('../models/restaurant');
+var Categories = require('../models/menu-category');
+var MealItems = require('../models/meal-item');
 
 router.route("/restaurants")
   .get(function(req,res) {
@@ -75,7 +77,7 @@ router.route("/restaurants/:restaurant")
   console.log("restname", restaurantName);
 
   //grab restaurant
-  Restaurant.findOne({name: restaurantName}, function (error, result){
+  Restaurant.findOne({name: restaurantName}, function (error, restaurant){
     if(error)
     {
       //console.log(error);
@@ -83,10 +85,23 @@ router.route("/restaurants/:restaurant")
     else
     {
       console.log("here: ");
-      console.log(result);
-      //console.log(result[0]);
-      res.render("restaurant-menu", {title: pageTitle, restaurant: result});
+      console.log(restaurant);
+      console.log(restaurant._id);
 
+      Categories.find({restaurantId: restaurant._id}, function (error, categories){
+        if(error)
+        {
+          console.log(error);
+        }
+        else
+        {
+
+          console.log("categories: " );
+          console.log(categories);
+          res.render("restaurant-menu", {title: pageTitle, restaurant: restaurant});
+        }
+        
+      });
     }
   });
 

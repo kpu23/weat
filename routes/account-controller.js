@@ -1,5 +1,6 @@
 var express = require('express');
 var Account = require("../models/account");
+var Restaurant = require("../models/restaurant");
 var router = express.Router();
 var passport = require('passport');
 
@@ -22,9 +23,14 @@ router.route("/register")
           } else {
               // Create Account
               var account = new Account();
-              // fetch email and password from REST request.
+              // fetch registration Info from REST request.
               // Add strict validation when you use this in Production.
+              account.firstName = req.body.firstName;
+              account.lastName = req.body.lastName;
               account.email = req.body.email;
+              account.userType = "customer";
+              account.dob = req.body.dob;
+              account.ethnicity = req.body.ethnicity;
               // Hash the password using SHA1 algorithm.
               account.password =  require('crypto')
                 .createHash('sha1')
@@ -64,25 +70,50 @@ router.route("/register_business")
           } else {
               // Create Account
               var account = new Account();
+              var restaurant = new Restaurant();
               // fetch email and password from REST request.
               // Add strict validation when you use this in Production.
+              account.firstName = req.body.firstName;
+              account.lastName = req.body.lastName;
               account.email = req.body.email;
+              account.userType = "owner";
+              account.dob = req.body.dob;
+              
+              restaurant.name = req.body.name;
+              restaurant.type = req.body.type;
+              restaurant.location = req.body.location;
+              restaurant.phone = req.body.phone;
+              restaurant.siteURL = req.body.siteURL;
+              restaurant.status = req.body.status;
+              restaurant.longDescription = req.body.longDescription;
+              restaurant.imgPath = req.body.imgPath;
+              restaurant.displayName = req.body.displayName;
+
               // Hash the password using SHA1 algorithm.
               account.password =  require('crypto')
                 .createHash('sha1')
                 .update(req.body.password)
                 .digest('base64');
 
-              account.save(function(err) {
-                  // save() will run insert() command of MongoDB.
-                  // it will add new data in collection.
-                  if (err) {
-                      response = {"error": true, "message": "Error adding data"};
+              restaurant.save(function(err, record){
+                  if(err){
+                      response = {"error": true, "message": "Error adding restaurant data"};
+                      res.json(response);
                   } else {
-                      response = {"error": false, "message": "Data added"};
+                      //save account with newly created restaurantId
+                      account.restaurantId = record.id;
+                      account.save(function(err) {
+                          // save() will run insert() command of MongoDB.
+                          // it will add new data in collection.
+                          if (err) {
+                              response = {"error": true, "message": "Error adding account data"};
+                          } else {
+                              response = {"error": false, "message": "restaurant and account added"};
+                          }
+                          res.json(response);
+                      });
                   }
-                  res.json(response);
-              });
+              });             
           }
       });
   });

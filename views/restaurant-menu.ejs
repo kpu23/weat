@@ -17,7 +17,15 @@
     </div>
 <hr>
 	<div id="menu">
-
+        <div class="row">
+            <% if(categories != null){ %>
+                <% categories.forEach(function(category) { %>
+                    <div class="menu-category col-lg-4">
+                        <h3><%= category.name %></h3>
+                        <span><%= category.description %></span>
+                    </div>
+            <% })} %>
+        </div>
 	</div>
-
-    <script src="/scripts/restaurant.js"></script>
+</div>
+<script src="/scripts/restaurant.js"></script>

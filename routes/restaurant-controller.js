@@ -95,16 +95,11 @@ router.route("/restaurants/:restaurant")
         }
         else
         {
-
-          console.log("categories: " );
+          console.log("categories:");
           console.log(categories);
-          res.render("restaurant-menu", {title: pageTitle, restaurant: restaurant});
+          res.render("restaurant-menu", {title: pageTitle, restaurant: restaurant, categories: categories});
         }
-        
       });
-      console.log(result);
-      //console.log(result[0]);
-      res.render("restaurant-menu", {title: pageTitle, restaurant: result});
     }
   });
 

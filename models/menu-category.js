@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var menuCategorySchema  = mongoose.Schema({
   "name" : String,
   "description" : String,
-  "imagePath" : String,
+  "imgPath" : String,
   "restaurantId" : mongoose.Schema.Types.ObjectId,
   "foodItems" : [mongoose.Schema.Types.ObjectId]
 });

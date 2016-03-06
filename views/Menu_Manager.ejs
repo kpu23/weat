@@ -1,0 +1,39 @@
+<% include layouts/admin_header %>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+<div class="container" id="menu-manager">
+    <div class="row">
+        <div> 
+            <p>View Your Menus</p>
+            <div data-bind="foreach: menus">
+                <div>
+                    <p data-bind="text: name"></p>
+                </div>
+            </div>
+        </div>
+
+    </br></br></br>
+        <div> Create a menu: 
+            <p>
+                <button id="create-menu" class="btn btn-success">Create Menu</button>
+            </p>
+        </div>
+
+        <div id="create-menu-section" class="hidden">
+            <div class="form-group">
+                <label for="menu-name"> Menu Name: </label> 
+                <input type="text" id="menu-name" name="menu-name">
+            </br>
+                <label for="menu-active"> Menu Active: </label> 
+                <input type="checkbox" id="menu-active"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/scripts/admin-menu-manager.js"></script>
+

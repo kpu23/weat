@@ -9,13 +9,14 @@ var MealItems = require('../models/meal-item');
 var FoodItems = require('../models/food-item');
 
 /* My restaurants page */
-router.get('/my_restaurants', function(req, res, next) {
-    res.render('my_restaurants',{title: 'weat: home'});
+router.get('/admin', function(req, res, next) {
+	//TODO we should handle renderings for customer home page, admin home page, and guest home page in the "/" (root) route
+    res.render('admin_home',{title: 'weat: home'});
 });
 
 /* GET admin page. */
-router.get('/admin', function(req, res, next) {
-    res.render('admin',{title: 'weat: admin panel'});
+router.get('/menu_manager', function(req, res, next) {
+    res.render('menu_manager',{title: 'weat: admin panel'});
 });
 
 router.post('/admin/fetchMenus', function(req, res, next){
@@ -33,7 +34,6 @@ router.post('/admin/fetchMenus', function(req, res, next){
 				//Categories.find({_id: $in: menu.})
 				console.log(menu);
 				res.send(menu);
-
 			}
 		});
 	}

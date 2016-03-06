@@ -8,10 +8,11 @@ var mongoose = require('mongoose');
 var menuSchema  = mongoose.Schema({
   "name" : String,
   "isPublic" : Boolean,
-  "startTime" : Date,
-  "endTime" : Date,
+  //"startTime" : Date,
+  //"endTime" : Date,
+  "restaurantId":  mongoose.Schema.Types.ObjectId,
   "menuCategories" : [mongoose.Schema.Types.ObjectId]
 });
 
 // create model if not exists
-module.exports = mongoose.model('menu', menuSchema);
+module.exports = mongoose.model('menus', menuSchema);

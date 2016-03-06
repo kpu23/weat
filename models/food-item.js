@@ -7,14 +7,14 @@ var mongoose = require('mongoose');
 var foodItemSchema  = mongoose.Schema({
   "name" : String,
   "price" : String,
-  "status" : String,
+  "available" : Boolean,
   "description" : mongoose.Schema.Types.ObjectId,
   "imagePath" : String,
-  "averagePrepTime" : Number, // in minutes
-  "itemOptions" : [mongoose.Schema.Types.ObjectId],
-  "restaurantId" : mongoose.Schema.Types.ObjectId,
-  "foodItems" : [mongoose.Schema.Types.ObjectId]
+  "averagePrepTime" : String, // in minutes
+  //"itemOptions" : [mongoose.Schema.Types.ObjectId],
+  "restaurantId" : mongoose.Schema.Types.ObjectId //,
+  //"foodItems" : [mongoose.Schema.Types.ObjectId]
 });
 
 // create model if not exists
-module.exports = mongoose.model('fooditem', foodItemSchema);
+module.exports = mongoose.model('fooditems', foodItemSchema);

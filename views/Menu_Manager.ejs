@@ -19,17 +19,38 @@
     </br></br></br>
         <div> Create a menu: 
             <p>
-                <button id="create-menu" class="btn btn-success">Create Menu</button>
+                <!--This should be a div in the same style as existing menus (like trello) -->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#create-menu-section">New Menu</button>
             </p>
         </div>
 
-        <div id="create-menu-section" class="hidden">
-            <div class="form-group">
-                <label for="menu-name"> Menu Name: </label> 
-                <input type="text" id="menu-name" name="menu-name">
-            </br>
-                <label for="menu-active"> Menu Active: </label> 
-                <input type="checkbox" id="menu-active"/>
+        <!-- Modal -->
+        <div id="create-menu-section" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content" data-bind="with: newMenu">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Create a menu</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <fieldset class="form-group">
+                                <label for="menu-name">Menu Name</label>
+                                <input type="text" class="form-control" id="menu-name" placeholder="Menu Name" data-bind="value: name">
+                                <small class="text-muted">We'll never share your email with anyone else.</small>
+                            </fieldset>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" data-bind="value: isPublic"> Public
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bind="click: $root.createMenu">Create Menu</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

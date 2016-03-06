@@ -39,6 +39,32 @@ router.post('/admin/fetchMenus', function(req, res, next){
 	}
 });
 
+router.post('/admin/createMenu', function(req, res, next) {
+    var data = JSON.parse(req.body.menu);
+    console.log(data);
+	var response = {};
+	// Create Menu
+	var menu = new Menu();
+	menu.name = data.name;
+	menu.isPublic = data.isPublic;
+	menu.restaurantId = data.restaurantId;
+	menu.menuCategories = data.categories;
+
+	menu.save(function(err) {
+		// save() will run insert() command of MongoDB.
+		// it will add new data in collection.
+		if (err) {
+			response = {"error": true, "message": "Error adding data"};
+		} else {
+			response = {"error": false, "message": "Menu added successfully."};
+		}
+		res.json(response);
+	});
+
+});
+
+
+
 router.post('/admin/fetchCategories', function(req, res, next){
 	console.log(JSON.parse(req.body.categoryIds));
 	categoryIds = JSON.parse(req.body.categoryIds)

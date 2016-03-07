@@ -1,6 +1,7 @@
 var express = require('express');
 var Account = require("../models/account");
 var Restaurant = require("../models/restaurant");
+var Crypto = require('crypto');
 var router = express.Router();
 var passport = require('passport');
 
@@ -32,7 +33,7 @@ router.route("/register")
               account.dob = req.body.dob;
               account.ethnicity = req.body.ethnicity;
               // Hash the password using SHA1 algorithm.
-              account.password =  require('crypto')
+              account.password =  Crypto
                 .createHash('sha1')
                 .update(req.body.password)
                 .digest('base64');
@@ -124,7 +125,27 @@ router.route("/login")
       res.render('account/login',{title: 'weat: sign-in'});
   })
   .post(function(req, res) {
-      //todo
+      var response = {};
+      //search for user in Database
+      Account.findOne({email: req.body.username}, function(err, record){
+          var password = Crypto.createHash('sha1')
+            .update(req.body.password)
+            .digest('base64');
+
+          if (err || password != record.password) {
+              response = {"error": true, "message": "email or password is incorrect"};
+          } else {
+              response = {"error": false, "message": "login successfull"};
+              req.session.user = record;
+          }
+          res.json(response);
+      });
+  });
+
+router.route("/logout")
+  .post(function(req, res){
+      req.session = null;
+      res.render('index',{title: 'weat: home'});
   });
 
 module.exports = router;

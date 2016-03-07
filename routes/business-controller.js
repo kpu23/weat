@@ -14,9 +14,19 @@ router.get('/admin', function(req, res, next) {
     res.render('admin_home',{title: 'weat: home'});
 });
 
-/* GET admin page. */
+/* admin page. */
 router.get('/menu_manager', function(req, res, next) {
     res.render('menu_manager',{title: 'weat: admin panel'});
+});
+
+/* Live Feed */
+router.get('/live_feed', function(req, res, next) {
+    res.render('live_feed',{title: 'weat: live feed'});
+});
+
+/* Marketing and analytics */
+router.get('/marketing_analytics', function(req, res, next) {
+    res.render('marketing_analytics',{title: 'weat: Marketing & Analytics'});
 });
 
 router.post('/admin/fetchMenus', function(req, res, next){

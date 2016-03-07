@@ -18,13 +18,19 @@
 <hr>
 	<div id="menu">
         <div class="row">
-            <% if(categories != null){ %>
-                <% categories.forEach(function(category) { %>
-                    <div class="menu-category col-lg-4">
-                        <h3><%= category.name %></h3>
-                        <span><%= category.description %></span>
+            <% if(menus != null){ %>
+                <% menus.forEach(function(menu){ %>
+                    <div class="menu col-lg-4">
+                        <h2 class="menu-name"> <%= menu.name %> </h2>
+                            <% menu.categories.forEach(function(category) { %>
+                                <div class="menu-category col-lg-4">
+                                <h3 class="category-name"><%= category.name %></h3>
+                                <span class="category-description"><%= category.description %></span>
+                            </div>
+                        <% }) %>
                     </div>
-            <% })} %>
+                <% }) %>
+            <% } %>
         </div>
 	</div>
 </div>

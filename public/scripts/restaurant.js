@@ -36,8 +36,8 @@ var OrderModel = function () {
 };
 
 $(document).ready(function () {
-  console.log('test');
-  var orderModel = new OrderModel();
-  orderModel.addOrderItem();
-  orderModel.submitOrder();
+  //console.log('test');
+  //var orderModel = new OrderModel();
+  //orderModel.addOrderItem();
+  //orderModel.submitOrder();
 });

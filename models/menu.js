@@ -11,6 +11,7 @@ var menuSchema  = mongoose.Schema({
   //"startTime" : Date,
   //"endTime" : Date,
   "restaurantId":  mongoose.Schema.Types.ObjectId,
+  "menuId": mongoose.Schema.Types.ObjectId,
   "menuCategories" : [mongoose.Schema.Types.ObjectId]
 });
 

@@ -1,7 +1,7 @@
 var express = require('express');
 var Account = require("../models/account");
 var Restaurant = require("../models/restaurant");
-var Crypto = require('crypto');
+var crypto = require('crypto');
 var router = express.Router();
 var passport = require('passport');
 
@@ -33,7 +33,7 @@ router.route("/register")
               account.dob = req.body.dob;
               account.ethnicity = req.body.ethnicity;
               // Hash the password using SHA1 algorithm.
-              account.password =  Crypto
+              account.password =  crypto
                 .createHash('sha1')
                 .update(req.body.password)
                 .digest('base64');
@@ -77,7 +77,7 @@ router.route("/register_business")
               account.firstName = req.body.firstName;
               account.lastName = req.body.lastName;
               account.email = req.body.email;
-              account.userType = "owner";
+              account.userType = "business";
               account.dob = req.body.dob;
               
               restaurant.name = req.body.name;
@@ -110,6 +110,7 @@ router.route("/register_business")
                               response = {"error": true, "message": "Error adding account data"};
                           } else {
                               response = {"error": false, "message": "restaurant and account added"};
+                              //TODO set user auth cookie and redirect to home page
                           }
                           res.json(response);
                       });
@@ -122,28 +123,32 @@ router.route("/register_business")
 //Login Form
 router.route("/login")
   .get( function(req, res) {
-      res.render('account/login',{title: 'weat: sign-in'});
+      res.render('account/login',{title: 'weat: sign-in', validationMessage: ''});
   })
   .post(function(req, res) {
-      var response = {};
       //search for user in Database
       Account.findOne({email: req.body.username}, function(err, record){
-          var password = Crypto.createHash('sha1')
-            .update(req.body.password)
-            .digest('base64');
-
-          if (err || password != record.password) {
-              response = {"error": true, "message": "email or password is incorrect"};
+          if (!record) {
+              res.render('account/login',{validationMessage: 'Email or password is incorrect.', title: 'weat: sign-in'});
           } else {
-              response = {"error": false, "message": "login successfull"};
-              req.session.user = record;
+              // encrypt password for comparison
+              var password = crypto.createHash('sha1')
+                  .update(req.body.password)
+                  .digest('base64');
+
+              if (err || password != record.password) {
+                  console.log(err);
+                  res.render('account/login',{validationMessage: 'Email or password is incorrect.', title: 'weat: sign-in'});
+              } else {
+                  req.session.user = record;
+                  res.redirect('/');
+              }
           }
-          res.json(response);
       });
   });
 
 router.route("/logout")
-  .post(function(req, res){
+  .get(function(req, res){
       req.session = null;
       res.render('index',{title: 'weat: home'});
   });

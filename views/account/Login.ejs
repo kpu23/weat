@@ -8,6 +8,9 @@
                 <form action="" method="post" name="Login_Form" class="form-signin">       
                 <h3 class="form-signin-heading">Please Sign In</h3>
                 <hr class="colorgraph"><br>
+                <% if(validationMessage){ %>
+                    <span class="label label-danger"><%= validationMessage %></span>
+                <% } %>
                 <input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
                 <input type="password" class="form-control" name="password" placeholder="Password" required=""/>    
                 <br>      

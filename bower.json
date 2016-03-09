@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "jquery": "~2.1.4",
-    "knockout": "~3.4.0"
+    "knockout": "~3.4.0",
+    "Chart.js": "chartjs#^1.0.2"
   }
 }

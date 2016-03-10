@@ -1,7 +1,7 @@
 <% include layouts/admin_header %>
 
 
-<div class="intro" style="display:list-item;">
+<div class="weat-content" style="display:list-item;">
 
     <div class="container" id="menu-manager">
         <h1 style="margin:10px;">Your Menus</h1>
@@ -15,7 +15,7 @@
             </div>
             <a href="" data-toggle="modal" data-target="#create-menu-section">
                 <div class="create-menu col-lg-4">
-                    <p>Add New Menu</p>
+                    <p>Add New Menu <i class="fa fa-plus-square fa-2x"></i></p>
                 </div>
             </a>
         </div>
@@ -34,11 +34,11 @@
                             <fieldset class="form-group">
                                 <label for="menu-name">Menu Name</label>
                                 <input type="text" class="form-control" id="menu-name" placeholder="Menu Name" data-bind="value: name">
-                                <small class="text-muted">We'll never share your email with anyone else.</small>
                             </fieldset>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" data-bind="value: isPublic"> Public
+                                    <small class="text-muted">All customers can see the menu on your site. You can set this later too.</small>
                                 </label>
                             </div>
                         </form>

@@ -74,6 +74,10 @@ h6 {
     rgba(0, 0, 0, 0.1) inset;
 }
 
+.modal {
+    color: #000;
+}
+
 .black_text {
     color: black;
 }
@@ -187,6 +191,20 @@ a:focus {
     }
 }
 
+.weat-content {
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 100px 0;
+    color: #fff;
+    background: url(/images/intro-bg.jpg) no-repeat bottom scroll;
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
 .intro {
     display: table;
     width: 100%;
@@ -219,6 +237,11 @@ a:focus {
 
 @media(min-width:768px) {
     .intro {
+        height: 100%;
+        padding: 5%;
+    }
+
+    .weat-content {
         height: 100%;
         padding: 5%;
     }

@@ -36,6 +36,44 @@ h6 {
     font-size: 18px;
 }
 
+.menu {
+    background: #1b6d85;
+    color: #000;
+    margin-right: 20px;
+    margin-top: 20px;
+    display: block;
+    width: 300px;
+    height: 110px;
+    padding:20px;
+    border-radius: 2px 2px 2px 2px;
+    -webkit-box-shadow: 0 1px 4px
+    rgba(0, 0, 0, 0.3), 0 0 40px
+    rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px
+    rgba(0, 0, 0, 0.3), 0 0 40px
+    rgba(0, 0, 0, 0.1) inset;
+}
+
+.create-menu {
+    background: #5cb85c;
+    color: #000;
+    margin-right: 20px;
+    margin-top: 20px;
+    display: block;
+    width: 300px;
+    height: 110px;
+    padding:20px;
+    border-radius: 2px 2px 2px 2px;
+    -webkit-box-shadow: 0 1px 4px
+    rgba(0, 0, 0, 0.3), 0 0 40px
+    rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px
+    rgba(0, 0, 0, 0.3), 0 0 40px
+    rgba(0, 0, 0, 0.1) inset;
+}
+
 .black_text {
     color: black;
 }

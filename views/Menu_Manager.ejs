@@ -1,27 +1,20 @@
 <% include layouts/admin_header %>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-<div class="container" id="menu-manager">
-    <div class="row">
-        <div> 
-            <p>View Your Menus</p>
-            <div data-bind="foreach: menus">
-                <div>
-                    <p data-bind="text: name"></p>
-                </div>
+<div class="intro">
+    <div class="container" id="menu-manager">
+        <h3>Your Menus</h3>
+        <div class="row">
+            <div data-bind="foreach: menus" >
+                <a href="#">
+                    <div class="menu col-lg-4">
+                        <p data-bind="text: name"></p>
+                    </div>
+                </a>
             </div>
-        </div>
-
-    </br></br></br>
-        <div> Create a menu: 
-            <p>
-                <!--This should be a div in the same style as existing menus (like trello) -->
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#create-menu-section">New Menu</button>
-            </p>
+            <a href="" data-toggle="modal" data-target="#create-menu-section">
+                <div class="create-menu col-lg-4">
+                    <p>Add New Menu</p>
+                </div>
+            </a>
         </div>
 
         <!-- Modal -->
@@ -55,6 +48,5 @@
         </div>
     </div>
 </div>
-
 <script src="/scripts/admin-menu-manager.js"></script>
 

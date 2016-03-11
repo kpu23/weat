@@ -1,0 +1,157 @@
+Database Population Script:
+
+Restaurants: 
+3x restaurants - Wahoos, Savas, Shake Shack
+
+//Start restaurants script
+db.restaurants.insertMany(
+[{
+    "_id" : ObjectId("56c503be9bc2f4cc1396845e"),
+    "location" : "philly",
+    "status" : true,
+    "name" : "wahoos",
+    "foodtype" : [ 
+        "mexican", 
+        "mexicali"
+    ],
+    "__v" : 0,
+    "longDescription" : "Three brothers took their love of surf and food to create a unique restaurant that serves up a fresh, light and tasty fusion of brazilian, asian and mexican fare.",
+    "mainFoodType" : "Mexican",
+    "imgPath" : "/images/wahoos_logo.jpg",
+    "displayName" : "Wahoos"
+},
+{
+    "_id" : ObjectId("56c50431c4e0c2602706adc6"),
+    "location" : "philly",
+    "status" : true,
+    "name" : "savas",
+    "foodtype" : [ 
+        "pizza", 
+        "cheesesteak"
+    ],
+    "__v" : 0,
+    "longDescription" : "At Savas Brick Oven Pizza, we pride ourselves on offering a consistently exceptional product at a reasonable price. We hope to see you soon.",
+    "mainFoodType" : "pizzeria",
+    "imgPath" : "/images/savas_logo.jpg",
+    "displayName" : "Savas"
+},
+{
+    "_id" : ObjectId("56c898e00d1849dccf0f861b"),
+    "status" : true,
+    "name" : "shakeshack",
+    "foodtype" : [ 
+        "burgers", 
+        "shakes", 
+        "american", 
+        "french fries"
+    ],
+    "longDescription" : "Shake Shack is a modern day 'roadside' burger stand serving the most delicious burgers, fries, hot dogs, frozen custard, beer, wine and more!",
+    "mainFoodType" : "American",
+    "imgPath" : "/images/shake_shack_logo.jpg",
+    "displayName" : "Shake Shack"
+}
+]);
+//End restaurants script
+
+Menus:
+2 Menus for Wahoos - Main Menu, Test Menu
+
+//Start menus script
+db.menus.insertMany([
+{
+    "_id" : ObjectId("56cb95c45215d491e4ca528e"),
+    "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
+    "name" : "Wahoos Main Menu",
+    "isPublic" : true,
+    "menuCategories" : [ 
+        ObjectId("56cb964c5215d491e4ca528f"), 
+        ObjectId("56ce1f0abe160950d3cf0e7c")
+    ]
+},
+{
+    "_id" : ObjectId("56dca4512b072da5d5f16513"),
+    "name" : "Wahoos Test Menu",
+    "isPublic" : false,
+    "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
+    "menuCategories" : [ 
+        ObjectId("56c503be9bc2f4cc1396845e")
+    ]
+}
+]);
+//End Menus Script
+
+Menu Categories:
+2x Wahoos Main Menu Categories - First Bites, Salads
+1x Wahoos Test Menu Categories - First Bites (test)
+
+//Start Menu Categories script
+db.menucategories.insertMany([
+{
+    "_id" : ObjectId("56cb964c5215d491e4ca528f"),
+    "name" : "First Bites",
+    "description" : "",
+    "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
+    "foodItems" : [ 
+        ObjectId("56ce2290be160950d3cf0e7d"), 
+        ObjectId("56dc8f652b072da5d5f16512")
+    ],
+    "imagePath" : ""
+},
+{
+    "_id" : ObjectId("56ce1f0abe160950d3cf0e7c"),
+    "name" : "Salads",
+    "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
+    "foodItems" : [ 
+        ObjectId("56de0eca57e52e5999cffaf9")
+    ]
+},
+{
+    "_id" : ObjectId("56dde9e457e52e5999cffaf8"),
+    "name" : "First Bites (test)",
+    "description" : "",
+    "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
+    "imagePath" : ""
+}
+]);
+//End Menu Categories script
+
+Food Items:
+2x Wahoos.MainMenu.First Bites Items - Chips & Salsa, Nachos
+1x Wahoos.MainMenu.Salads - Wahoos Salad
+
+//Start food items script
+db.fooditems.insertMany([
+{
+    "_id" : ObjectId("56ce2290be160950d3cf0e7d"),
+    "name" : "Chips & Salsa",
+    "price" : "$1.99",
+    "available" : true,
+    "imagePath" : "/images/wahoos/chips_and_salsa.jpg",
+    "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
+    "averagePrepTime" : "1 minute",
+    "description" : ""
+},
+{
+    "_id" : ObjectId("56dc8f652b072da5d5f16512"),
+    "name" : "Nachos",
+    "price" : "$5.99",
+    "available" : true,
+    "imagePath" : "/images/wahoos/nachos.jpg",
+    "averagePrepTime" : "5 minutes",
+    "description" : "Any Protein & Beans served with Guacamole & Sour Cream",
+    "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e")
+},
+{
+    "_id" : ObjectId("56de0eca57e52e5999cffaf9"),
+    "name" : "Wahoos Salad",
+    "price" : "$7.99",
+    "available" : true,
+    "imagePath" : "/images/wahoos/wahoos_salad.jpg",
+    "description" : "Any Protein, Banzai Veggies, Mixed Greens, Cheese, Guacamole, Salsa & Tortilla Strips",
+    "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
+    "averagePrepTime" : "10 minutes"
+}
+]);
+//end food items script
+
+// END

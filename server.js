@@ -56,6 +56,8 @@ app.use('/bower_components', express.static(path.join(__dirname, '/bower_compone
 //Pre-called function before routing
 app.use(function(req, res, next){
   //set ejs variables to be used on every page
+  res.locals.error = false;
+  res.locals.message = '';
   res.locals.session = req.session;
   next();
 });

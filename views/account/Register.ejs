@@ -8,6 +8,9 @@
                     <form action="" method="post" name="Login_Form" class="form-signin">       
                         <h3 class="form-signin-heading">Register</h3>
                         <hr class="colorgraph">
+                        <% if(error){ %>
+                            <span class="label label-danger"><%= message %></span>
+                        <% } %>
                         <br>
                         <input type="text" class="form-control" name="firstname" placeholder="First Name*" autofocus />
                         
@@ -40,4 +43,6 @@
             </div>
         </div>
 </div>
+<script src="/scripts/auth.js"></script>
+
 

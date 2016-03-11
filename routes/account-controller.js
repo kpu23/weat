@@ -8,22 +8,24 @@ var passport = require('passport');
 //Customer Registration
 router.route("/register")
   .get(function(req,res) {
-      res.render('account/register', {title: 'weat: register'});
+      res.render('account/register', {title: 'Weat: Register'});
   })
   .post(function(req,res){
-      var response = {title: 'weat: register'};
+      var response = {title: 'Weat: Register'};
       // Mongo command to check if user exists.
       Account.find({'email': req.body.email}, function (err, data) {
           console.log(data);
           if (err) {
-              response = {"error": true, "message": "Error fetching data"};
+              response.error = true;
+              response.message = "Error fetching data";
+              res.render('account/register', response);
           } else if (data.length > 0){
-              response = {"error": false, "message": "Sorry, that email is already in use."};           
+              response.error = true;
+              response.message = "Sorry, that email is already in use.";
+              res.render('account/register', response);          
           } else {
               // Create Account
               var account = new Account();
-              // fetch registration Info from REST request.
-              // Add strict validation when you use this in Production.
               account.firstName = req.body.firstName;
               account.lastName = req.body.lastName;
               account.email = req.body.email;
@@ -36,19 +38,21 @@ router.route("/register")
                 .update(req.body.password)
                 .digest('base64');
 
-              account.save(function(err) {
+              account.save(function(err, record) {
                   // save() will run insert() command of MongoDB.
                   // it will add new data in collection.
-                  if (err) {
-                      response = {"error": true, "message": "Error adding data"};
+                  if (err) {                 
+                      response.error = true;
+                      response.message = "Error adding account data";
+                      console.log('error1', err, response);
                       res.render('account/register', response);
-                  } 
-                  //SUCCESS
-                  res.redirect('/');                  
+                  }else{
+                      //SUCCESS
+                      req.session.user = record;
+                      res.redirect('/'); 
+                  }                  
               });
           }
-          //ERROR
-          res.render('account/register', response);
       });
   });
 
@@ -58,14 +62,18 @@ router.route("/register_business")
       res.render('account/register_business', {title: 'Weat: Register Business'});
   })
   .post(function(req,res){
-      var response = {title: 'weat: register'};
+      var response = {title: 'Weat: Register Business'};
       // Mongo command to check if user exists.
       Account.find({'email': req.body.email}, function (err, data) {
           console.log(data);
           if (err) {
-              response = {"error": true, "message": "Error fetching data"};
+              response.error = true;
+              response.message = "Error fetching data";
+              res.render('account/register_business', response);
           } else if (data.length > 0){
-              response = {"error": false, "message": "Sorry, that email is already in use."};
+              response.error = true;
+              response.message = "Sorry, that email is already in use.";
+              res.render('account/register_business', response);
           } else {
               // Create Account
               var account = new Account();
@@ -96,27 +104,26 @@ router.route("/register_business")
 
               restaurant.save(function(err, record){
                   if(err){
-                      response = {"error": true, "message": "Error adding restaurant data"};
+                      response.error = true;
+                      response.message = "Error adding restaurant data";
+                      res.render('account/register_business', response);
                   } else {
                       //save account with newly created restaurantId
                       account.restaurantId = record.id;
-                      account.save(function(err) {
-                          // save() will run insert() command of MongoDB.
-                          // it will add new data in collection.
+                      account.save(function(err, record) {                      
                           if (err) {
-                              response = {"error": true, "message": "Error adding account data"};
+                              response.error = true;
+                              response.message = "Error adding account data";
                               res.render('account/register_business', response);
-                          } 
-                          //SUCCESS
-                          res.redirect('/');    
+                          } else {
+                              //SUCCESS
+                              req.session.user = record;
+                              res.redirect('/');    
+                          }
                       });
-                  }
-                  //ERROR
-                  res.render('account/register_business', response);
+                  }       
               });             
           }
-          //ERROR
-          res.render('account/register_business', response);
       });
   });
 
@@ -143,9 +150,9 @@ router.route("/login")
                   req.session.user = record;
                   //redirect based on user type
                   if(record.userType == 'owner'){
-                      res.render('admin_home', {title: 'weat: home'});
+                      res.redirect('/admin');
                   }else{
-                      res.render('index', {title: 'weat: home'});
+                      res.redirect('/');
                   }
               }
           }

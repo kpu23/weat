@@ -5,13 +5,16 @@
     <div class="container" id="menu-manager">
         <h1 style="margin:10px;">Your Menus</h1>
         <div class="row">
-            <div data-bind="foreach: menus" >
-                <a href="#" data-bind="click: $root.showMenuEditor">
-                    <div class="menu col-lg-4">
-                        <p data-bind="text: name"></p>
-                    </div>
-                </a>
+            <div  class="col-lg-4">
+                <div data-bind="foreach: menus" >
+                    <a href="#">
+                        <div class="menu col-lg-4">
+                            <p data-bind="text: name"></p>
+                        </div>
+                    </a>
+                </div>
             </div>
+
             <a href="" data-toggle="modal" data-target="#create-menu-section">
                 <div class="create-menu col-lg-4">
                     <p>Add New Menu <i class="fa fa-plus-square fa-2x"></i></p>
@@ -45,14 +48,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success" data-bind="click: $root.createMenu">Create Menu</button>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div data-bind="with: currentMenu">
-            <div data-bind="foreach: categories">
-                <div data-bind="foreach: foodItems">
-                    <div data-bind="text: name"></div>
                 </div>
             </div>
         </div>

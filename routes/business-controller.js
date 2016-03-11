@@ -49,7 +49,7 @@ router.post('/admin/fetchMenus', function(req, res, next){
 	}
 });
 
-router.post('/admin/createMenu', function(req, res, next) {
+router.post('/admin/createMenu', function(req, res) {
     var data = JSON.parse(req.body.menu);
     console.log(data);
 	var response = {};
@@ -75,9 +75,9 @@ router.post('/admin/createMenu', function(req, res, next) {
 
 
 
-router.post('/admin/fetchCategories', function(req, res, next){
+router.post('/admin/fetchCategories', function(req, res){
 	console.log(JSON.parse(req.body.categoryIds));
-	categoryIds = JSON.parse(req.body.categoryIds)
+	var categoryIds = JSON.parse(req.body.categoryIds)
 	if(categoryIds)
 	{
 		Categories.find({_id: {$in: categoryIds}}, function (error, categories){
@@ -98,24 +98,21 @@ router.post('/admin/fetchCategories', function(req, res, next){
 });
 
 
-router.post('/admin/fetchFoodItems', function(req, res, next){
+router.post('/admin/fetchFoodItems', function(req, res){
 
 	console.log(JSON.parse(req.body.foodItemIds));
 
-	foodItemIds = JSON.parse(req.body.categoryIds)
-	if(foodItemIds)
-	{
+	var foodItemIds = JSON.parse(req.body.foodItemIds);
+	if(foodItemIds)	{
 		FoodItems.find({_id: {$in: foodItemIds}}, function (error, foodItems){
-			if(error){console.log(error);}
-			else
-			{
+			if(error){
+				console.log(error);
+			} else {
 				console.log(foodItems);
 				res.send(foodItems);
 			}
 		});
-	}
-	else
-	{
+	}	else {
 		console.log("returning null");
 		res.send(null);
 	}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <% include layouts/layout %>
 </br>
 </br>
@@ -15,13 +16,28 @@
                 </div>
             </div>
         </div>
+=======
+<% include layouts/admin_header %>
+>>>>>>> 12b8786d145ba2ef214d0b699b746e77ff930fb9
 
-    </br></br></br>
-        <div> Create a menu: 
-            <p>
-                <!--This should be a div in the same style as existing menus (like trello) -->
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#create-menu-section">New Menu</button>
-            </p>
+
+<div class="weat-content" style="display:list-item;">
+
+    <div class="container" id="menu-manager">
+        <h1 style="margin:10px;">Your Menus</h1>
+        <div class="row">
+            <div data-bind="foreach: menus" >
+                <a href="#">
+                    <div class="menu col-lg-4">
+                        <p data-bind="text: name"></p>
+                    </div>
+                </a>
+            </div>
+            <a href="" data-toggle="modal" data-target="#create-menu-section">
+                <div class="create-menu col-lg-4">
+                    <p>Add New Menu <i class="fa fa-plus-square fa-2x"></i></p>
+                </div>
+            </a>
         </div>
 
         <!-- Modal -->
@@ -38,11 +54,11 @@
                             <fieldset class="form-group">
                                 <label for="menu-name">Menu Name</label>
                                 <input type="text" class="form-control" id="menu-name" placeholder="Menu Name" data-bind="value: name">
-                                <small class="text-muted">We'll never share your email with anyone else.</small>
                             </fieldset>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" data-bind="value: isPublic"> Public
+                                    <small class="text-muted">All customers can see the menu on your site. You can set this later too.</small>
                                 </label>
                             </div>
                         </form>
@@ -55,6 +71,5 @@
         </div>
     </div>
 </div>
-
 <script src="/scripts/admin-menu-manager.js"></script>
 

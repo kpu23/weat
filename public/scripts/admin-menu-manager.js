@@ -33,6 +33,11 @@ var MenuModel = function() {
             alert('Please fill in name.');
         }
     };
+
+    // Show/Hide Methods
+    self.showMenu = function(menu) {
+        console.log(menu._id);
+    }
 };
 $(document).ready(function(){
     var menuModel = new MenuModel();

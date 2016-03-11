@@ -31,6 +31,7 @@
 
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<<<<<<< HEAD:views/layouts/layout.ejs
     <% if (session.user) { %>
         <% if (session.user.userType == 'owner') { %>
             <% include admin_header %>
@@ -40,5 +41,39 @@
     <% } else { %> 
         <% include default_header %>
     <% } %>
+=======
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="/">
+                    <i class="fa fa-play-circle"></i>  <span class="light">Weat</span>
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/login">Login</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/restaurants">Restaurants</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+<script src="/scripts/grayscale.js"></script>
+>>>>>>> 12b8786d145ba2ef214d0b699b746e77ff930fb9:views/layouts/header.ejs
 </body>
 </html>

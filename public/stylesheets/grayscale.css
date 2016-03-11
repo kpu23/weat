@@ -36,6 +36,48 @@ h6 {
     font-size: 18px;
 }
 
+.menu {
+    background: #1b6d85;
+    color: #000;
+    margin-right: 20px;
+    margin-top: 20px;
+    display: block;
+    width: 300px;
+    height: 110px;
+    padding:20px;
+    border-radius: 2px 2px 2px 2px;
+    -webkit-box-shadow: 0 1px 4px
+    rgba(0, 0, 0, 0.3), 0 0 40px
+    rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px
+    rgba(0, 0, 0, 0.3), 0 0 40px
+    rgba(0, 0, 0, 0.1) inset;
+}
+
+.create-menu {
+    background: #5cb85c;
+    color: #000;
+    margin-right: 20px;
+    margin-top: 20px;
+    display: block;
+    width: 300px;
+    height: 110px;
+    padding:20px;
+    border-radius: 2px 2px 2px 2px;
+    -webkit-box-shadow: 0 1px 4px
+    rgba(0, 0, 0, 0.3), 0 0 40px
+    rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px
+    rgba(0, 0, 0, 0.3), 0 0 40px
+    rgba(0, 0, 0, 0.1) inset;
+}
+
+.modal {
+    color: #000;
+}
+
 .black_text {
     color: black;
 }
@@ -149,6 +191,20 @@ a:focus {
     }
 }
 
+.weat-content {
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 100px 0;
+    color: #fff;
+    background: url(/images/intro-bg.jpg) no-repeat bottom scroll;
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
 .intro {
     display: table;
     width: 100%;
@@ -181,6 +237,11 @@ a:focus {
 
 @media(min-width:768px) {
     .intro {
+        height: 100%;
+        padding: 5%;
+    }
+
+    .weat-content {
         height: 100%;
         padding: 5%;
     }
@@ -467,3 +528,7 @@ input[type="password"] {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+.morris-hover{position:absolute;z-index:1000}.morris-hover.morris-default-style{border-radius:10px;padding:6px;color:#666;background:rgba(255,255,255,0.8);border:solid 2px rgba(230,230,230,0.8);font-family:sans-serif;font-size:12px;text-align:center}.morris-hover.morris-default-style .morris-hover-row-label{font-weight:bold;margin:0.25em 0}
+.morris-hover.morris-default-style .morris-hover-point{white-space:nowrap;margin:0.1em 0}
+

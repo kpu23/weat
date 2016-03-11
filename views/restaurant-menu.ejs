@@ -2,36 +2,39 @@
 
 <!-- Restaurants -->
 <!-- Page Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-7">
-            <a href=<%= restaurant.name %>>
-                <img class="img-responsive" src=<%= restaurant.imgPath %> alt="">
-            </a>
+<div class="weat-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <a href=<%= restaurant.name %>>
+                    <img class="img-responsive" src=<%= restaurant.imgPath %> alt="">
+                </a>
+            </div>
+            <div class="col-md-5">
+                <h3><%= restaurant.displayName %></h3>
+                <h4><%= restaurant.mainFoodType %></h4>
+                <p><%= restaurant.longDescription %></p>
+            </div>
         </div>
-        <div class="col-md-5">
-            <h3><%= restaurant.displayName %></h3>
-            <h4><%= restaurant.mainFoodType %></h4>
-            <p><%= restaurant.longDescription %></p>
+        <hr>
+        <div id="menu">
+            <div class="row">
+                <% if(menus){ %>
+                <% menus.forEach(function(menu){ %>
+                <div class="menu col-lg-4">
+                    <h2 class="menu-name"> <%= menu.name %> </h2>
+                    <% menu.categories.forEach(function(category) { %>
+                    <div class="menu-category col-lg-4">
+                        <h3 class="category-name"><%= category.name %></h3>
+                        <span class="category-description"><%= category.description %></span>
+                    </div>
+                    <% }) %>
+                </div>
+                <% }) %>
+                <% } %>
+            </div>
         </div>
     </div>
-<hr>
-	<div id="menu">
-        <div class="row">
-            <% if(menus != null){ %>
-                <% menus.forEach(function(menu){ %>
-                    <div class="menu col-lg-4">
-                        <h2 class="menu-name"> <%= menu.name %> </h2>
-                            <% menu.categories.forEach(function(category) { %>
-                                <div class="menu-category col-lg-4">
-                                <h3 class="category-name"><%= category.name %></h3>
-                                <span class="category-description"><%= category.description %></span>
-                            </div>
-                        <% }) %>
-                    </div>
-                <% }) %>
-            <% } %>
-        </div>
-	</div>
 </div>
+
 <script src="/scripts/restaurant.js"></script>

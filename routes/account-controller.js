@@ -8,19 +8,17 @@ var passport = require('passport');
 //Customer Registration
 router.route("/register")
   .get(function(req,res) {
-      res.render('account/register',{title: 'weat: register'});
+      res.render('account/register', {title: 'weat: register'});
   })
   .post(function(req,res){
-      var response = {};
+      var response = {title: 'weat: register'};
       // Mongo command to check if user exists.
       Account.find({'email': req.body.email}, function (err, data) {
           console.log(data);
           if (err) {
               response = {"error": true, "message": "Error fetching data"};
-              res.json(response);
           } else if (data.length > 0){
-              response = {"error": false, "message": "Sorry, that email is already in use."};
-              res.json(response);
+              response = {"error": false, "message": "Sorry, that email is already in use."};           
           } else {
               // Create Account
               var account = new Account();
@@ -43,12 +41,14 @@ router.route("/register")
                   // it will add new data in collection.
                   if (err) {
                       response = {"error": true, "message": "Error adding data"};
-                  } else {
-                      response = {"error": false, "message": "Data added"};
-                  }
-                  res.json(response);
+                      res.render('account/register', response);
+                  } 
+                  //SUCCESS
+                  res.redirect('/');                  
               });
           }
+          //ERROR
+          res.render('account/register', response);
       });
   });
 
@@ -58,16 +58,14 @@ router.route("/register_business")
       res.render('account/register_business', {title: 'Weat: Register Business'});
   })
   .post(function(req,res){
-      var response = {};
+      var response = {title: 'weat: register'};
       // Mongo command to check if user exists.
       Account.find({'email': req.body.email}, function (err, data) {
           console.log(data);
           if (err) {
               response = {"error": true, "message": "Error fetching data"};
-              res.json(response);
           } else if (data.length > 0){
               response = {"error": false, "message": "Sorry, that email is already in use."};
-              res.json(response);
           } else {
               // Create Account
               var account = new Account();
@@ -99,7 +97,6 @@ router.route("/register_business")
               restaurant.save(function(err, record){
                   if(err){
                       response = {"error": true, "message": "Error adding restaurant data"};
-                      res.json(response);
                   } else {
                       //save account with newly created restaurantId
                       account.restaurantId = record.id;
@@ -108,15 +105,18 @@ router.route("/register_business")
                           // it will add new data in collection.
                           if (err) {
                               response = {"error": true, "message": "Error adding account data"};
-                          } else {
-                              response = {"error": false, "message": "restaurant and account added"};
-                              //TODO set user auth cookie and redirect to home page
-                          }
-                          res.json(response);
+                              res.render('account/register_business', response);
+                          } 
+                          //SUCCESS
+                          res.redirect('/');    
                       });
                   }
+                  //ERROR
+                  res.render('account/register_business', response);
               });             
           }
+          //ERROR
+          res.render('account/register_business', response);
       });
   });
 
@@ -155,7 +155,7 @@ router.route("/login")
 router.route("/logout")
   .get(function(req, res){
       req.session = null;
-      res.render('index', {title: 'weat: home'});
+      res.redirect('/');
   });
 
 module.exports = router;

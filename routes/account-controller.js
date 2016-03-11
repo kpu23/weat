@@ -55,7 +55,7 @@ router.route("/register")
 //Business Registration
 router.route("/register_business")
   .get(function(req,res) {
-      res.render('account/register_business',{title: 'Weat: Register Business'});
+      res.render('account/register_business', {title: 'Weat: Register Business'});
   })
   .post(function(req,res){
       var response = {};
@@ -141,7 +141,12 @@ router.route("/login")
                   res.render('account/login',{validationMessage: 'Email or password is incorrect.', title: 'weat: sign-in'});
               } else {
                   req.session.user = record;
-                  res.redirect('/');
+                  //redirect based on user type
+                  if(record.userType == 'owner'){
+                      res.render('admin_home', {title: 'weat: home'});
+                  }else{
+                      res.render('index', {title: 'weat: home'});
+                  }
               }
           }
       });
@@ -150,7 +155,7 @@ router.route("/login")
 router.route("/logout")
   .get(function(req, res){
       req.session = null;
-      res.render('index',{title: 'weat: home'});
+      res.render('index', {title: 'weat: home'});
   });
 
 module.exports = router;

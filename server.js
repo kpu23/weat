@@ -19,17 +19,17 @@ mongoose.connect("mongodb://localhost:27017/weat", function(err, db) {
     }
 });
 
-// set-up auth
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-      Account.findOne({ email: email }, function (err, account) {
-          if (err) { return done(err); }
-          if (!account) { return done(null, false); }
-          if (!account.verifyPassword(password)) { return done(null, false); }
-          return done(null, user);
-      });
-  }
-));
+// // set-up auth
+// passport.use(new LocalStrategy(
+//   function(username, password, done) {
+//       Account.findOne({ email: email }, function (err, account) {
+//           if (err) { return done(err); }
+//           if (!account) { return done(null, false); }
+//           if (!account.verifyPassword(password)) { return done(null, false); }
+//           return done(null, user);
+//       });
+//   }
+// ));
 
 // import routes
 var routes = require('./routes/index-controller');
@@ -52,6 +52,13 @@ app.use(cookieParser());
 app.use(cookieSession({secret: '1234567890QWERTY'}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
+
+//Pre-called function before routing
+app.use(function(req, res, next){
+  //set ejs variables to be used on every page
+  res.locals.session = req.session;
+  next();
+});
 
 app.use('/', routes);
 app.use('/', account);

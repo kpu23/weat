@@ -9,7 +9,7 @@ var foodItemSchema  = mongoose.Schema({
   "price" : String,
   "available" : Boolean,
   "description" : String,
-  "imagePath" : String,
+  "imgPath" : String,
   "averagePrepTime" : String, // in minutes
   //"itemOptions" : [mongoose.Schema.Types.ObjectId],
   "restaurantId" : mongoose.Schema.Types.ObjectId //,

@@ -4,9 +4,8 @@
 var express = require('express');
 var router = express.Router();
 var Menu = require('../models/menu');
-var Categories = require('../models/menu-category');
-var MealItems = require('../models/meal-item');
-var FoodItems = require('../models/food-item');
+var Category = require('../models/menu-category');
+var FoodItem = require('../models/food-item');
 
 /* My restaurants page */
 router.get('/admin', function(req, res, next) {
@@ -41,8 +40,7 @@ router.post('/admin/fetchMenus', function(req, res, next){
 			if(error){console.log(error);}
 			else
 			{
-				//Categories.find({_id: $in: menu.})
-				console.log(menu);
+				//Category.find({_id: $in: menu.})
 				res.send(menu);
 			}
 		});
@@ -70,9 +68,62 @@ router.post('/admin/createMenu', function(req, res) {
 		}
 		res.json(response);
 	});
-
 });
-
+router.post('/admin/createCategory', function(req, res) {
+    var data = JSON.parse(req.body.category);
+    var menuId = req.body.menuId;
+    var response = {};
+    // Create Category
+    var category = new Category();
+    category.name = data.name;
+    category.description = data.description;
+    category.save(function(err, result) {
+        if (err) {
+            response = {"error": true, "message": "Error adding data"};
+        } else {
+            Menu.findById(menuId, function (error, menu){
+                if(error) {
+                    console.log('mongoose error')
+                    console.log(error);
+                } else {
+                    console.log(menu);
+                    menu.menuCategories.push(result._id);
+                    menu.save();
+                    response = {"error": false, "message": "Category added to menu successfully."};
+                }
+            });
+        }
+        res.json(response);
+    });
+});
+router.post('/admin/createFoodItem', function(req, res) {
+    var data = JSON.parse(req.body.foodItem);
+    var categoryId = req.body.categoryId;
+    var response = {};
+    // Create Category
+    var foodItem = new FoodItem();
+    foodItem.name = data.name;
+    foodItem.price = data.price;
+    foodItem.description = data.description;
+    foodItem.save(function(err, result) {
+        if (err) {
+            response = {"error": true, "message": "Error adding data"};
+        } else {
+            Category.findById(categoryId, function (error, category){
+                if(error) {
+                    console.log('mongoose error')
+                    console.log(error);
+                } else {
+                    console.log(category);
+                    category.foodItems.push(result._id);
+                    category.save();
+                    response = {"error": false, "message": "Item added to category successfully."};
+                }
+            });
+        }
+        res.json(response);
+    });
+});
 
 
 router.post('/admin/fetchCategories', function(req, res){
@@ -80,13 +131,11 @@ router.post('/admin/fetchCategories', function(req, res){
 	var categoryIds = JSON.parse(req.body.categoryIds)
 	if(categoryIds)
 	{
-		Categories.find({_id: {$in: categoryIds}}, function (error, categories){
+		Category.find({_id: {$in: categoryIds}}, function (error, categories){
 			if(error){console.log(error);}
 			else
 			{
-				console.log(categories);
 				res.send(categories);
-
 			}
 		});
 	}
@@ -104,11 +153,10 @@ router.post('/admin/fetchFoodItems', function(req, res){
 
 	var foodItemIds = JSON.parse(req.body.foodItemIds);
 	if(foodItemIds)	{
-		FoodItems.find({_id: {$in: foodItemIds}}, function (error, foodItems){
+		FoodItem.find({_id: {$in: foodItemIds}}, function (error, foodItems){
 			if(error){
 				console.log(error);
 			} else {
-				console.log(foodItems);
 				res.send(foodItems);
 			}
 		});

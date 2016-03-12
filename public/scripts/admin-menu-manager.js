@@ -1,5 +1,6 @@
 var restaurantId = "56c503be9bc2f4cc1396845e"; //HACK: fetch from logged-in account
 
+// Templates for new objects
 var Menu = {
     name: '',
     isPublic: false,
@@ -13,7 +14,7 @@ var Category = {
     "imgPath" : '',
     "restaurantId" : restaurantId,
     "foodItems" : []
-}
+};
 
 var FoodItem = {
     "name" : '',
@@ -23,13 +24,16 @@ var FoodItem = {
     "imagePath" : '',
     "averagePrepTime" : '', // in minutes
     "restaurantId" : restaurantId
-}
+};
 
 var MenuManagementModel = function() {
     var self = this;
     self.menus = ko.observableArray();
     self.newMenu = ko.observable(Menu);
+    self.newCategory = ko.observable(Category);
+    self.newFoodItem = ko.observable(FoodItem);
     self.currentMenu = ko.observable();
+    self.currentCategory = ko.observable();
     self.fetchMenus = function() {
         $.post("/admin/fetchMenus", {restaurantId: restaurantId}, function(menus){
             self.menus(menus);
@@ -38,12 +42,15 @@ var MenuManagementModel = function() {
 
     self.createMenu = function() {
         if (self.newMenu().name) {
+            console.log(ko.toJSON(self.newCategory()));
+            console.log(ko.toJSON(self.newMenu()));
+
             $.post("/admin/createMenu", {menu: ko.toJSON(self.newMenu())}, function(result){
                 console.log(result);
                 if (result.error) {
                     alert('Error occurred. Please contact us at help@weat.com.')
                 } else {
-                    $('#create-menu-section').modal('hide')
+                    $('#create-menu-window').modal('hide')
                     self.menus.push(self.newMenu());
                 }
             });
@@ -51,13 +58,52 @@ var MenuManagementModel = function() {
             alert('Please fill in name.');
         }
     };
-
+    self.createCategory = function() {
+        var currentMenuId = self.currentMenu().id();
+        console.log(self.currentMenu());
+        if (self.newCategory().name) {
+            $.post("/admin/createCategory", {category: ko.toJSON(self.newCategory()), menuId: currentMenuId.toString()}, function(result){
+                console.log(result);
+                if (result.error) {
+                    alert('Error occurred. Please contact us at help@weat.com.')
+                } else {
+                    $('#create-category-window').modal('hide')
+                    self.currentMenu().categories.push(self.newCategory());
+                }
+            });
+        } else {
+            alert('Please fill in name.');
+        }
+    };
+    self.createFoodItem = function() {
+        var currentCategoryId = self.currentCategory().id();
+        console.log(self.currentMenu());
+        if (self.newFoodItem().name) {
+            $.post("/admin/createFoodItem", {foodItem: ko.toJSON(self.newFoodItem()), categoryId: currentCategoryId.toString()}, function(result){
+                console.log(result);
+                if (result.error) {
+                    alert('Error occurred. Please contact us at help@weat.com.')
+                } else {
+                    $('#create-food-item-window').modal('hide')
+                    self.currentCategory().foodItems.push(self.newFoodItem());
+                }
+            });
+        } else {
+            alert('Please fill in name.');
+        }
+    };
     // Show/Hide Methods
     self.showMenuEditor = function(menu) {
         console.log(menu);
-        //console.log(new MenuModel(menu));
+        //$('#menu-editor').hide();
         self.currentMenu(new MenuModel(menu));
-    }
+    };
+    self.showCategoryEditor = function(category) {
+        console.log(category);
+        //console.log(new MenuModel(menu));
+        //$('#category-editor').hide();
+        self.currentCategory(category);
+    };
 };
 $(document).ready(function(){
     var manageModel = new MenuManagementModel();
@@ -68,6 +114,10 @@ $(document).ready(function(){
 
 function MenuModel(menu){
     var self = this;
+    self.id = ko.observable(menu._id);
+    self.name = ko.observable(menu.name);
+    self.isPublic = ko.observable(menu.isPublic);
+    self.restaurantId = ko.observable(menu.restaurantId);
     self.categories = ko.observableArray();
     self.fetchCategories = function(ids) {
         $.post("/admin/fetchCategories", {categoryIds: JSON.stringify(ids)}, function(categories){
@@ -84,6 +134,10 @@ function MenuModel(menu){
 
 function CategoryModel(category){
     var self = this;
+    self.id = ko.observable(category._id);
+    self.name = ko.observable(category.name);
+    self.description = ko.observable(category.description);
+    self.restaurantId = ko.observable(category.restaurantId);
     self.foodItems = ko.observableArray();
     self.fetchFoodItems = function(category, ids) {
         $.post("/admin/fetchFoodItems", {foodItemIds: JSON.stringify(ids)}, function(items){

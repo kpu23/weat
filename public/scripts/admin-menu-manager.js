@@ -5,7 +5,7 @@ var Menu = {
     name: '',
     isPublic: false,
     restaurantId: restaurantId,
-    categories: []
+    menuCategories: []
 };
 
 var Category = {
@@ -51,12 +51,29 @@ var MenuManagementModel = function() {
                     alert('Error occurred. Please contact us at help@weat.com.')
                 } else {
                     $('#create-menu-window').modal('hide')
+                    self.newMenu()._id = result.menuId;
+                    console.log(self.newMenu());
                     self.menus.push(self.newMenu());
                 }
             });
         } else {
             alert('Please fill in name.');
         }
+    };
+    self.deleteMenu = function() {
+        $.post("/admin/deleteMenu", {menuId: self.currentMenu().id}, function(result){
+            console.log(result);
+            if (result.error) {
+                alert('Error occurred. Please contact us at help@weat.com.')
+            } else {
+                $('#edit-menu-window').modal('hide')
+                self.menus.remove(function (item) {
+                    console.log(item._id, self.currentMenu().id());
+                    return item._id == self.currentMenu().id();
+                });
+                self.currentMenu('');
+            }
+        });
     };
     self.createCategory = function() {
         var currentMenuId = self.currentMenu().id();
@@ -94,13 +111,11 @@ var MenuManagementModel = function() {
     };
     // Show/Hide Methods
     self.showMenuEditor = function(menu) {
-        console.log(menu);
         //$('#menu-editor').hide();
+        self.currentCategory('');
         self.currentMenu(new MenuModel(menu));
     };
     self.showCategoryEditor = function(category) {
-        console.log(category);
-        //console.log(new MenuModel(menu));
         //$('#category-editor').hide();
         self.currentCategory(category);
     };
@@ -121,15 +136,15 @@ function MenuModel(menu){
     self.categories = ko.observableArray();
     self.fetchCategories = function(ids) {
         $.post("/admin/fetchCategories", {categoryIds: JSON.stringify(ids)}, function(categories){
-            console.log(categories);
             categories.forEach(function (category) {
-                console.log(category.foodItems);
                 self.categories.push(new CategoryModel(category));
             })
         });
     };
     // Initialize
-    self.fetchCategories(menu.menuCategories);
+    if (menu.menuCategories.length > 0) {
+        self.fetchCategories(menu.menuCategories);
+    }
 }
 
 function CategoryModel(category){
@@ -141,7 +156,6 @@ function CategoryModel(category){
     self.foodItems = ko.observableArray();
     self.fetchFoodItems = function(category, ids) {
         $.post("/admin/fetchFoodItems", {foodItemIds: JSON.stringify(ids)}, function(items){
-            console.log(items);
             items.forEach(function(item){
                 self.foodItems.push(item);
             });

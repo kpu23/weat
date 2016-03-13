@@ -37,9 +37,10 @@ router.post('/admin/fetchMenus', function(req, res, next){
 		//_id: req.body.restaurantId
 		//name: "Default"
 		Menu.find({restaurantId: req.body.restaurantId}, function (error, menu){
-			if(error){console.log(error);}
-			else
-			{
+			if(error){
+                console.log(error);
+            }
+			else {
 				//Category.find({_id: $in: menu.})
 				res.send(menu);
 			}
@@ -58,16 +59,60 @@ router.post('/admin/createMenu', function(req, res) {
 	menu.restaurantId = data.restaurantId;
 	menu.menuCategories = data.categories;
 
-	menu.save(function(err) {
+	menu.save(function(err, result) {
 		// save() will run insert() command of MongoDB.
 		// it will add new data in collection.
 		if (err) {
 			response = {"error": true, "message": "Error adding data"};
 		} else {
-			response = {"error": false, "message": "Menu added successfully."};
+			response = {"error": false, "message": "Menu added successfully.", menuId: result._id};
 		}
 		res.json(response);
 	});
+});
+router.post('/admin/deleteMenu', function(req, res) {
+    var menuId = req.body.menuId;
+    var response = {};
+    console.log(menuId);
+    // Delete Menu
+    Menu.findById(menuId, function (error, menu) {
+        if (menu) {
+            Category.find({_id: {$in: menu.menuCategories}}, function (error, categories){
+                if(error) {
+                    response = {"error": true, "message": "Error querying categories."};
+                    console.log(error);
+                } else {
+                    if (categories.length > 0) {
+                        categories.forEach(function (category) {
+                            // Delete Food Items
+                            FoodItem.find({_id: {$in: category.foodItems}}).remove(function(error) {
+                                if (error) {
+                                    response = {"error": true, "message": "Error deleting food items."};
+                                    console.log(error);
+                                }
+                            });
+                        });
+                    }
+                }
+            }).remove(function(error) {
+                if (error) {
+                    response = {"error": true, "message": "Error deleting categories."};
+                    console.log(error);                    }
+            });
+            menu.remove(function (error) {
+                if (error) {
+                    response = {"error": true, "message": "Error deleting menu."};
+                    console.log(error);
+                } else {
+                    response = {"error": false, "message": "Menu added successfully."};
+                }
+            });
+        } else {
+            response = {"error": false, "message": "Could not find menu."};
+        }
+
+        res.json(response);
+    });
 });
 router.post('/admin/createCategory', function(req, res) {
     var data = JSON.parse(req.body.category);

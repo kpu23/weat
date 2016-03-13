@@ -2,20 +2,20 @@
 
 <div class="weat-content" style="display:list-item;">
 
-    <div class="container" id="menu-manager">
+    <div class="container" id="menu-manager" style="display: none;">
         <div id="menu-editor">
             <h1 style="margin:10px;">Your Menus</h1>
             <div class="row">
                 <div data-bind="foreach: menus" >
                     <a href="#" data-bind="click: $root.showMenuEditor">
                         <div class="menu col-lg-4">
-                            <p data-bind="text: name"></p>
+                            <h4 data-bind="text: name"></h4>
                         </div>
                     </a>
                 </div>
                 <a href="" data-toggle="modal" data-target="#create-menu-window">
                     <div class="create-menu col-lg-4">
-                        <p>Add New Menu <i class="fa fa-plus-square fa-2x"></i></p>
+                        <h4>Add New Menu <i class="fa fa-plus-square"></i></h4>
                     </div>
                 </a>
             </div>
@@ -27,14 +27,14 @@
                 <div data-bind="foreach: categories" >
                     <a href="#" data-bind="click: $root.showCategoryEditor">
                         <div class="menu col-lg-4">
-                            <p data-bind="text: name"></p>
+                            <h4 data-bind="text: name"></h4>
                             <small data-bind="text: description"></small>
                         </div>
                     </a>
                 </div>
                 <a href="" data-toggle="modal" data-target="#create-category-window">
                     <div class="create-menu col-lg-4">
-                        <p>Add New Category <i class="fa fa-plus-square fa-2x"></i></p>
+                        <h4>Add New Category <i class="fa fa-plus-square"></i></h4>
                     </div>
                 </a>
             </div>
@@ -46,13 +46,13 @@
                 <div data-bind="foreach: foodItems" >
                     <a href="#">
                         <div class="menu col-lg-4">
-                            <p data-bind="text: name"></p>
+                            <h4 data-bind="text: name"></h4>
                         </div>
                     </a>
                 </div>
                 <a href="" data-toggle="modal" data-target="#create-food-item-window">
                     <div class="create-menu col-lg-4">
-                        <p>Add New Item <i class="fa fa-plus-square fa-2x"></i></p>
+                        <h4>Add New Item <i class="fa fa-plus-square"></i></h4>
                     </div>
                 </a>
             </div>
@@ -123,7 +123,7 @@
                         <form>
                             <fieldset class="form-group">
                                 <label for="menu-name">Item Name</label>
-                                <input type="text" class="form-control" id="menu-name" placeholder="Menu Name" data-bind="value: name" required>
+                                <input type="text" class="form-control" id="menu-name" placeholder="Item Name" data-bind="value: name" required>
                                 <label for="menu-name">Description</label>
                                 <input type="text" class="form-control" id="menu-name" placeholder="Description" data-bind="value: description">
                                 <label for="menu-name">Price</label>

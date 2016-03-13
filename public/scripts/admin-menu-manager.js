@@ -9,11 +9,12 @@ var Menu = {
 };
 
 var Category = {
+    "id": ko.observable(),
     "name" : '',
     "description" : '',
     "imgPath" : '',
     "restaurantId" : restaurantId,
-    "foodItems" : []
+    "foodItems" : ko.observableArray()
 };
 
 var FoodItem = {
@@ -36,6 +37,7 @@ var MenuManagementModel = function() {
     self.currentCategory = ko.observable();
     self.fetchMenus = function() {
         $.post("/admin/fetchMenus", {restaurantId: restaurantId}, function(menus){
+            $('#menu-manager').fadeIn();
             self.menus(menus);
         });
     };
@@ -68,10 +70,10 @@ var MenuManagementModel = function() {
             } else {
                 $('#edit-menu-window').modal('hide')
                 self.menus.remove(function (item) {
-                    console.log(item._id, self.currentMenu().id());
                     return item._id == self.currentMenu().id();
                 });
                 self.currentMenu('');
+                self.currentCategory('');
             }
         });
     };
@@ -84,7 +86,8 @@ var MenuManagementModel = function() {
                 if (result.error) {
                     alert('Error occurred. Please contact us at help@weat.com.')
                 } else {
-                    $('#create-category-window').modal('hide')
+                    $('#create-category-window').modal('hide');
+                    self.newCategory().id(result.id);
                     self.currentMenu().categories.push(self.newCategory());
                 }
             });
@@ -117,6 +120,7 @@ var MenuManagementModel = function() {
     };
     self.showCategoryEditor = function(category) {
         //$('#category-editor').hide();
+        console.log(category);
         self.currentCategory(category);
     };
 };

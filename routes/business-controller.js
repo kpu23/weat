@@ -125,6 +125,7 @@ router.post('/admin/createCategory', function(req, res) {
     category.save(function(err, result) {
         if (err) {
             response = {"error": true, "message": "Error adding data"};
+            res.json(response);
         } else {
             Menu.findById(menuId, function (error, menu){
                 if(error) {
@@ -134,11 +135,11 @@ router.post('/admin/createCategory', function(req, res) {
                     console.log(menu);
                     menu.menuCategories.push(result._id);
                     menu.save();
-                    response = {"error": false, "message": "Category added to menu successfully."};
+                    response = {"error": false, "message": "Category added to menu successfully.", id: result._id};
+                    res.json(response);
                 }
             });
         }
-        res.json(response);
     });
 });
 router.post('/admin/createFoodItem', function(req, res) {

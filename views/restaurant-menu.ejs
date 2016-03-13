@@ -17,32 +17,44 @@
                     <p><%= restaurant.longDescription %></p>
                 </div>
             </div>
-        <hr>
-            <div id="all-menus">
-                <div class="row">
-                    <% if(menus != null){ %>
-                        <% menus.forEach(function(menu){ %>
-                            <div class=" menu col-lg-12">  <!-- -->
-                                <h2 class="menu-name"> <%= menu.name %> </h2>
-                                    <% menu.categories.forEach(function(category) { %>
-                                        <div class="menu-category col-lg-4" id="<%=category._id%>">
-                                        <h3 data-bind="click: clickCategory.bind($data, '<%=category._id%>')" class="category-name"><%= category.name %></h3>
-                                        <span class="category-description"><%= category.description %></span>
-                                        <div class="menu-items row" id="food-items-<%=category._id%>">
-                                            <!----> 
-                                            <div data-bind="foreach: items">
-                                                <div class="menu-item col-lg-12"  data-bind="click: $parent.clickItem, attr:{id: _id}">
-                                                    <h4 data-bind="text: name"></h4>
-                                                    <img width="200" height="200" data-bind="attr:{src: imgPath}">
-                                                </div>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                <% }) %>
-                            </div>
-                        <% }) %>
-                    <% } %>
-                </div>
+        
+            
+        <% if(menus != null){ %>
+        
+        <% menus.forEach(function(menu){ %>
+                            
+            <!-- Menu Name -->
+            <h1 class="page-header" style="text-align: center;"><%= menu.name %></h1>
+            
+            <!-- Categories -->
+            <% menu.categories.forEach(function(category) { %>
+            <div class="menu-category" id="<%=category._id%>">
+            <h2 data-bind="click: clickCategory.bind($data, '<%=category._id%>')" class="category-name"><%= category.name %></h2>
+            <span class="category-description"><%= category.description %></span>
+            <hr>
+            
+
+            <!-- Items -->
+            <div id="food-items-<%=category._id%>">
+            <div data-bind="foreach: items">
+            <div class="menu-item col-md-4"  data-bind="click: $parent.clickItem, attr:{id: _id}">
+            <h4 data-bind="text: name"></h4>
+            <h4 data-bind="text: price"></h4>
+            <img width="300" height="200" data-bind="attr:{src: imgPath}">
+            <h4 style="margin:10px;" data-bind="text: description"></h4>
+                                                
+
+            </div>
+            </div> 
+            </div>
+            </div>
+            <% }) %>
+            </div>
+            <% }) %>
+            <% } %>
+            </div>
+
+
         <!-- data-toggle="modal" data-target="#create-food-item-window" -->
             <!-- Modals -->
             <div id="show-food-item-options" class="modal fade" role="dialog">

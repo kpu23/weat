@@ -8,6 +8,7 @@ var Menu = require('../models/menu');
 var Categories = require('../models/menu-category');
 var MealItems = require('../models/meal-item');
 var FoodItems = require('../models/food-item');
+var Order = require('../models/order');
 
 router.route("/restaurants")
   .get(function(req,res) {
@@ -65,10 +66,6 @@ router.route("/restaurants")
       //console.log(restaurants);
       
     }
-    
-    
-    //restaurants = [{name: "TESST"},{name: "TESST2"}];
-   
   });
 
 
@@ -129,73 +126,10 @@ router.route("/restaurants/:restaurant").get(function(req,res) {
             });*/
             //console.log(menuObject.menus[0]);
           });
-          
-              
-              /*Categories.find({_id: {$in: menu[0].menuCategories}}).lean().exec(function (error, categories){
-              if(error)
-              {
-                console.log(error);
-              }
-              else
-              {
-
-              }
-            });*/
-        }
-
-        
+        }        
       });
-
-        //console.log("menuObject - Step 3 - Add Categories to Menus", menuObject);
-        //console.log("DDDDDDDDDDDDDd");
-        //res.render("restaurant-menu", {title: pageTitle, restaurant: menuObject.restaurant, menus: menuObject.menus});
-      
     }
   });
-
-      /*Categories.find({restaurantId: restaurant._id}, function (error, categories){
-        if(error)
-        {
-          console.log(error);
-        }
-        else
-        {
-          for(i = 0; i < categories.length; i++)
-          {
-            FoodItems.find({_id: { $in: categories[i].foodItems}}, function (error, items){
-              if(error)
-              {
-                console.log(error);
-              }
-              else
-              {
-                if(typeof(items) != "undefined")
-                { 
-                  console.log(i); //foodItemsArray); // = items;
-                  console.log(items);
-                  console.log("categories:");
-                  console.log(categories);
-
-                }
-               
-                
-                
-              }
-            });
-
-          }
-          //FoodItems.find( {_id: categories.}, )
-          res.render("restaurant-menu", {title: pageTitle, restaurant: restaurant, categories: categories});
-        }
-      });
-    }
-  });*/
-
-  //grab menu
-
-
-
-
 });
 
 function fetchCategories(menus, menuObject, counter, callback)
@@ -224,6 +158,9 @@ function fetchCategories(menus, menuObject, counter, callback)
   }
 }
 
+/*
+    Not being used currently
+*/
 function fetchFoodItems(menus, menuObject, counter, callback)
 {
   i = 0;
@@ -242,7 +179,74 @@ function fetchFoodItems(menus, menuObject, counter, callback)
       callback();
     }
 }
+
+router.route("/restaurants/fetchItemsIdArray").post(function(req,res,next) {
+  var catId = req.body.categoryId;
+  console.log(catId);
+  if(catId)
+  {
+    Categories.findOne({_id: catId}).lean().exec(function (error, categories)
+    {
+      res.send(categories.foodItems);
+    });  
+  }
   
+});
+
+router.route("/restaurants/fetchFoodItems").post(function(req,res,next) {
+  console.log("Fetch Food Items");
+  var foodItemsIdArray = JSON.parse(req.body.foodItemsIdArray);
+  FoodItems.find({_id: {$in: foodItemsIdArray }}).lean().exec(function (error, foodItems)
+  {
+    console.log(req.session);
+    res.send(foodItems);
+  });
+});
+
+router.route("/restaurants/AddItemToOrder").post(function(req,res,next) {
+  console.log("Add Item to Order");
+
+  //req.session.order = null;
+
+  var itemId = req.body.itemId;
+  var restaurantId = req.body.restaurantId;
+
+  if(itemId && restaurantId)
+  {
+    //check if order exists
+      if(req.session.order != null)
+      {
+        if(restaurantId != req.session.order.restaurantId)
+        {
+          var response = {success: false, message: "new restaurant"};
+          res.send(response);
+        }
+        else
+        {
+          req.session.order.items.push(itemId);
+          var response = {success: true, message: "item added to existing order"};
+
+          console.log(req.session);
+
+          res.send(response);
+        }
+      }
+      //make new order
+      else
+      {
+        var order = new Order();
+        order.userId = req.session.user._id;
+        order.restaurantId = restaurantId;
+        order.items = []; order.items.push(itemId);
+        req.session.order = order;
+        var response = {success: true, message: "item added to new order"};
+        res.send(response);
+      }
+      
+  }
+  
+  
+});
 
 
 module.exports = router;

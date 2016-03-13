@@ -2,39 +2,103 @@
 
 <!-- Restaurants -->
 <!-- Page Content -->
-<div class="weat-content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7">
-                <a href=<%= restaurant.name %>>
-                    <img class="img-responsive" src=<%= restaurant.imgPath %> alt="">
-                </a>
-            </div>
-            <div class="col-md-5">
-                <h3><%= restaurant.displayName %></h3>
-                <h4><%= restaurant.mainFoodType %></h4>
-                <p><%= restaurant.longDescription %></p>
-            </div>
-        </div>
-        <hr>
-        <div id="menu">
+<div class="intro">
+    <div class="intro-body">
+        <div class="container">
             <div class="row">
-                <% if(menus){ %>
-                <% menus.forEach(function(menu){ %>
-                <div class="menu col-lg-4">
-                    <h2 class="menu-name"> <%= menu.name %> </h2>
-                    <% menu.categories.forEach(function(category) { %>
-                    <div class="menu-category col-lg-4">
-                        <h3 class="category-name"><%= category.name %></h3>
-                        <span class="category-description"><%= category.description %></span>
-                    </div>
-                    <% }) %>
+                <div class="col-md-7">
+                    <a href=<%= restaurant.name %>>
+                        <img class="img-responsive" src=<%= restaurant.imgPath %> alt="">
+                    </a>
                 </div>
-                <% }) %>
-                <% } %>
+                <div class="col-md-5">
+                    <h3><%= restaurant.displayName %></h3>
+                    <h4><%= restaurant.mainFoodType %></h4>
+                    <p><%= restaurant.longDescription %></p>
+                </div>
+            </div>
+        <hr>
+            <div id="all-menus">
+                <div class="row">
+                    <% if(menus != null){ %>
+                        <% menus.forEach(function(menu){ %>
+                            <div class=" menu col-lg-12">  <!-- -->
+                                <h2 class="menu-name"> <%= menu.name %> </h2>
+                                    <% menu.categories.forEach(function(category) { %>
+                                        <div class="menu-category col-lg-4" id="<%=category._id%>">
+                                        <h3 data-bind="click: clickCategory.bind($data, '<%=category._id%>')" class="category-name"><%= category.name %></h3>
+                                        <span class="category-description"><%= category.description %></span>
+                                        <div class="menu-items row" id="food-items-<%=category._id%>">
+                                            <!----> 
+                                            <div data-bind="foreach: items">
+                                                <div class="menu-item col-lg-12"  data-bind="click: $parent.clickItem, attr:{id: _id}">
+                                                    <h4 data-bind="text: name"></h4>
+                                                    <img width="200" height="200" data-bind="attr:{src: imgPath}">
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                </div>
+        <!-- data-toggle="modal" data-target="#create-food-item-window" -->
+            <!-- Modals -->
+            <div id="show-food-item-options" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content" data-bind="with: item">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Add Item to Order</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h4 id="modal-item-name" data-item-guid="" data-restaurant-guid=""></h4>
+                                <form>
+                                    <label>Quantity:</label>
+                                    <div class="quantity">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-danger btn-number" data-type="minus" >
+                                                    <span class="fa fa-minus"></span>
+                                                </button>
+                                            </span>
+
+                                                <input disabled id="item-quantity" type="text" class="form-control input-number" value="1" min="1" max="100">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-success btn-number" data-type="plus">
+                                                    <span class="fa fa-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                    <label>Special Instructions:</label>
+                                    <div class="special-instructions">
+                                        <textarea rows="5" cols="35" placeholder="Any special instructions for this?"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="add-item" class="btn btn-success">Add Item to Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.quantity{
+    width: 150px;
+}
+
+</style>
+
+
 
 <script src="/scripts/restaurant.js"></script>

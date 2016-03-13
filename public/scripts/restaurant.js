@@ -35,9 +35,97 @@ var OrderModel = function () {
   };
 };
 
+var itemsModel = function(){
+  var self = this;
+  self.items = ko.observableArray();
+  self.item = ko.observable();
+
+  self.clickCategory = function(categoryId){
+    console.log(categoryId);
+    $.post("/restaurants/fetchItemsIdArray", {categoryId: categoryId}, function(foodItemsIdArray){
+      if(foodItemsIdArray)
+      {
+        console.log(foodItemsIdArray);
+        $.post("/restaurants/fetchFoodItems", {foodItemsIdArray: JSON.stringify(foodItemsIdArray)}, function(foodItems){
+          console.log(foodItems);
+          self.items(foodItems);
+        });
+      }
+    });
+  }
+
+  self.clickItem = function(item){
+    console.log(item);
+    $("#modal-item-name").text(item.name);
+    $("#modal-item-name").data("item-guid", item._id);
+    $("#modal-item-name").data("restaurant-guid", item.restaurantId);
+    console.log($("#modal-item-name").data("item-guid"));
+
+
+    //var itemModel = new itemsModel();
+    //itemModel.item = item;
+    //ko.applyBindings(itemModel, document.getElementById("show-food-item-options"));
+    //console.log(item.foodOptions);
+    /*$.post("/restaurants/fetchFoodItemOptions", {foodItemsIdArray: JSON.stringify(foodItemsIdArray)}, function(foodItems){
+          console.log(foodItems);
+          self.items(foodItems);
+        });*/
+    $("#show-food-item-options").modal("show");
+  }
+}
+
 $(document).ready(function () {
   //console.log('test');
   //var orderModel = new OrderModel();
   //orderModel.addOrderItem();
   //orderModel.submitOrder();
+
+  $('.menu-category').each (function () {    
+  var itemModel = new itemsModel();
+  ko.applyBindings(itemModel, this);
+  });
+
+  $('.btn-number').click(function(){
+    var amount = parseInt($("#item-quantity").val());
+
+      if($(this).data("type") == "plus")
+      {
+        if(amount == 1 || amount < 10)
+        {
+          amount = (amount + 1);
+        }
+      }
+      else
+      {
+        if(amount == 10 || amount > 1)
+        {
+          amount = (amount - 1)
+        }
+      }
+
+    $("#item-quantity").val(amount);
+  });
+
+  $("#add-item").click(function(){
+    var itemId = $("#modal-item-name").data("item-guid");
+    var restaurantId = $("#modal-item-name").data("restaurant-guid");
+
+    //Add item to order
+    addItemToOrder(itemId, restaurantId);
+  });
+
+  /*$('.menu-item').click(function(){
+    console.log("here...");
+    //console.log($(this).attr(id));
+  });*/
+
 });
+
+function addItemToOrder(itemId, restaurantId)
+{
+
+  $.post("/restaurants/AddItemToOrder", {itemId: itemId, restaurantId: restaurantId}, function(response){
+      console.log(response.message);
+      $("#show-food-item-options").modal("hide");
+  });
+}

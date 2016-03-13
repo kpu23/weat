@@ -8,6 +8,7 @@ var orderSchema  = mongoose.Schema({
   "userId" : mongoose.Schema.Types.ObjectId,
   "status" : String,
   "paymentMethodId" : mongoose.Schema.Types.ObjectId,
+  "restaurantId" : mongoose.Schema.Types.ObjectId,
   "items" : [mongoose.Schema.Types.ObjectId]
 });
 

@@ -138,7 +138,10 @@
                                 <label for="menu-name">Description</label>
                                 <input type="text" class="form-control" id="menu-name" placeholder="Description" data-bind="value: description">
                                 <label for="menu-name">Price</label>
-                                <input type="number" class="form-control" id="menu-name" placeholder="Price" data-bind="value: price" required>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="number" class="form-control" id="menu-name" placeholder="Price" data-bind="value: price" required>
+                                </div>
                             </fieldset>
                             <div class="checkbox">
                                 <label>

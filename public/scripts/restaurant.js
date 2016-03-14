@@ -152,6 +152,6 @@ function addItemToOrder(itemId, restaurantId, quantity, instructions)
 
       //Put text into & Show thank-you banner
       $("#notify-text").text("Your item has been added!");
-      $("#tnotify").fadeIn("slow").delay(1600).fadeOut("slow");
+      $("#notify").fadeIn("slow").delay(1600).fadeOut("slow");
   });
 }

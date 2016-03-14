@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 // create food item schema
 var foodItemSchema  = mongoose.Schema({
   "name" : String,
-  "price" : String,
+  "price" : Number,
   "available" : Boolean,
   "description" : String,
   "imgPath" : String,

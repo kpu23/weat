@@ -10,7 +10,6 @@ var Order = require('../models/order');
 
 /* My restaurants page */
 router.get('/admin', function(req, res, next) {
-	//TODO we should handle renderings for customer home page, admin home page, and guest home page in the "/" (root) route
     res.render('admin_home',{title: 'weat: home'});
 });
 
@@ -32,12 +31,21 @@ router.get('/marketing_analytics', function(req, res, next) {
 router.post('/admin/fetchMenus', function(req, res, next){
 
 //Fetch menus, fetch categories, fetch items
+    if(req.body.restaurantId)
+    {
+        var restaurantId = req.body.restaurantId
+    }
+    else if(req.session.user.restaurantId)
+    {
+        var restaurantId = req.session.user.restaurantId
+    }
 
-	if(req.body.restaurantId)
+	if(restaurantId)
 	{
+        console.log(restaurantId);
 		//_id: req.body.restaurantId
 		//name: "Default"
-		Menu.find({restaurantId: req.body.restaurantId}, function (error, menu){
+		Menu.find({restaurantId: restaurantId}, function (error, menu){
 			if(error){
                 console.log(error);
             }
@@ -57,7 +65,7 @@ router.post('/admin/createMenu', function(req, res) {
 	var menu = new Menu();
 	menu.name = data.name;
 	menu.isPublic = data.isPublic;
-	menu.restaurantId = data.restaurantId;
+	menu.restaurantId = req.session.user.restaurantId;
 	menu.menuCategories = data.categories;
 
 	menu.save(function(err, result) {
@@ -152,6 +160,9 @@ router.post('/admin/createFoodItem', function(req, res) {
     foodItem.name = data.name;
     foodItem.price = data.price;
     foodItem.description = data.description;
+    if (!data.imgPath) {
+      data.imgPath = '/images/placeholder-item-img.png';
+    }
     foodItem.imgPath = data.imgPath;
     foodItem.save(function(err, result) {
         if (err) {

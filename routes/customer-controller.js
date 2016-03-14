@@ -52,7 +52,7 @@ router.post('/submitOrder', function(req, res) {
                 response = {"error": true, "message": "Error submitting order."};
             } else {
                 response = {"error": false, "message": "Order submitted!"};
-                //TODO clear out session
+                req.session.order = null;
             }
             res.json(response);
         });

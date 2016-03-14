@@ -1,7 +1,3 @@
-Database Population Script:
-
-Restaurants: 
-3x restaurants - Wahoos, Savas, Shake Shack
 
 //Start restaurants script
 db.restaurants.insertMany(
@@ -53,9 +49,6 @@ db.restaurants.insertMany(
 ]);
 //End restaurants script
 
-Menus:
-2 Menus for Wahoos - Main Menu, Test Menu
-
 //Start menus script
 db.menus.insertMany([
 {
@@ -79,10 +72,6 @@ db.menus.insertMany([
 }
 ]);
 //End Menus Script
-
-Menu Categories:
-2x Wahoos Main Menu Categories - First Bites, Salads
-1x Wahoos Test Menu Categories - First Bites (test)
 
 //Start Menu Categories script
 db.menucategories.insertMany([
@@ -115,18 +104,14 @@ db.menucategories.insertMany([
 ]);
 //End Menu Categories script
 
-Food Items:
-2x Wahoos.MainMenu.First Bites Items - Chips & Salsa, Nachos
-1x Wahoos.MainMenu.Salads - Wahoos Salad
-
 //Start food items script
 db.fooditems.insertMany([
 {
     "_id" : ObjectId("56ce2290be160950d3cf0e7d"),
     "name" : "Chips & Salsa",
-    "price" : "$1.99",
+    "price" : "1.99",
     "available" : true,
-    "imagePath" : "/images/wahoos/chips_and_salsa.jpg",
+    "imgPath" : "/images/wahoos/chips_and_salsa.jpg",
     "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
     "averagePrepTime" : "1 minute",
     "description" : ""
@@ -134,9 +119,9 @@ db.fooditems.insertMany([
 {
     "_id" : ObjectId("56dc8f652b072da5d5f16512"),
     "name" : "Nachos",
-    "price" : "$5.99",
+    "price" : "5.99",
     "available" : true,
-    "imagePath" : "/images/wahoos/nachos.jpg",
+    "imgPath" : "/images/wahoos/nachos.jpg",
     "averagePrepTime" : "5 minutes",
     "description" : "Any Protein & Beans served with Guacamole & Sour Cream",
     "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e")
@@ -144,9 +129,9 @@ db.fooditems.insertMany([
 {
     "_id" : ObjectId("56de0eca57e52e5999cffaf9"),
     "name" : "Wahoos Salad",
-    "price" : "$7.99",
+    "price" : "7.99",
     "available" : true,
-    "imagePath" : "/images/wahoos/wahoos_salad.jpg",
+    "imgPath" : "/images/wahoos/wahoos_salad.jpg",
     "description" : "Any Protein, Banzai Veggies, Mixed Greens, Cheese, Guacamole, Salsa & Tortilla Strips",
     "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
     "averagePrepTime" : "10 minutes"

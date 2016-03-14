@@ -19,14 +19,11 @@ router.route("/restaurants")
       console.log("get request: " + req.query.q);
       var searchTerm = req.query.q.toLowerCase();
 
-      Restaurant.find( {status: true, $or: [{name: searchTerm}, {foodtype: searchTerm}, {displayName: searchTerm}]}, function (error, results){
+      Restaurant.find( {$or: [{name: searchTerm}, {foodtype: searchTerm}, {displayName: searchTerm}]}, function (error, results){
         if(error){
           return console.error(error);
         } 
-
-        //not sure how to check if empty...
-        
-        if(results)
+        else if(results)
         {
           console.log("Results: ");
           console.log(results);
@@ -34,24 +31,9 @@ router.route("/restaurants")
           res.render('Restaurants',{title: pageTitle, restaurants: results});
         }
       });
-      //console.log(searchResults._collection.collection);  
-      //var restaurants = [{name: req.query.q}];
-      //res.render("Restaurants", {title: "test", restaurants: restaurants})
     }
     else
     {
-
-     /*var newRest = new Restaurant(); 
-      newRest.name = "savas";
-      newRest.status = 1;
-      newRest.location = "philly";
-      newRest.foodtype = ["pizza", "cheesesteak"];
-      console.log(newRest);
-      newRest.save();*/
-
-      
-     console.log("here");
-
       Restaurant.find(function (error, results){
         if(error){
           return console.error(error);
@@ -63,143 +45,23 @@ router.route("/restaurants")
           res.render('Restaurants',{title: pageTitle, restaurants: results});
         }
       });
-      //console.log(restaurants);
-      
     }
   });
 
 
 router.route("/restaurants/:restaurant").get(function(req,res) {
-
-  /*menuObject = {
-    restaurant: [
-      menus: [
-        categories: [
-          foodItems: []
-          mealItems: []
-          ]
-        ]
-      ]
-  };*/
-
-  menuObject = {};
-
-
   var restaurantName = req.params.restaurant;
   var pageTitle = 'weat: ' + restaurantName;
   console.log("restname", restaurantName);
 
   //grab restaurant
   Restaurant.findOne({name: restaurantName}, function (error, restaurant){
-    if(error)
-    {
+    if(error) {
       console.log(error);
     }
-    else
-    {
-      menuObject.restaurant = restaurant;
-      //console.log("menuObject - Step 1 - Restaurant", menuObject);
-
-      Menu.find({restaurantId: restaurant._id}).lean().exec(function (error, menus){
-        //menuObject.menus = [];
-        //console.log("menuObject - Step 2 - Add Array to Restaurant", menuObject);
-        
-        if(error){console.log(error);}
-        else
-        {
-          console.log("menu", menus);
-          //menuObject.menus.push(["test", "array"]);
-
-          menuObject.menus = menus
-          //console.log("menuObject - Step 2 - Add Menus", menuObject);
-          //loop through menus
-
-          i = 0;
-          fetchCategories(menus, menuObject, i, function(){
-            console.log("categories async loop done!");
-            j = 0;
-            console.log(menuObject);
-            res.render("restaurant-menu", {title: pageTitle, restaurant: menuObject.restaurant, menus: menuObject.menus});
-            /*fetchFoodItems(menus, menuObject, j, function(){
-              console.log("food items async loop done!")
-              console.log(menuObject.menus[0].categories);
-            });*/
-            //console.log(menuObject.menus[0]);
-          });
-        }        
-      });
+    else {
+      res.render("restaurant-menu", {title: pageTitle, restaurant: restaurant});
     }
-  });
-});
-
-function fetchCategories(menus, menuObject, counter, callback)
-{
-  
-  if(counter < menus.length)
-  {
-   // menus.forEach(function(menu){
-
-    console.log(counter);
-      Categories.find({_id: {$in: menus[counter].menuCategories}}).lean().exec(function (error, categories)
-      {
-
-          menuObject.menus[counter].categories = categories;
-          counter++;
-          fetchCategories(menus, menuObject, counter, callback);
-      });
-   
-   // });
-    
-  }
-  else
-  {
-    console.log("counter >= length -- leaving fetch categories function...");
-    callback();
-  }
-}
-
-/*
-    Not being used currently
-*/
-function fetchFoodItems(menus, menuObject, counter, callback)
-{
-  i = 0;
-
-    if(counter < menuObject.menus[i].categories.length)
-    {
-      FoodItems.find({_id: {$in: menuObject.menus[i].categories[counter].foodItems}}).lean().exec(function (error, foodItems){
-        menuObject.menus[i].categories[counter].foodItemsArray = foodItems;
-        counter++;
-        fetchFoodItems(menus, menuObject, counter, callback);
-      });
-    }
-    else
-    {
-      console.log("counter >= length -- leaving fetch food items function...");
-      callback();
-    }
-}
-
-router.route("/restaurants/fetchItemsIdArray").post(function(req,res,next) {
-  var catId = req.body.categoryId;
-  console.log(catId);
-  if(catId)
-  {
-    Categories.findOne({_id: catId}).lean().exec(function (error, categories)
-    {
-      res.send(categories.foodItems);
-    });  
-  }
-  
-});
-
-router.route("/restaurants/fetchFoodItems").post(function(req,res,next) {
-  console.log("Fetch Food Items");
-  var foodItemsIdArray = JSON.parse(req.body.foodItemsIdArray);
-  FoodItems.find({_id: {$in: foodItemsIdArray }}).lean().exec(function (error, foodItems)
-  {
-    console.log(req.session);
-    res.send(foodItems);
   });
 });
 

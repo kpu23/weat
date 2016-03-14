@@ -11,6 +11,7 @@ var accountSchema  = Schema({
     "lastName" : String,
     "userType" : String,
     "ethnicity" : String,
+    "phone" : String,
     "dob" : Date,
     "restaurantId" : ObjectId,
     "paymentDetailId" : ObjectId,

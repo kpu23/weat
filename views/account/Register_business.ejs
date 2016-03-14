@@ -14,11 +14,14 @@
                             <% if(error){ %>
                                 <span class="label label-danger"><%= message %></span>
                             <% } %>                    
-                            <input type="text" class="form-control" name="firstname" placeholder="First Name" required="" autofocus="" />                    
-                            <input type="text" class="form-control" name="lastname" placeholder="Last Name" required="" />                       
+                            <input type="text" class="form-control" name="firstName" placeholder="First Name" required="" autofocus="" />                    
+                            <input type="text" class="form-control" name="lastName" placeholder="Last Name" required="" />                       
                             <br>       
                             <input type="email" class="form-control" name="email" placeholder="Email" required=""/>                                                
                             <input type="password" class="form-control" name="password" placeholder="Password" required=""/> 
+                            <br>
+                            <input type="date" class="form-control" name="dob" placeholder="Date of Birth*" required/>
+                            <input type="phone" class="form-control" name="phone" placeholder="Phone*" required/>
                             <br>
                             <!-- <button id="register-next-btn" class="btn btn-lg btn-primary btn-block" name="Next">Next</button> -->
                         </div>                  
@@ -45,7 +48,9 @@
                             </div> 
                             <input type="text" class="form-control" name="location" placeholder="City" required="" autofocus="" />     
                             <input type="phone" class="form-control" name="phone" placeholder="Business Phone Number" required="" autofocus="" />
+                            <!--
                             <input type="text" class="form-control" name="siteURL" placeholder="Restaurant URL Name" required="" autofocus="" />
+                            -->
                             <input type="text" class="form-control" name="imgPath" placeholder="Logo Image Path" required="" autofocus="" />
                             <br>
                             <label>Description</label>

@@ -2,87 +2,57 @@
 
 <!-- Restaurants -->
 <!-- Page Content -->
-<div class="intro">
+<div id="live-feed" class="intro">
     <div class="intro-body">
         <div class="container">
 
         	<h1 class="page-header">Live Order Feed</h1>
 
-        	<table class="table" style="background-color:white;">
-    			<thead style="color:black;">
-      				<tr>
-        				<th>Order Time</th>
-        				<th>Name</th>
-        				<th>Phone</th>
-        				<th>Order</th>
-      				</tr>
-    			</thead>
-    
-    			<tbody style="color:black;">
-      				<tr>
-        				<td>9:53 am</td>
-        				<td>John Doe</td>
-        				<td>609-398-4959</td>
-        				<td>1 Burger with Fries</td>
-      				</tr>
-      				
-      				<tr>
-        				<td>9:53 am</td>
-        				<td>John Doe</td>
-        				<td>609-398-4959</td>
-        				<td>1 Burger with Fries</td>
-      				</tr>
-      				<tr>
-        				<td>9:53 am</td>
-        				<td>John Doe</td>
-        				<td>609-398-4959</td>
-        				<td>1 Burger with Fries</td>
-      				</tr>
-      				<tr>
-        				<td>9:53 am</td>
-        				<td>John Doe</td>
-        				<td>609-398-4959</td>
-        				<td>1 Burger with Fries</td>
-      				</tr>
-      				<tr>
-        				<td>9:53 am</td>
-        				<td>John Doe</td>
-        				<td>609-398-4959</td>
-        				<td>1 Burger with Fries</td>
-      				</tr>
-      				<tr>
-        				<td>9:53 am</td>
-        				<td>John Doe</td>
-        				<td>609-398-4959</td>
-        				<td>1 Burger with Fries</td>
-      				</tr>
-      				<tr>
-        				<td>9:53 am</td>
-        				<td>John Doe</td>
-        				<td>609-398-4959</td>
-        				<td>1 Burger with Fries</td>
-      				</tr>
-      				<tr>
-        				<td>9:53 am</td>
-        				<td>John Doe</td>
-        				<td>609-398-4959</td>
-        				<td>1 Burger with Fries</td>
-      				</tr>
-      				<tr>
-        				<td>9:53 am</td>
-        				<td>John Doe</td>
-        				<td>609-398-4959</td>
-        				<td>1 Burger with Fries</td>
-      				</tr>
-    			</tbody>
-  			</table>
-		</div>
-            
-                
+          <h4 class="row">
+                  <div class="col-md-3">Order Time</div>
+                  <div class="col-md-3">Name</div>
+                  <div class="col-md-3">Phone</div>
+                  <div class="col-md-3">Action</div> 
+          </h4> 
+          <div class="panel-group" data-bind="foreach: orderList">
 
-
-
+            <div class="panel panel-default" data-bind="click: fetchFoodItems">
+              <div data-toggle="collapse" class="panel-heading collapsed click-cursor" data-bind="attr: {href: '#collapse-'+$index()}" aria-expanded="false">
+                <div class="panel-title">
+                  <div class="row">
+                  <div class="col-md-3" data-bind="text: order.submitTime"></div>
+                  <div class="col-md-3" data-bind="text: order.user.firstName+' '+order.user.lastName"></div>
+                  <div class="col-md-3" data-bind="text: order.user.phone"></div>
+                  <div class="col-md-3">
+                    <button type="button" class="btn btn-success">Complete</button>
+                    <button type="button" class="btn btn-danger">Cancel</button>
+                  </div> 
+                  </div> 
                 </div>
+              </div>
+              <div class="panel-collapse collapse" data-bind="attr: {id: 'collapse-'+$index()}" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body">
+                  <table class="table table-striped">
+                      <thead>
+                          <tr>
+                              <th align="left" class="col-md-5">Item Name</th>
+                              <th align="left" class="col-md-5">Special Instructions</th>
+                          </tr>
+                      </thead>
+                      <tbody data-bind="foreach: foodItems">
+                          <tr>
+                              <td class="text-left" data-bind="text: name"></td>
+                              <td class="text-left" data-bind="text: instructions"></td>
+                          </tr>
+                      </tbody>
+                  </table>                 
+                </div>
+              </div>
             </div>
-        </div>
-    
+          </div>
+		    </div>
+      </div>
+    </div>
+</div>
+
+<script src="/scripts/admin-live-feed.js"></script>

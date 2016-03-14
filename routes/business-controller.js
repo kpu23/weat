@@ -6,6 +6,7 @@ var router = express.Router();
 var Menu = require('../models/menu');
 var Category = require('../models/menu-category');
 var FoodItem = require('../models/food-item');
+var Order = require('../models/order');
 
 /* My restaurants page */
 router.get('/admin', function(req, res, next) {
@@ -204,6 +205,7 @@ router.post('/admin/fetchFoodItems', function(req, res){
 			if(error){
 				console.log(error);
 			} else {
+                console.log(foodItems);
 				res.send(foodItems);
 			}
 		});
@@ -211,6 +213,28 @@ router.post('/admin/fetchFoodItems', function(req, res){
 		console.log("returning null");
 		res.send(null);
 	}
+});
+
+router.get('/admin/fetchLiveOrders', function(req, res){
+    console.log('fetch orders ', req.session);
+    if(req.session){
+        var restaurantId = req.session.user.restaurantId;
+        if(restaurantId) {
+            console.log('here1');
+            Order.find(function (error, orders){
+                if(error){
+                    console.log(error);
+                    res.send(null);
+                } else {
+                    console.log("oorders", orders);
+                    res.send(orders);
+                }
+            });
+        } else {
+            res.send(null);
+        }
+    }
+    
 });
 
 module.exports = router;

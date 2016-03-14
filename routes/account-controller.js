@@ -30,6 +30,7 @@ router.route("/register")
               account.lastName = req.body.lastName;
               account.email = req.body.email;
               account.userType = "customer";
+              account.phone = req.body.phone;
               account.dob = req.body.dob;
               account.ethnicity = req.body.ethnicity;
               // Hash the password using SHA1 algorithm.
@@ -83,6 +84,7 @@ router.route("/register_business")
               account.firstName = req.body.firstName;
               account.lastName = req.body.lastName;
               account.email = req.body.email;
+              account.phone = req.body.phone;
               account.userType = "business";
               account.dob = req.body.dob;
               
@@ -90,7 +92,7 @@ router.route("/register_business")
               restaurant.type = req.body.type;
               restaurant.location = req.body.location;
               restaurant.phone = req.body.phone;
-              restaurant.siteURL = req.body.siteURL;
+              //restaurant.siteURL = req.body.siteURL;
               restaurant.status = req.body.status;
               restaurant.longDescription = req.body.longDescription;
               restaurant.imgPath = req.body.imgPath;

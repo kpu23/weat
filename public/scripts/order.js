@@ -1,8 +1,15 @@
 var OrderModel = function () {
     var self = this;
     self.items = ko.observableArray();
-    self.getOrderData = function () {
-
+    self.fetchOrderData = function () {
+        $.get("/getOrderData", function(result){
+            console.log(result);
+            if (result.error) {
+                alert('Error occurred. Please contact us at help@weat.com.')
+            } else {
+                self.items(result);
+            }
+        });
     };
     // Members
     self.submitOrder = function () {
@@ -27,3 +34,10 @@ var OrderModel = function () {
         });
     };
 };
+
+$(document).ready(function(){
+    var orderModel = new OrderModel();
+    orderModel.fetchOrderData();
+    ko.applyBindings(orderModel, document.getElementById('my-order'));
+});
+

@@ -7,8 +7,8 @@ var FoodItem = require("../models/food-item");
 router.get('/order', function(req, res) {
     res.render("Order", {title: "weat: your order"});
 });
-router.get('/getOrderData', function () {
-    var response = {}
+router.get('/getOrderData', function (req, res) {
+    var response = {};
     if(req.session.order != null) {
         //grab items
         FoodItem.find({_id: {$in: req.session.order.itemIds}}, function (error, items){

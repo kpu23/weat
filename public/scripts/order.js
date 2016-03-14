@@ -1,6 +1,7 @@
 var OrderModel = function () {
     var self = this;
     self.items = ko.observableArray();
+    self.paymentInfo = ko.observable();
     self.fetchOrderData = function () {
         $.get("/getOrderData", function(result){
             console.log(result);
@@ -25,30 +26,32 @@ var OrderModel = function () {
     // Members
     self.submitOrder = function () {
         // construct data to send
+        var ids = [];
+        self.items().forEach(function(item) {
+            ids.push(item._id);
+        });
         var orderData = {
-            'userId': localStorage.userId,
-            'paymentMethodId': localStorage.paymentMethodId,
-            'orderItemIds': localStorage.orderItemIds
+            'paymentMethodId': '56c503be9bc2f4cc1396845e',
+            'itemIds': ids
         };
-        $.ajax({
-            url: '/submitOrder',
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(orderData),
-            success: function (response) {
-                console.log('Success!');
-                console.log(response);
-            },
-            error: function (response) {
-                console.log(response);
+        console.log(ko.toJSON(orderData));
+        $.post('/submitOrder',{order: ko.toJSON(orderData)}, function(response) {
+            console.log(response);
+            if (!response.error) {
+                $('#my-order').hide();
+                $('#thank-you').fadeIn();
             }
         });
+    };
+    self.fetchPaymentInfo = function () {
+
     };
 };
 
 $(document).ready(function(){
     var orderModel = new OrderModel();
     orderModel.fetchOrderData();
+    orderModel.fetchPaymentInfo();
     ko.applyBindings(orderModel, document.getElementById('my-order'));
 });
 

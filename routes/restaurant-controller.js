@@ -245,7 +245,6 @@ router.route("/restaurants/AddItemToOrder").post(function(req,res,next) {
       else
       {
         var order = new Order();
-        order.userId = req.session.user._id;
         order.restaurantId = restaurantId;
         for(var i = 0; i < quantity; i++)
         {

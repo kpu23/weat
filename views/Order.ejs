@@ -2,7 +2,7 @@
 
 <!-- Order -->
 <div class="weat-content">
-    <div id="my-order" class = "container">
+    <div id="my-order" class="container">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3>My Order</h3>
@@ -33,8 +33,15 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn btn-info">Complete Order</button>
+                <button class="btn btn-info" data-bind="click: submitOrder">Submit Order</button>
             </div>
+        </div>
+    </div>
+    <div id="thank-you" class="container" style="display: none;">
+        <div class="alert alert-success" role="alert">
+            <i class="fa fa-smile-o"></i>
+            <span class="sr-only">Success:</span>
+            Thank you for your business! Delicious food is in your future.
         </div>
     </div>
 </div>

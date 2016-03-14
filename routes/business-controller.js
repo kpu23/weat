@@ -151,6 +151,9 @@ router.post('/admin/createFoodItem', function(req, res) {
     foodItem.name = data.name;
     foodItem.price = data.price;
     foodItem.description = data.description;
+    if (!data.imgPath) {
+      data.imgPath = '/images/placeholder-item-img.png';
+    }
     foodItem.imgPath = data.imgPath;
     foodItem.save(function(err, result) {
         if (err) {

@@ -2,6 +2,7 @@ var OrderModel = function () {
     var self = this;
     self.items = ko.observableArray();
     self.paymentInfo = ko.observable();
+    self.orderTotal = ko.observable(0);
     self.fetchOrderData = function () {
         $.get("/getOrderData", function(result){
             console.log(result);
@@ -13,12 +14,12 @@ var OrderModel = function () {
                 result.items.forEach(function (dbItem) {
                    result.instructions.forEach(function(item) {
                         if(item.itemId == dbItem._id) {
-                            console.log('here');
                             dbItem.instructions = item.instructions;
-                            console.log(dbItem);
                             itemsWithInstructions.push(dbItem);
                         }
                     });
+                    console.log(dbItem);
+                    self.orderTotal(self.orderTotal()+ dbItem.price) ;
                 });
                 self.items(itemsWithInstructions);
         });

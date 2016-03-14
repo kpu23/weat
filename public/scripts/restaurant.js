@@ -45,22 +45,19 @@ var itemsModel = function(){
     if($("#"+categoryId).children(".food-items").hasClass("open"))
     {
       $("#"+categoryId).children(".food-items").toggleClass("open");
-      $("#"+categoryId).children(".food-items").hide(); 
+      $("#"+categoryId).children(".food-items").slideUp(); 
     }
     else
     {
       $("#"+categoryId).children(".food-items").toggleClass("open");
-      $("#"+categoryId).children(".food-items").show(); 
+      $("#"+categoryId).children(".food-items").slideDown(); 
       
       if(!$("#"+categoryId).children(".food-items").hasClass("data-retrieved"))
       {
-        console.log(categoryId);
         $.post("/restaurants/fetchItemsIdArray", {categoryId: categoryId}, function(foodItemsIdArray){
           if(foodItemsIdArray)
           {
-            console.log(foodItemsIdArray);
             $.post("/restaurants/fetchFoodItems", {foodItemsIdArray: JSON.stringify(foodItemsIdArray)}, function(foodItems){
-              console.log(foodItems);
               self.items(foodItems);
 
               //Set flag so we don't make AJAX call multiple times
@@ -73,25 +70,28 @@ var itemsModel = function(){
   }
 
   self.clickItem = function(item){
-    console.log(item);
     $("#modal-item-name").text(item.name);
     $("#modal-item-name").data("item-guid", item._id);
     $("#modal-item-name").data("restaurant-guid", item.restaurantId);
-    console.log($("#modal-item-name").data("item-guid"));
 
-
-    //var itemModel = new itemsModel();
-    //itemModel.item = item;
-    //ko.applyBindings(itemModel, document.getElementById("show-food-item-options"));
-    //console.log(item.foodOptions);
+    //Fetch Item Options: 
     /*$.post("/restaurants/fetchFoodItemOptions", {foodItemsIdArray: JSON.stringify(foodItemsIdArray)}, function(foodItems){
           console.log(foodItems);
           self.items(foodItems);
         });*/
+
     $("#item-quantity").val(1);
     $("#special-instructions-text").val("");
     $("#show-food-item-options").modal("show");
   }
+
+  /*self.br = function(a){
+    alert(a);
+  }
+
+  self.aa = function(a){
+    alert(a);
+  }*/
 }
 
 $(document).ready(function () {
@@ -149,5 +149,9 @@ function addItemToOrder(itemId, restaurantId, quantity, instructions)
   $.post("/restaurants/AddItemToOrder", {itemId: itemId, restaurantId: restaurantId, quantity: quantity, instructions: instructions}, function(response){
       console.log(response.message);
       $("#show-food-item-options").modal("hide");
+
+      //Put text into & Show thank-you banner
+      $("#notify-text").text("Your item has been added!");
+      $("#tnotify").fadeIn("slow").delay(1600).fadeOut("slow");
   });
 }

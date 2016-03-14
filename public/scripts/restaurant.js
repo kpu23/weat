@@ -56,7 +56,6 @@ function CategoryModel(category){
   }
 }
 
-
 function FoodItemModel(item){
   var self = this;
   self.id = ko.observable();

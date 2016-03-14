@@ -36,6 +36,9 @@ h6 {
     font-size: 18px;
 }
 
+.menu-item {
+    height: 350px;
+}
 .menu {
     background: #1b6d85;
     color: #000;

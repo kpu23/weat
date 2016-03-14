@@ -130,20 +130,6 @@ var MenuViewModel = function() {
       }
     }
     $("#item-quantity").val(amount);
-  }
-  self.showFoodItems = function(category){
-    console.log(category.id())
-    var categoryId = category.id();
-    if($("#"+categoryId).hasClass("open"))
-    {
-      $("#"+categoryId).toggleClass("open");
-      $("#"+categoryId).slideUp();
-    }
-    else
-    {
-      $("#"+categoryId).toggleClass("open");
-      $("#"+categoryId).slideDown();
-    }
   };
 };
 $(document).ready(function(){

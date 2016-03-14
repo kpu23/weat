@@ -72,8 +72,12 @@ h6 {
     rgba(0, 0, 0, 0.1) inset;
 }
 
-.modal, .panel {
+.modal, .panel, .panel > a {
     color: #000;
+}
+
+.panel-heading {
+    cursor: pointer;
 }
 
 .black_text {

@@ -22,27 +22,30 @@
             <div class="row" data-bind="foreach: menus" style="display: none;" id="all-menus">
                 <div class="col-lg-12">
                     <h1 class="page-header" style="text-align: center;" data-bind="text: name"></h1>
-                    <div class="row" data-bind="foreach: categories">
-                        <!-- Categories -->
-                        <div class="menu-category col-md-12" data-bind="click: $root.showFoodItems">
-                            <h2 data-bind="text: name" class="category-name"></h2>
-                            <span class="category-description" data-bind="text:name"></span>
-                            <hr>
-
-                            <!-- Items -->
-                            <div class="food-items row" data-bind="attr: {id: id}" style="display: none;">
-                                <div data-bind="foreach: foodItems">
-                                    <div class="menu-item col-md-4" data-bind="click: $root.clickItem, attr:{id: id}">
-                                        <h4 data-bind="text: name"></h4>
-                                        <h4 data-bind="text: price"></h4>
-                                        <!-- ko if: imgPath -->
-                                        <img width="300" height="200" data-bind="attr:{src: imgPath}">
-                                        <!-- /ko -->
-                                        <h4 style="margin:10px;" data-bind="text: description"></h4>
+                    <div class="row">
+                        <div class="col-md-12" data-bind="foreach: categories">
+                            <div class="panel-group">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading" data-toggle="collapse" data-bind="attr: {href: '#' + id()}">
+                                        <h3 data-bind="text: name"></h3>
+                                        <span class="category-description" data-bind="text:name"></span>
+                                    </div>
+                                    <div data-bind="attr: {id: id}" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div data-bind="foreach: foodItems">
+                                                <div class="menu-item col-md-4" data-bind="click: $root.clickItem, attr:{id: id}">
+                                                    <h4 data-bind="text: name"></h4>
+                                                    <h4 data-bind="text: price"></h4>
+                                                    <!-- ko if: imgPath -->
+                                                    <img width="300" height="200" data-bind="attr:{src: imgPath}">
+                                                    <!-- /ko -->
+                                                    <h4 style="margin:10px;" data-bind="text: description"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

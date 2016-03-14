@@ -22,7 +22,7 @@ var FoodItem = {
     "price" : '',
     "available" : '',
     "description" : '',
-    "imagePath" : '',
+    "imgPath" : '',
     "averagePrepTime" : '', // in minutes
     "restaurantId" : restaurantId
 };

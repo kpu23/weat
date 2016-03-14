@@ -39,7 +39,9 @@
                                                 <div class="menu-item col-md-4" data-bind="click: $parent.clickItem, attr:{id: _id}">
                                                     <h4 data-bind="text: name"></h4>
                                                     <h4 data-bind="text: price"></h4>
+                                                    <!-- ko if: imgPath -->
                                                     <img width="300" height="200" data-bind="attr:{src: imgPath}">
+                                                    <!-- /ko -->
                                                     <h4 style="margin:10px;" data-bind="text: description"></h4>
                                                 </div>
                                             </div> 

@@ -1,29 +1,27 @@
 var express = require('express');
 var router = express.Router();
 var Order = require("../models/order");
-var FoodItems = require("../models/food-item");
-
-
-
+var FoodItem = require("../models/food-item");
 
 /* GET Order */
 router.get('/order', function(req, res) {
-    if(req.session.order != null)
-    {
+    res.render("Order", {title: "weat: your order"});
+});
+router.get('/getOrderData', function () {
+    var response = {}
+    if(req.session.order != null) {
         //grab items
-        console.log(req.session.order.itemIds);
-
-        FoodItems.find({_id: {$in: req.session.order.itemIds}}, function (error, items){
+        FoodItem.find({_id: {$in: req.session.order.itemIds}}, function (error, items){
             if(error){
                 console.log(error);
+                response = {error: true, message: 'Error finding food items associated with order.'};
             }
             else {
-                console.log(items);    
-                res.render("Order", { items: items, title: "weat: your order"});
+                console.log(items);
+                res.send(items);
             }
         });
     }
-    
 });
 
 /* POST - Submit Order */

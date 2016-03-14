@@ -151,6 +151,7 @@ router.post('/admin/createFoodItem', function(req, res) {
     foodItem.name = data.name;
     foodItem.price = data.price;
     foodItem.description = data.description;
+    foodItem.imgPath = data.imgPath;
     foodItem.save(function(err, result) {
         if (err) {
             response = {"error": true, "message": "Error adding data"};

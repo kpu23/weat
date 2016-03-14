@@ -18,7 +18,7 @@ router.get('/getOrderData', function (req, res) {
                 res.send(response);
             }
             else {
-                response = {items: items, instructions: req.session.order.items}
+                response = {items: items, instructions: req.session.order.items};
                 res.send(response);
             }
         });
@@ -47,7 +47,7 @@ router.post('/submitOrder', function(req, res) {
                 response = {"error": true, "message": "Error submitting order."};
             } else {
                 response = {"error": false, "message": "Order submitted!"};
-                //TODO clear out session
+                req.session.order = null;
             }
             res.json(response);
         });

@@ -9,7 +9,6 @@ var FoodItem = require('../models/food-item');
 
 /* My restaurants page */
 router.get('/admin', function(req, res, next) {
-	//TODO we should handle renderings for customer home page, admin home page, and guest home page in the "/" (root) route
     res.render('admin_home',{title: 'weat: home'});
 });
 

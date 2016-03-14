@@ -1,4 +1,4 @@
-var restaurantId = "56c503be9bc2f4cc1396845e"; //HACK: fetch from logged-in account
+//var restaurantId = "56c503be9bc2f4cc1396845e"; //HACK: fetch from logged-in account (Wahoos)
 
 var MenuManagementModel = function() {
     var self = this;
@@ -11,7 +11,7 @@ var MenuManagementModel = function() {
     self.currentMenu = ko.observable();
     self.currentCategory = ko.observable();
     self.fetchMenus = function() {
-        $.post("/admin/fetchMenus", {restaurantId: restaurantId}, function(menus){
+        $.post("/admin/fetchMenus", function(menus){
             $('#menu-manager').fadeIn();
             menus.forEach(function (menu) {
                 self.menus.push(new MenuModel(menu));
@@ -190,7 +190,7 @@ function FoodItemModel(item){
     self.description = ko.observable();
     self.imgPath = ko.observable();
     self.averagePrepTime = ko.observable();
-    self.restaurantId = restaurantId;
+    //self.restaurantId = restaurantId;
     // Initialize
     if (item) {
         self.id(item._id);
@@ -200,6 +200,6 @@ function FoodItemModel(item){
         self.description(item.description);
         self.imgPath = item.imgPath;
         self.averagePrepTime = item.averagePrepTime;
-        self.restaurantId = item.restaurantId;
+        //self.restaurantId = item.restaurantId;
     }
 }

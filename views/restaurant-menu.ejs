@@ -34,7 +34,7 @@
                                         <hr>
 
                                         <!-- Items -->
-                                        <div class="row" id="food-items-<%=category._id%>">
+                                        <div class="food-items row" id="food-items-<%=category._id%>">
                                             <div data-bind="foreach: items">
                                                 <div class="menu-item col-md-4" data-bind="click: $parent.clickItem, attr:{id: _id}">
                                                     <h4 data-bind="text: name"></h4>
@@ -68,7 +68,7 @@
                                 <h4 id="modal-item-name" data-item-guid="" data-restaurant-guid=""></h4>
                                 <form>
                                     <label>Quantity:</label>
-                                    <div class="quantity">
+                                    <div class="quantity-picker">
                                         <div class="input-group">
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-danger btn-number" data-type="minus" >
@@ -104,10 +104,20 @@
 </div>
 
 <style>
-.quantity{
+.quantity-picker{
     width: 150px;
+    margin-right: auto;
+    margin-left: auto;
 }
-
+.category-name{
+    cursor: pointer;
+}
+.menu-item{
+    cursor: pointer;   
+}
+.special-instructions.input.placeholder{
+    text-align:center;
+}
 </style>
 
 

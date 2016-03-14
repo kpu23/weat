@@ -4,7 +4,7 @@
 'use strict';
 
 // Order Model
-var OrderModel = function () {
+/*var OrderModel = function () {
   var self = this;
   // Members
   self.addOrderItem = function () {
@@ -33,7 +33,7 @@ var OrderModel = function () {
       }
     });
   };
-};
+};*/
 
 var itemsModel = function(){
   var self = this;
@@ -41,17 +41,35 @@ var itemsModel = function(){
   self.item = ko.observable();
 
   self.clickCategory = function(categoryId){
-    console.log(categoryId);
-    $.post("/restaurants/fetchItemsIdArray", {categoryId: categoryId}, function(foodItemsIdArray){
-      if(foodItemsIdArray)
+    
+    if($("#"+categoryId).children(".food-items").hasClass("open"))
+    {
+      $("#"+categoryId).children(".food-items").toggleClass("open");
+      $("#"+categoryId).children(".food-items").hide(); 
+    }
+    else
+    {
+      $("#"+categoryId).children(".food-items").toggleClass("open");
+      $("#"+categoryId).children(".food-items").show(); 
+      
+      if(!$("#"+categoryId).children(".food-items").hasClass("data-retrieved"))
       {
-        console.log(foodItemsIdArray);
-        $.post("/restaurants/fetchFoodItems", {foodItemsIdArray: JSON.stringify(foodItemsIdArray)}, function(foodItems){
-          console.log(foodItems);
-          self.items(foodItems);
+        console.log(categoryId);
+        $.post("/restaurants/fetchItemsIdArray", {categoryId: categoryId}, function(foodItemsIdArray){
+          if(foodItemsIdArray)
+          {
+            console.log(foodItemsIdArray);
+            $.post("/restaurants/fetchFoodItems", {foodItemsIdArray: JSON.stringify(foodItemsIdArray)}, function(foodItems){
+              console.log(foodItems);
+              self.items(foodItems);
+
+              //Set flag so we don't make AJAX call multiple times
+              $("#"+categoryId).children(".food-items").addClass("data-retrieved");
+            });
+          }
         });
       }
-    });
+    }
   }
 
   self.clickItem = function(item){
@@ -83,8 +101,8 @@ $(document).ready(function () {
   //orderModel.submitOrder();
 
   $('.menu-category').each (function () {    
-  var itemModel = new itemsModel();
-  ko.applyBindings(itemModel, this);
+    var itemModel = new itemsModel();
+    ko.applyBindings(itemModel, this);
   });
 
   $('.btn-number').click(function(){

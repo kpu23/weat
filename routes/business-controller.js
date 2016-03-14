@@ -32,11 +32,11 @@ router.post('/admin/fetchMenus', function(req, res, next){
 
 //Fetch menus, fetch categories, fetch items
 
-	if(req.body.restaurantId)
+	if(req.session.user.restaurantId)
 	{
 		//_id: req.body.restaurantId
 		//name: "Default"
-		Menu.find({restaurantId: req.body.restaurantId}, function (error, menu){
+		Menu.find({restaurantId: req.session.user.restaurantId}, function (error, menu){
 			if(error){
                 console.log(error);
             }
@@ -56,7 +56,7 @@ router.post('/admin/createMenu', function(req, res) {
 	var menu = new Menu();
 	menu.name = data.name;
 	menu.isPublic = data.isPublic;
-	menu.restaurantId = data.restaurantId;
+	menu.restaurantId = req.session.user.restaurantId;
 	menu.menuCategories = data.categories;
 
 	menu.save(function(err, result) {

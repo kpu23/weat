@@ -19,7 +19,7 @@ router.route("/restaurants")
       console.log("get request: " + req.query.q);
       var searchTerm = req.query.q.toLowerCase();
 
-      Restaurant.find( {status: true, $or: [{name: searchTerm}, {foodtype: searchTerm}, {displayName: searchTerm}]}, function (error, results){
+      Restaurant.find( {$or: [{name: searchTerm}, {foodtype: searchTerm}, {displayName: searchTerm}]}, function (error, results){
         if(error){
           return console.error(error);
         } 

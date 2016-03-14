@@ -3,7 +3,7 @@ var router = express.Router();
 var Order = require("../models/order");
 var FoodItem = require("../models/food-item");
 
-/* GET Order */
+/* GET Order Page */
 router.get('/order', function(req, res) {
     res.render("Order", {title: "weat: your order"});
 });
@@ -17,8 +17,8 @@ router.get('/getOrderData', function (req, res) {
                 response = {error: true, message: 'Error finding food items associated with order.'};
             }
             else {
-                console.log(items);
-                res.send(items);
+                var response = {items: items, instructions: req.session.order.items}
+                res.send(response);
             }
         });
     }

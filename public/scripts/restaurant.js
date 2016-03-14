@@ -2,7 +2,8 @@
  * Created by Ben on 2/24/2016.
  */
 'use strict';
-var restaurantId = "56c503be9bc2f4cc1396845e"; //HACK: fetch from logged-in account
+//var restaurantId = "56c503be9bc2f4cc1396845e"; //HACK: fetch from logged-in account (Wahoos)
+var restaurantId = $("#restaurant-id").data("restaurant-id");
 
 function MenuModel(menu){
   var self = this;

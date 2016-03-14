@@ -31,12 +31,21 @@ router.get('/marketing_analytics', function(req, res, next) {
 router.post('/admin/fetchMenus', function(req, res, next){
 
 //Fetch menus, fetch categories, fetch items
+    if(req.body.restaurantId)
+    {
+        var restaurantId = req.body.restaurantId
+    }
+    else if(req.session.user.restaurantId)
+    {
+        var restaurantId = req.session.user.restaurantId
+    }
 
-	if(req.session.user.restaurantId)
+	if(restaurantId)
 	{
+        console.log(restaurantId);
 		//_id: req.body.restaurantId
 		//name: "Default"
-		Menu.find({restaurantId: req.session.user.restaurantId}, function (error, menu){
+		Menu.find({restaurantId: restaurantId}, function (error, menu){
 			if(error){
                 console.log(error);
             }

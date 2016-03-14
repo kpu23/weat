@@ -23,10 +23,7 @@ router.route("/restaurants")
         if(error){
           return console.error(error);
         } 
-
-        //not sure how to check if empty...
-        
-        if(results)
+        else if(results)
         {
           console.log("Results: ");
           console.log(results);
@@ -34,24 +31,9 @@ router.route("/restaurants")
           res.render('Restaurants',{title: pageTitle, restaurants: results});
         }
       });
-      //console.log(searchResults._collection.collection);  
-      //var restaurants = [{name: req.query.q}];
-      //res.render("Restaurants", {title: "test", restaurants: restaurants})
     }
     else
     {
-
-     /*var newRest = new Restaurant(); 
-      newRest.name = "savas";
-      newRest.status = 1;
-      newRest.location = "philly";
-      newRest.foodtype = ["pizza", "cheesesteak"];
-      console.log(newRest);
-      newRest.save();*/
-
-      
-     console.log("here");
-
       Restaurant.find(function (error, results){
         if(error){
           return console.error(error);
@@ -63,8 +45,6 @@ router.route("/restaurants")
           res.render('Restaurants',{title: pageTitle, restaurants: results});
         }
       });
-      //console.log(restaurants);
-      
     }
   });
 

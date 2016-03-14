@@ -3,8 +3,18 @@
 <div class="weat-content" style="display:list-item;">
 
     <div class="container" id="menu-manager" style="display: none;">
-        <div id="menu-editor">
-            <h1 style="margin:10px;">Your Menus</h1>
+        <h1>
+            <a href="" data-bind="click: showAllMenus">  All Menus </a>
+            <a href="" data-bind="click: showCurrentMenu, if: currentMenuName">
+                <i class="fa fa-angle-right"></i>
+                <span data-bind="text: currentMenuName"></span>
+            </a>
+            <a href="#" data-bind="if: currentCategoryName">
+                <i class="fa fa-angle-right"></i>
+                <span data-bind="text: currentCategoryName"></span>
+            </a>
+        </h1>
+        <div id="all-menus">
             <div class="row">
                 <div data-bind="foreach: menus" >
                     <a href="#" data-bind="click: $root.showMenuEditor">
@@ -21,8 +31,8 @@
             </div>
         </div>
         <br />
-        <div id="category-manager" data-bind="with: currentMenu">
-            <h2 ><span data-bind="text: name"></span> <i class="fa fa-cog" data-toggle="modal" data-target="#edit-menu-window"></i></h2>
+        <div id="all-categories" data-bind="with: currentMenu">
+            <h2 ><span data-bind="text: name"></span> <a href="#"><i class="fa fa-cog" data-toggle="modal" data-target="#edit-menu-window"></i></a></h2>
             <div class="row">
                 <div data-bind="foreach: categories" >
                     <a href="#" data-bind="click: $root.showCategoryEditor">
@@ -42,7 +52,7 @@
         <br />
 
         <div id="food-item-manager" data-bind="with: currentCategory">
-            <h2 ><span data-bind="text: name"></span> <i class="fa fa-cog"></i></h2>
+            <h2 ><span data-bind="text: name"></span> <a href="#"><i class="fa fa-cog"></i></a></h2>
             <div class="row">
                 <div data-bind="foreach: foodItems" >
                     <a href="#">

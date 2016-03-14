@@ -44,7 +44,7 @@ var OrderModel = function () {
         });
     };
     self.fetchPaymentInfo = function () {
-
+        //TODO
     };
 };
 

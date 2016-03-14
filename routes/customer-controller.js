@@ -1,9 +1,32 @@
 var express = require('express');
 var router = express.Router();
 var Order = require("../models/order");
+var FoodItems = require("../models/food-item");
 
 
-/* GET Menu */
+
+
+/* GET Order */
+router.get('/order', function(req, res) {
+    if(req.session.order != null)
+    {
+        //grab items
+        console.log(req.session.order.itemIds);
+
+        FoodItems.find({_id: {$in: req.session.order.itemIds}}, function (error, items){
+            if(error){
+                console.log(error);
+            }
+            else {
+                console.log(items);    
+                res.render("Order", { items: items, title: "weat: your order"});
+            }
+        });
+    }
+    
+});
+
+/* POST - Submit Order */
 router.post('/submitOrder', function(req, res) {
     console.log(req.body);
     var response = {};

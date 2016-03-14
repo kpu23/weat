@@ -210,6 +210,9 @@ router.route("/restaurants/AddItemToOrder").post(function(req,res,next) {
 
   var itemId = req.body.itemId;
   var restaurantId = req.body.restaurantId;
+  var quantity = req.body.quantity;
+  var instructions = req.body.instructions;
+
 
   if(itemId && restaurantId)
   {
@@ -223,7 +226,12 @@ router.route("/restaurants/AddItemToOrder").post(function(req,res,next) {
         }
         else
         {
-          req.session.order.items.push(itemId);
+          for(var i = 0; i < quantity; i++)
+          {
+            req.session.order.itemIds.push(itemId);
+            req.session.order.items.push({itemId: itemId, instructions: instructions});
+          }
+          
           var response = {success: true, message: "item added to existing order"};
 
           console.log(req.session);
@@ -237,9 +245,14 @@ router.route("/restaurants/AddItemToOrder").post(function(req,res,next) {
         var order = new Order();
         order.userId = req.session.user._id;
         order.restaurantId = restaurantId;
-        order.items = []; order.items.push(itemId);
+        for(var i = 0; i < quantity; i++)
+        {
+          order.itemIds.push(itemId);
+          order.items.push({itemId: itemId, instructions: instructions});
+        }
         req.session.order = order;
         var response = {success: true, message: "item added to new order"};
+        console.log(req.session);
         res.send(response);
       }
       

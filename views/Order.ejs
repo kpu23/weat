@@ -1,0 +1,18 @@
+<% include ./layouts/layout %>
+
+<!-- Order -->
+<div class="intro">
+    <div class="intro-body">
+        <div class = "container">
+            <div class="wrapper">
+                <% if (session.order) { %>
+                    <p> Your Order: </p>
+                <% } else { %>
+                <p> You don't have any open orders! </p>
+                <% } %>   
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/scripts/order.js"></script>

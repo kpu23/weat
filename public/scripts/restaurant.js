@@ -70,6 +70,8 @@ var itemsModel = function(){
           console.log(foodItems);
           self.items(foodItems);
         });*/
+    $("#item-quantity").val(1);
+    $("#special-instructions-text").val("");
     $("#show-food-item-options").modal("show");
   }
 }
@@ -109,9 +111,11 @@ $(document).ready(function () {
   $("#add-item").click(function(){
     var itemId = $("#modal-item-name").data("item-guid");
     var restaurantId = $("#modal-item-name").data("restaurant-guid");
+    var quantity = $("#item-quantity").val();
+    var instructions = $("#special-instructions-text").val();
 
     //Add item to order
-    addItemToOrder(itemId, restaurantId);
+    addItemToOrder(itemId, restaurantId, quantity, instructions);
   });
 
   /*$('.menu-item').click(function(){
@@ -121,10 +125,10 @@ $(document).ready(function () {
 
 });
 
-function addItemToOrder(itemId, restaurantId)
+function addItemToOrder(itemId, restaurantId, quantity, instructions)
 {
 
-  $.post("/restaurants/AddItemToOrder", {itemId: itemId, restaurantId: restaurantId}, function(response){
+  $.post("/restaurants/AddItemToOrder", {itemId: itemId, restaurantId: restaurantId, quantity: quantity, instructions: instructions}, function(response){
       console.log(response.message);
       $("#show-food-item-options").modal("hide");
   });

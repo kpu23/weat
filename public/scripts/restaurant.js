@@ -2,156 +2,152 @@
  * Created by Ben on 2/24/2016.
  */
 'use strict';
+var restaurantId = "56c503be9bc2f4cc1396845e"; //HACK: fetch from logged-in account
 
-// Order Model
-/*var OrderModel = function () {
+function MenuModel(menu){
   var self = this;
-  // Members
-  self.addOrderItem = function () {
-    localStorage.setItem('orderItemIds', ['56cb96b87c9a80727f72d72e', '56cb96b87c9a80727f72d72e']);
-    localStorage.setItem('userId', '56cb96b87c9a80727f72d72e');
-    localStorage.setItem('paymentMethodId', '56cb96b87c9a80727f72d72e');
-  };
-  self.submitOrder = function () {
-    // construct data to send
-    var orderData = {
-      'userId': localStorage.userId,
-      'paymentMethodId': localStorage.paymentMethodId,
-      'orderItemIds': localStorage.orderItemIds
-    };
-    $.ajax({
-      url: '/submitOrder',
-      type: 'POST',
-      contentType: 'application/json; charset=utf-8',
-      data: JSON.stringify(orderData),
-      success: function (response) {
-        console.log('Success!');
-        console.log(response);
-      },
-      error: function (response) {
-        console.log(response);
-      }
+  self.id = ko.observable();
+  self.name = ko.observable();
+  self.isPublic = ko.observable();
+  self.restaurantId = ko.observable();
+  self.categories = ko.observableArray();
+  self.fetchCategories = function(ids) {
+    $.post("/admin/fetchCategories", {categoryIds: JSON.stringify(ids)}, function(categories){
+      categories.forEach(function (category) {
+        self.categories.push(new CategoryModel(category));
+      })
     });
   };
-};*/
-
-var itemsModel = function(){
-  var self = this;
-  self.items = ko.observableArray();
-  self.item = ko.observable();
-
-  self.clickCategory = function(categoryId){
-    
-    if($("#"+categoryId).children(".food-items").hasClass("open"))
-    {
-      $("#"+categoryId).children(".food-items").toggleClass("open");
-      $("#"+categoryId).children(".food-items").slideUp(); 
-    }
-    else
-    {
-      $("#"+categoryId).children(".food-items").toggleClass("open");
-      $("#"+categoryId).children(".food-items").slideDown(); 
-      
-      if(!$("#"+categoryId).children(".food-items").hasClass("data-retrieved"))
-      {
-        $.post("/restaurants/fetchItemsIdArray", {categoryId: categoryId}, function(foodItemsIdArray){
-          if(foodItemsIdArray)
-          {
-            $.post("/restaurants/fetchFoodItems", {foodItemsIdArray: JSON.stringify(foodItemsIdArray)}, function(foodItems){
-              self.items(foodItems);
-
-              //Set flag so we don't make AJAX call multiple times
-              $("#"+categoryId).children(".food-items").addClass("data-retrieved");
-            });
-          }
-        });
-      }
+  // Initialize
+  if (menu) {
+    self.id(menu._id);
+    self.name(menu.name);
+    self.isPublic(menu.isPublic);
+    self.restaurantId(menu.restaurantId);
+    if (menu.menuCategories.length > 0) {
+      self.fetchCategories(menu.menuCategories);
     }
   }
-
-  self.clickItem = function(item){
-    $("#modal-item-name").text(item.name);
-    $("#modal-item-name").data("item-guid", item._id);
-    $("#modal-item-name").data("restaurant-guid", item.restaurantId);
-
-    //Fetch Item Options: 
-    /*$.post("/restaurants/fetchFoodItemOptions", {foodItemsIdArray: JSON.stringify(foodItemsIdArray)}, function(foodItems){
-          console.log(foodItems);
-          self.items(foodItems);
-        });*/
-
-    $("#item-quantity").val(1);
-    $("#special-instructions-text").val("");
-    $("#show-food-item-options").modal("show");
-  }
-
-  /*self.br = function(a){
-    alert(a);
-  }
-
-  self.aa = function(a){
-    alert(a);
-  }*/
 }
 
-$(document).ready(function () {
-  //console.log('test');
-  //var orderModel = new OrderModel();
-  //orderModel.addOrderItem();
-  //orderModel.submitOrder();
+function CategoryModel(category){
+  var self = this;
+  self.id = ko.observable();
+  self.name = ko.observable();
+  self.description = ko.observable();
+  self.restaurantId = ko.observable();
+  self.foodItems = ko.observableArray();
+  self.fetchFoodItems = function(category, ids) {
+    $.post("/admin/fetchFoodItems", {foodItemIds: JSON.stringify(ids)}, function(items){
+      items.forEach(function(item){
+        self.foodItems.push(new FoodItemModel(item));
+      });
+    });
+  };
+  // Initialize
+  if (category) {
+    self.id(category._id);
+    self.name(category.name);
+    self.description(category.description);
+    self.restaurantId(category.restaurantId);
+    if (category.foodItems.length > 0) {
+      self.fetchFoodItems(category, category.foodItems);
+    }
+  }
+}
 
-  $('.menu-category').each (function () {    
-    var itemModel = new itemsModel();
-    ko.applyBindings(itemModel, this);
-  });
 
-  $('.btn-number').click(function(){
-    var amount = parseInt($("#item-quantity").val());
+function FoodItemModel(item){
+  var self = this;
+  self.id = ko.observable();
+  self.name = ko.observable();
+  self.price = ko.observable();
+  self.available = ko.observable();
+  self.description = ko.observable();
+  self.imgPath = ko.observable();
+  self.averagePrepTime = ko.observable();
+  self.restaurantId = restaurantId;
+  // Initialize
+  if (item) {
+    self.id(item._id);
+    self.name(item.name);
+    self.price(item.price);
+    self.available(item.available);
+    self.description(item.description);
+    self.imgPath = item.imgPath;
+    self.averagePrepTime = item.averagePrepTime;
+    self.restaurantId = item.restaurantId;
+  }
+}
 
-      if($(this).data("type") == "plus")
-      {
-        if(amount == 1 || amount < 10)
-        {
-          amount = (amount + 1);
-        }
-      }
-      else
-      {
-        if(amount == 10 || amount > 1)
-        {
-          amount = (amount - 1)
-        }
-      }
-
-    $("#item-quantity").val(amount);
-  });
-
-  $("#add-item").click(function(){
-    var itemId = $("#modal-item-name").data("item-guid");
-    var restaurantId = $("#modal-item-name").data("restaurant-guid");
+var MenuViewModel = function() {
+  var self = this;
+  self.menus = ko.observableArray();
+  self.selectedItem = ko.observable(new FoodItemModel());
+  self.clickItem = function(item){
+    self.selectedItem(item);
+    $("#show-food-item-options").modal("show");
+  };
+  self.addToOrder = function(item) {
     var quantity = $("#item-quantity").val();
     var instructions = $("#special-instructions-text").val();
-
     //Add item to order
-    addItemToOrder(itemId, restaurantId, quantity, instructions);
-  });
-
-  /*$('.menu-item').click(function(){
-    console.log("here...");
-    //console.log($(this).attr(id));
-  });*/
-
-});
-
-function addItemToOrder(itemId, restaurantId, quantity, instructions)
-{
-
-  $.post("/restaurants/AddItemToOrder", {itemId: itemId, restaurantId: restaurantId, quantity: quantity, instructions: instructions}, function(response){
+    $.post("/restaurants/AddItemToOrder", {itemId: item.id(), restaurantId: restaurantId, quantity: quantity, instructions: instructions}, function(response){
       console.log(response.message);
       $("#show-food-item-options").modal("hide");
 
       //Put text into & Show thank-you banner
       $("#notify-text").text("Your item has been added!");
       $("#notify").fadeIn("slow").delay(1600).fadeOut("slow");
-  });
-}
+    });
+  };
+
+  self.fetchMenus = function() {
+    $.post("/admin/fetchMenus", {restaurantId: restaurantId}, function(menus){
+      menus.forEach(function (menu) {
+        self.menus.push(new MenuModel(menu));
+      });
+      $('#all-menus').fadeIn();
+    });
+  };
+
+  self.incrementQuantity = function (data, event) {
+    var amount = parseInt($("#item-quantity").val());
+    console.log(amount);
+    console.log(event.target);
+    if($(event.target).data("type") == "plus")
+    {
+      if(amount == 1 || amount < 10)
+      {
+        amount = (amount + 1);
+      }
+    }
+    else
+    {
+      if(amount == 10 || amount > 1)
+      {
+        amount = (amount - 1)
+      }
+    }
+    $("#item-quantity").val(amount);
+  }
+  self.showFoodItems = function(category){
+    console.log(category.id())
+    var categoryId = category.id();
+    if($("#"+categoryId).hasClass("open"))
+    {
+      $("#"+categoryId).toggleClass("open");
+      $("#"+categoryId).slideUp();
+    }
+    else
+    {
+      $("#"+categoryId).toggleClass("open");
+      $("#"+categoryId).slideDown();
+    }
+  };
+};
+$(document).ready(function(){
+  var menuModel = new MenuViewModel();
+  menuModel.fetchMenus();
+  ko.applyBindings(menuModel, document.getElementById('restaurant-menu'));
+});

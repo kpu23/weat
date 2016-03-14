@@ -71,7 +71,7 @@ function FoodItemModel(item){
   if (item) {
     self.id(item._id);
     self.name(item.name);
-    self.price(item.price);
+    self.price('$' + item.price);
     self.available(item.available);
     self.description(item.description);
     self.imgPath = item.imgPath;

@@ -109,7 +109,7 @@ db.fooditems.insertMany([
 {
     "_id" : ObjectId("56ce2290be160950d3cf0e7d"),
     "name" : "Chips & Salsa",
-    "price" : "$1.99",
+    "price" : "1.99",
     "available" : true,
     "imgPath" : "/images/wahoos/chips_and_salsa.jpg",
     "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
@@ -119,7 +119,7 @@ db.fooditems.insertMany([
 {
     "_id" : ObjectId("56dc8f652b072da5d5f16512"),
     "name" : "Nachos",
-    "price" : "$5.99",
+    "price" : "5.99",
     "available" : true,
     "imgPath" : "/images/wahoos/nachos.jpg",
     "averagePrepTime" : "5 minutes",
@@ -129,7 +129,7 @@ db.fooditems.insertMany([
 {
     "_id" : ObjectId("56de0eca57e52e5999cffaf9"),
     "name" : "Wahoos Salad",
-    "price" : "$7.99",
+    "price" : "7.99",
     "available" : true,
     "imgPath" : "/images/wahoos/wahoos_salad.jpg",
     "description" : "Any Protein, Banzai Veggies, Mixed Greens, Cheese, Guacamole, Salsa & Tortilla Strips",

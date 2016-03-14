@@ -29,6 +29,8 @@ var FoodItem = {
 
 var MenuManagementModel = function() {
     var self = this;
+    self.currentMenuName = ko.observable();
+    self.currentCategoryName = ko.observable();
     self.menus = ko.observableArray();
     self.newMenu = ko.observable(Menu);
     self.newCategory = ko.observable(Category);
@@ -113,15 +115,34 @@ var MenuManagementModel = function() {
         }
     };
     // Show/Hide Methods
-    self.showMenuEditor = function(menu) {
-        //$('#menu-editor').hide();
+    self.showAllMenus = function () {
         self.currentCategory('');
+        self.currentMenuName('');
+        self.currentCategoryName('');
+        self.currentMenu('');
+        $('#all-menus').fadeIn();
+    };
+    self.showCurrentMenu = function () {
+        $('#all-menus').hide();
+        $('#food-item-manager').hide();
+        self.currentCategoryName('');
+
+        $('#all-categories').fadeIn();
+    };
+    self.showMenuEditor = function(menu) {
+        $('#all-menus').hide();
+        self.currentCategory('');
+        self.currentCategoryName('');
+        self.currentMenuName(menu.name);
         self.currentMenu(new MenuModel(menu));
+        $('#all-categories').fadeIn();
     };
     self.showCategoryEditor = function(category) {
-        //$('#category-editor').hide();
+        $('#all-categories').hide();
         console.log(category);
+        self.currentCategoryName(category.name());
         self.currentCategory(category);
+        $('#food-item-manager').fadeIn();
     };
 };
 $(document).ready(function(){

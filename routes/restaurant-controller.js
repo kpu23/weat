@@ -219,6 +219,8 @@ router.route("/restaurants/AddItemToOrder").post(function(req,res,next) {
     //check if order exists
       if(req.session.order != null)
       {
+        console.log("here");
+
         if(restaurantId != req.session.order.restaurantId)
         {
           var response = {success: false, message: "new restaurant"};
@@ -231,7 +233,7 @@ router.route("/restaurants/AddItemToOrder").post(function(req,res,next) {
             req.session.order.itemIds.push(itemId);
             req.session.order.items.push({itemId: itemId, instructions: instructions});
           }
-          
+
           var response = {success: true, message: "item added to existing order"};
 
           console.log(req.session);
@@ -243,7 +245,6 @@ router.route("/restaurants/AddItemToOrder").post(function(req,res,next) {
       else
       {
         var order = new Order();
-        order.userId = req.session.user._id;
         order.restaurantId = restaurantId;
         for(var i = 0; i < quantity; i++)
         {

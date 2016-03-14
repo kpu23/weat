@@ -91,7 +91,7 @@ router.route("/register_business")
               restaurant.name = req.body.name;
               restaurant.type = req.body.type;
               restaurant.location = req.body.location;
-              restaurant.phone = req.body.phone;
+              restaurant.phone = req.body.workPhone;
               //restaurant.siteURL = req.body.siteURL;
               restaurant.status = req.body.status;
               restaurant.longDescription = req.body.longDescription;

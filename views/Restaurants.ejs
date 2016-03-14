@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-7">
                 <a href=/restaurants/<%= restaurant.name %>>
-                    <% if(restaurant.imgPath.length > 1){ %>
+                    <% if(restaurant.imgPath != null && restaurant.imgPath.length > 1){ %>
                     <img class="img-responsive" src=<%= restaurant.imgPath %> alt="">
                     <% } %>
                 </a>

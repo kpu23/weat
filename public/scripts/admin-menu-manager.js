@@ -39,6 +39,17 @@ var MenuManagementModel = function() {
             alert('Please fill in name.');
         }
     };
+    self.editMenu = function() {
+        $.post("/admin/editMenu", {menu: ko.toJSON(self.currentMenu())}, function(result){
+            console.log(result);
+            if (result.error) {
+                alert('Error occurred. Please contact us at help@weat.com.')
+            } else {
+                $('#edit-menu-window').modal('hide');
+            }
+        });
+
+    };
     self.deleteMenu = function() {
         $.post("/admin/deleteMenu", {menuId: self.currentMenu().id}, function(result){
             console.log(result);
@@ -132,7 +143,7 @@ function MenuModel(menu){
     var self = this;
     self.id = ko.observable();
     self.name = ko.observable();
-    self.isPublic = ko.observable();
+    self.isPublic = ko.observable(false);
     self.restaurantId = ko.observable();
     self.categories = ko.observableArray();
     self.fetchCategories = function(ids) {
@@ -144,6 +155,7 @@ function MenuModel(menu){
     };
     // Initialize
     if (menu) {
+        console.log(menu);
         self.id(menu._id);
         self.name(menu.name);
         self.isPublic(menu.isPublic);

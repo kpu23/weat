@@ -79,6 +79,23 @@ router.post('/admin/createMenu', function(req, res) {
 		res.json(response);
 	});
 });
+router.post('/admin/editMenu', function (req, res) {
+  var data = JSON.parse(req.body.menu);
+  console.log('edit',data);
+  var response = {};
+  // Delete Menu
+  Menu.findById(data.id, function (error, menu) {
+    if (menu) {
+      menu.name = data.name;
+      menu.isPublic = data.isPublic;
+      menu.save();
+    } else {
+      response = {"error": false, "message": "Could not find menu."};
+    }
+    res.json(response);
+  });
+});
+
 router.post('/admin/deleteMenu', function(req, res) {
     var menuId = req.body.menuId;
     var response = {};

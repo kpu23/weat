@@ -3,71 +3,83 @@
 <div class="weat-content" style="display:list-item;">
 
     <div class="container" id="menu-manager" style="display: none;">
-        <h1>
-            <a href="" data-bind="click: showAllMenus">  All Menus </a>
-            <a href="" data-bind="click: showCurrentMenu, if: currentMenuName">
-                <i class="fa fa-angle-right"></i>
-                <span data-bind="text: currentMenuName"></span>
-            </a>
-            <a href="#" data-bind="if: currentCategoryName">
-                <i class="fa fa-angle-right"></i>
-                <span data-bind="text: currentCategoryName"></span>
-            </a>
-        </h1>
-        <div id="all-menus">
-            <div class="row">
-                <div data-bind="foreach: menus" >
-                    <a href="#" data-bind="click: $root.showMenuEditor">
-                        <div class="menu col-lg-4">
-                            <h4 data-bind="text: name"></h4>
-                        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading menu-manager-panel-header">
+                <h1>
+                    <a href="" data-bind="click: showAllMenus">  All Menus </a>
+                    <a href="" data-bind="click: showCurrentMenu, if: currentMenuName">
+                        <i class="fa fa-angle-right"></i>
+                        <span data-bind="text: currentMenuName"></span>
                     </a>
-                </div>
-                <a href="" data-toggle="modal" data-target="#create-menu-window">
-                    <div class="create-menu col-lg-4">
-                        <h4>Add New Menu <i class="fa fa-plus-square"></i></h4>
+                    <a href="#" data-bind="if: currentCategoryName">
+                        <i class="fa fa-angle-right"></i>
+                        <span data-bind="text: currentCategoryName"></span>
+                    </a>
+                </h1>
+            </div>
+            <div class="panel-body menu-manager-panel-body">
+                <div id="all-menus">
+                    <div class="row">
+                        <div data-bind="foreach: menus" >
+                            <a href="#" data-bind="click: $root.showMenuView">
+                                <div class="menu-manager-item col-lg-4">
+                                    <h4 data-bind="text: name"></h4>
+                                </div>
+                            </a>
+                        </div>
+                        <a href="" data-toggle="modal" data-target="#create-menu-window">
+                            <div class="menu-manger-new-item col-lg-4">
+                                <h4>Add New Menu <i class="fa fa-plus-square"></i></h4>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                </div>
+                <div id="all-categories" data-bind="with: currentMenu">
+                    <h2 >
+                        <span data-bind="text: name"></span>
+                        <span data-bind="if: !isPublic()">(DRAFT)</span>
+                        <a href="#"><i class="fa fa-cog" data-toggle="modal" data-target="#edit-menu-window"></i></a>
+                    </h2>
+                    <div class="row">
+                        <div data-bind="foreach: categories" >
+                            <a href="#" data-bind="click: $root.showCategoryView">
+                                <div class="menu-manager-item col-lg-4">
+                                    <h4 data-bind="text: name"></h4>
+                                    <small data-bind="text: description"></small>
+                                </div>
+                            </a>
+                        </div>
+                        <a href="" data-toggle="modal" data-target="#create-category-window">
+                            <div class="menu-manger-new-item col-lg-4">
+                                <h4>Add New Category <i class="fa fa-plus-square"></i></h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div id="food-item-manager" data-bind="with: currentCategory">
+                    <h2 ><span data-bind="text: name"></span> <a href="#"><i class="fa fa-cog" data-toggle="modal" data-target="#edit-category-window"></i></a></h2>
+                    <div class="row">
+                        <div data-bind="foreach: foodItems" >
+                            <a href="#" class="black_text" data-bind="click: $root.showFoodItemEditor">
+                                <div class="menu-manager-item col-lg-4">
+                                    <h4>
+                                        <span data-bind="text: name"></span>
+                                        <i class="fa fa-cog" ></i>
+                                    </h4>
+                                </div>
+                            </a>
+                        </div>
+                        <a href="" data-toggle="modal" data-target="#create-food-item-window">
+                            <div class="menu-manger-new-item col-lg-4">
+                                <h4>Add New Item <i class="fa fa-plus-square"></i></h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <br />
-        <div id="all-categories" data-bind="with: currentMenu">
-            <h2 ><span data-bind="text: name"></span> <a href="#"><i class="fa fa-cog" data-toggle="modal" data-target="#edit-menu-window"></i></a></h2>
-            <div class="row">
-                <div data-bind="foreach: categories" >
-                    <a href="#" data-bind="click: $root.showCategoryEditor">
-                        <div class="menu col-lg-4">
-                            <h4 data-bind="text: name"></h4>
-                            <small data-bind="text: description"></small>
-                        </div>
-                    </a>
-                </div>
-                <a href="" data-toggle="modal" data-target="#create-category-window">
-                    <div class="create-menu col-lg-4">
-                        <h4>Add New Category <i class="fa fa-plus-square"></i></h4>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <br />
 
-        <div id="food-item-manager" data-bind="with: currentCategory">
-            <h2 ><span data-bind="text: name"></span> <a href="#"><i class="fa fa-cog"></i></a></h2>
-            <div class="row">
-                <div data-bind="foreach: foodItems" >
-                    <a href="#">
-                        <div class="menu col-lg-4">
-                            <h4 data-bind="text: name"></h4>
-                        </div>
-                    </a>
-                </div>
-                <a href="" data-toggle="modal" data-target="#create-food-item-window">
-                    <div class="create-menu col-lg-4">
-                        <h4>Add New Item <i class="fa fa-plus-square"></i></h4>
-                    </div>
-                </a>
-            </div>
-        </div>
+
 
         <!-- Modals -->
         <div id="create-menu-window" class="modal fade" role="dialog">
@@ -82,11 +94,11 @@
                         <form>
                             <fieldset class="form-group">
                                 <label for="menu-name">Menu Name</label>
-                                <input type="text" class="form-control" id="menu-name" placeholder="Menu Name" data-bind="value: name">
+                                <input type="text" class="form-control" id="menu-name" placeholder="Menu Name" data-bind="value: name" autofocus>
                             </fieldset>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" data-bind="checked: isPublic"> Public
+                                    <input type="checkbox" data-bind="checked: isPublic, value: isPublic"> Public
                                     <small class="text-muted">All customers can see the menu on your site. You can set this later too.</small>
                                 </label>
                             </div>
@@ -110,7 +122,7 @@
                         <form>
                             <fieldset class="form-group">
                                 <label for="menu-name">Category Name</label>
-                                <input type="text" class="form-control" id="menu-name" placeholder="Category Name" data-bind="value: name">
+                                <input type="text" class="form-control" id="menu-name" placeholder="Category Name" data-bind="value: name" autofocus required>
                                 <label for="menu-name">Description</label>
                                 <input type="text" class="form-control" id="menu-name" placeholder="Category Name" data-bind="value: description">
                             </fieldset>
@@ -134,7 +146,7 @@
                         <form>
                             <fieldset class="form-group">
                                 <label for="menu-name">Item Name</label>
-                                <input type="text" class="form-control" id="menu-name" placeholder="Item Name" data-bind="value: name" required>
+                                <input type="text" class="form-control" id="menu-name" placeholder="Item Name" data-bind="value: name" required autofocus>
                                 <label for="menu-name">Description</label>
                                 <input type="text" class="form-control" id="menu-name" placeholder="Description" data-bind="value: description">
                                 <label for="menu-name">Price</label>
@@ -168,8 +180,8 @@
                     <div class="modal-body">
                         <form>
                             <fieldset class="form-group">
-                                <label for="menu-name">Item Name</label>
-                                <input type="text" class="form-control" id="menu-name" placeholder="Menu Name" data-bind="value: name" required>
+                                <label for="menu-name">Menu Name</label>
+                                <input type="text" class="form-control" id="menu-name" placeholder="Menu Name" data-bind="value: name" required autofocus>
                             </fieldset>
                             <div class="checkbox">
                                 <label>
@@ -180,13 +192,73 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bind="click: $root.deleteMenu">Delete Menu</button>
-                        <button type="button" class="btn btn-info" data-bind="click: $root.editMenu">Edit Menu</button>
+                        <button type="button" class="btn btn-danger" data-bind="click: $root.deleteMenu">Delete</button>
+                        <button type="button" class="btn btn-info" data-bind="click: $root.editMenu">Update</button>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div id="edit-category-window" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content" data-bind="with: currentCategory">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit <span data-bind="text: name"></span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <fieldset class="form-group">
+                                <label for="menu-name">Category Name</label>
+                                <input type="text" class="form-control" id="menu-name" placeholder="Category Name" data-bind="value: name" required autofocus>
+                                <label for="menu-name">Description</label>
+                                <input type="text" class="form-control" id="menu-name" placeholder="Description" data-bind="value: description">
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bind="click: $root.deleteCategory">Delete</button>
+                        <button type="button" class="btn btn-info" data-bind="click: $root.editCategory">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="edit-food-item-window" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content" data-bind="with: currentFoodItem">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit <span data-bind="text: name"></span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <fieldset class="form-group">
+                                <label for="menu-name">Item Name</label>
+                                <input type="text" class="form-control" id="menu-name" placeholder="Item Name" data-bind="value: name" required autofocus>
+                                <label for="menu-name">Description</label>
+                                <input type="text" class="form-control" id="menu-name" placeholder="Description" data-bind="value: description">
+                                <label for="menu-name">Price</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="number" class="form-control" id="menu-name" placeholder="Price" data-bind="value: price" required>
+                                </div>
+                            </fieldset>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" data-bind="value: available"> Available
+                                    <small class="text-muted">All customers can see the item on your site. You can set this later too.</small>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bind="click: $root.deleteFoodItem">Delete</button>
+                        <button type="button" class="btn btn-info" data-bind="click: $root.editFoodItem">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="/scripts/admin-menu-manager.js"></script>

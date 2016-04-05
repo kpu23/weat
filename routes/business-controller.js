@@ -95,7 +95,6 @@ router.post('/admin/editMenu', function (req, res) {
     res.json(response);
   });
 });
-
 router.post('/admin/deleteMenu', function(req, res) {
     var menuId = req.body.menuId;
     var response = {};
@@ -168,6 +167,24 @@ router.post('/admin/createCategory', function(req, res) {
         }
     });
 });
+router.post('/admin/editCategory', function (req, res) {
+  var data = JSON.parse(req.body.category);
+  console.log('edit',data);
+  var response = {};
+  // Edit Cat
+  Category.findById(data.id, function (error, category) {
+    if (category) {
+      category.name = data.name;
+      category.description = data.description;
+      category.imgPath = data.imgPath;
+      category.save();
+      response = {"error": false};
+    } else {
+      response = {"error": true, "message": "Could not find category."};
+    }
+    res.json(response);
+  });
+});
 router.post('/admin/createFoodItem', function(req, res) {
     var data = JSON.parse(req.body.foodItem);
     var categoryId = req.body.categoryId;
@@ -200,7 +217,27 @@ router.post('/admin/createFoodItem', function(req, res) {
         res.json(response);
     });
 });
-
+router.post('/admin/editFoodItem', function (req, res) {
+  var data = JSON.parse(req.body.foodItem);
+  console.log('edit',data);
+  var response = {};
+  // Edit FoodItem
+  FoodItem.findById(data.id, function (error, category) {
+    if (category) {
+      category.name = data.name;
+      category.price = data.price;
+      category.available = data.available;
+      category.description = data.description;
+      category.imgPath = data.imgPath;
+      category.averagePrepTime = data.averagePrepTime;
+      category.save();
+      response = {"error": false};
+    } else {
+      response = {"error": true, "message": "Could not find food item."};
+    }
+    res.json(response);
+  });
+});
 
 router.post('/admin/fetchCategories', function(req, res){
 	console.log(JSON.parse(req.body.categoryIds));

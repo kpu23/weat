@@ -31,11 +31,11 @@ h6 {
 }
 
 .register {
-    
     color:black;
     font-size: 18px;
 }
 
+/* Restaurant Customer-Facing Menu Styles */
 .menu-item {
     height: 350px;
 }
@@ -47,9 +47,11 @@ h6 {
     background-color: rgba(0, 57, 255, 0.2);
 }
 
-.menu {
+/* Menu Manger Styles */
+.menu-manager-item {
     background: #1b6d85;
     color: #000;
+    margin-left: 20px;
     margin-right: 20px;
     margin-top: 20px;
     display: block;
@@ -65,9 +67,10 @@ h6 {
     rgba(0, 0, 0, 0.1) inset;
 }
 
-.create-menu {
+.menu-manger-new-item {
     background: #5cb85c;
     color: #000;
+    margin-left: 20px;
     margin-right: 20px;
     margin-top: 20px;
     display: block;
@@ -83,17 +86,27 @@ h6 {
     rgba(0, 0, 0, 0.1) inset;
 }
 
-.modal, .panel, .panel > a {
-    color: #000;
+.menu-manager-panel-header {
+    background-color: #222222;
 }
 
-.panel-heading {
-    cursor: pointer;
+.panel-body {
+    color: #222222;
+}
+.menu-manager-panel-body {
+    color: #dff0d8;
+    background-color: #222222;
+    height: 500px;
 }
 
 .black_text {
     color: black;
 }
+
+.modal {
+    color: #222222
+}
+
 p {
     margin: 0 0 25px;
     font-size: 18px;
@@ -109,10 +122,14 @@ p {
 }
 
 a {
-    color: white;
+    color: #1b6d85;
     -webkit-transition: all .2s ease-in-out;
     -moz-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
+}
+
+nav > a {
+    color: white;
 }
 
 a:hover,

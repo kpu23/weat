@@ -1,4 +1,3 @@
-//var restaurantId = "56c503be9bc2f4cc1396845e"; //HACK: fetch from logged-in account (Wahoos)
 
 var MenuManagementModel = function() {
     var self = this;
@@ -10,6 +9,8 @@ var MenuManagementModel = function() {
     self.newFoodItem = ko.observable(new FoodItemModel());
     self.currentMenu = ko.observable();
     self.currentCategory = ko.observable();
+    self.currentFoodItem = ko.observable();
+
     self.fetchMenus = function() {
         $.post("/admin/fetchMenus", function(menus){
             $('#menu-manager').fadeIn();
@@ -83,6 +84,27 @@ var MenuManagementModel = function() {
             alert('Please fill in name.');
         }
     };
+    self.editCategory = function() {
+        $.post("/admin/editCategory", {category: ko.toJSON(self.currentCategory())}, function(result){
+            console.log(result);
+            if (result.error) {
+                alert('Error occurred. Please contact us at help@weat.com.')
+            } else {
+                $('#edit-category-window').modal('hide');
+            }
+        });
+    };
+    self.editFoodItem = function() {
+        $.post("/admin/editFoodItem", {foodItem: ko.toJSON(self.currentFoodItem())}, function(result){
+            console.log(result);
+            if (result.error) {
+                alert('Error occurred. Please contact us at help@weat.com.')
+            } else {
+                $('#edit-food-item-window').modal('hide');
+            }
+        });
+    };
+
     self.createFoodItem = function() {
         var currentCategoryId = self.currentCategory().id();
         console.log(self.currentMenu());
@@ -117,7 +139,7 @@ var MenuManagementModel = function() {
 
         $('#all-categories').fadeIn();
     };
-    self.showMenuEditor = function(menu) {
+    self.showMenuView = function(menu) {
         $('#all-menus').hide();
         self.currentCategory('');
         self.currentCategoryName('');
@@ -125,12 +147,16 @@ var MenuManagementModel = function() {
         self.currentMenu(menu);
         $('#all-categories').fadeIn();
     };
-    self.showCategoryEditor = function(category) {
+    self.showCategoryView = function(category) {
         $('#all-categories').hide();
         self.currentCategoryName(category.name());
         self.currentCategory(category);
         $('#food-item-manager').fadeIn();
     };
+    self.showFoodItemEditor = function (foodItem) {
+        self.currentFoodItem(foodItem);
+        $('#edit-food-item-window').modal('show');
+    }
 };
 $(document).ready(function(){
     var manageModel = new MenuManagementModel();

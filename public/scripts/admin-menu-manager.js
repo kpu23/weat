@@ -94,6 +94,20 @@ var MenuManagementModel = function() {
             }
         });
     };
+    self.deleteCategory = function() {
+        $.post("/admin/deleteCategory", {catId: self.currentCategory().id}, function(result){
+            console.log(result);
+            if (result.error) {
+                alert('Error occurred. Please contact us at help@weat.com.')
+            } else {
+                $('#edit-category-window').modal('hide');
+                self.currentMenu().categories.remove(function (item) {
+                    return item.id() == self.currentCategory().id();
+                });
+                self.showCurrentMenu();
+            }
+        });
+    };
     self.editFoodItem = function() {
         $.post("/admin/editFoodItem", {foodItem: ko.toJSON(self.currentFoodItem())}, function(result){
             console.log(result);
@@ -158,6 +172,7 @@ var MenuManagementModel = function() {
         $('#edit-food-item-window').modal('show');
     }
 };
+
 $(document).ready(function(){
     var manageModel = new MenuManagementModel();
     manageModel.fetchMenus();

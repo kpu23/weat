@@ -129,7 +129,7 @@ router.post('/admin/deleteMenu', function(req, res) {
                     response = {"error": true, "message": "Error deleting menu."};
                     console.log(error);
                 } else {
-                    response = {"error": false, "message": "Menu added successfully."};
+                    response = {"error": false, "message": "Menu deleted successfully."};
                 }
             });
         } else {
@@ -185,6 +185,35 @@ router.post('/admin/editCategory', function (req, res) {
     res.json(response);
   });
 });
+router.post('/admin/deleteCategory', function(req, res) {
+  var catId = req.body.catId;
+  var response = {};
+  console.log(catId);
+  // Delete Menu
+  Category.findById(catId, function (error, cat) {
+    if (cat) {
+      // Delete Food Items
+      FoodItem.find({_id: {$in: cat.foodItems}}).remove(function(error) {
+        if (error) {
+          response = {"error": true, "message": "Error deleting food items."};
+          console.log(error);
+        }
+      });
+      cat.remove(function (error) {
+        if (error) {
+          response = {"error": true, "message": "Error deleting category."};
+          console.log(error);
+        } else {
+          response = {"error": false, "message": "Menu added successfully."};
+        }
+      });
+    } else {
+      response = {"error": false, "message": "Could not find menu."};
+    }
+    res.json(response);
+  });
+});
+
 router.post('/admin/createFoodItem', function(req, res) {
     var data = JSON.parse(req.body.foodItem);
     var categoryId = req.body.categoryId;

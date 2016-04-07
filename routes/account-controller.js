@@ -1,5 +1,6 @@
 var express = require('express');
 var Account = require("../models/account");
+var PaymentOption = require("../models/payment-option");
 var Restaurant = require("../models/restaurant");
 var crypto = require('crypto');
 var router = express.Router();
@@ -33,6 +34,7 @@ router.route("/register")
               account.phone = req.body.phone;
               account.dob = req.body.dob;
               account.ethnicity = req.body.ethnicity;
+              account.gender = req.body.gender;
               // Hash the password using SHA1 algorithm.
               account.password =  crypto
                 .createHash('sha1')
@@ -87,6 +89,7 @@ router.route("/register_business")
               account.phone = req.body.phone;
               account.userType = "business";
               account.dob = req.body.dob;
+              account.gender = req.body.gender;
               
               restaurant.name = req.body.name;
               restaurant.type = req.body.type;
@@ -95,7 +98,8 @@ router.route("/register_business")
               //restaurant.siteURL = req.body.siteURL;
               restaurant.status = req.body.status;
               restaurant.longDescription = req.body.longDescription;
-              restaurant.imgPath = req.body.imgPath;
+              if(req.body.imgPath) restaurant.imgPath = req.body.imgPath;
+              else restaurant.imgPath = '/images/default_restaurant_logo.jpg';             
               restaurant.displayName = req.body.displayName;
 
               // Hash the password using SHA1 algorithm.
@@ -165,6 +169,58 @@ router.route("/logout")
   .get(function(req, res){
       req.session = null;
       res.redirect('/');
+  });
+
+  //Login Form
+router.route("/settings")
+  .get( function(req, res) {
+      PaymentOption.findOne({acountId: req.session.user._id}, function(err, paymentOption) {
+          if(err){              
+              res.render('error', {
+                  message: err.message,
+                  error: err
+              });
+          }else if (paymentOption){
+              res.render('account/settings',{title: 'weat: settings', validationMessage: '', paymentOption: paymentOption});
+          } else {
+              //no payment option
+              res.render('account/settings',{title: 'weat: settings', validationMessage: ''});
+          }
+      });
+      
+  });
+
+router.route("/saveUserInfo")
+  .post(function(req, res){
+      var response = {status: 'error'};      
+      Account.findOneAndUpdate({email: req.session.user.email}, req.body, function(err, record) {
+          if(err){              
+              response.message = 'error saving user info';
+              res.send(response);
+          }else{
+              console.log(record);
+              response.status = 'success';
+              req.session.user = record;
+              res.send(response);
+          }
+      }); 
+  });
+
+router.route("/savePaymentInfo")
+  .post(function(req, res){
+      var response = {status: 'error'};
+      var paymentOption = req.body;      
+      paymentOption.accountId = req.session.user._id;
+      PaymentOption.findOneAndUpdate({acountId: req.session.user._id}, req.body, {upsert: true}, function(err, record) {
+          if(err){              
+              response.message = 'error saving payment option';
+              res.send(response);
+          }else{
+              console.log(record);
+              response.status = 'success';
+              res.send(response);
+          }
+      });
   });
 
 module.exports = router;

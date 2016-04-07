@@ -13,10 +13,12 @@ var accountSchema  = Schema({
     "ethnicity" : String,
     "phone" : String,
     "dob" : Date,
+    "gender" : String,
     "restaurantId" : ObjectId,
     "paymentDetailId" : ObjectId,
     "email" : String,
-    "password" : String
+    "password" : String,
+    "favorites" : Array
 });
 
 // create model if not exists

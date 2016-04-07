@@ -6,16 +6,16 @@ var mongoose = require('mongoose'),
   ObjectId = Schema.ObjectId;;
 
 // create meal item schema
-var mealItemSchema  = Schema({
+var mealSchema  = Schema({
   "name" : String,
   "price" : String,
-  "status" : String,
+  "available" : String,
   "description" : ObjectId,
-  "imagePath" : String,
+  "imgPath" : String,
   "averagePrepTime" : Number, // in minutes
   "restaurantId" : ObjectId,
   "foodItems" : [ObjectId]
 });
 
 // create model if not exists
-module.exports = mongoose.model('mealitem', mealItemSchema);
+module.exports = mongoose.model('meal', mealSchema);

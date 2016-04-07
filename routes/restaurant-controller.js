@@ -6,7 +6,7 @@ var router = express.Router();
 var Restaurant = require('../models/restaurant');
 var Menu = require('../models/menu');
 var Categories = require('../models/menu-category');
-var MealItems = require('../models/meal-item');
+var MealItems = require('../models/meal');
 var FoodItems = require('../models/food-item');
 var Order = require('../models/order');
 

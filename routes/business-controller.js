@@ -7,6 +7,7 @@ var Menu = require('../models/menu');
 var Category = require('../models/menu-category');
 var FoodItem = require('../models/food-item');
 var Order = require('../models/order');
+var Meal = require('../models/meal');
 
 // Admin Home
 router.get('/admin', function (req, res) {
@@ -84,6 +85,22 @@ router.post('/admin/fetchFoodItems', function (req, res) {
         });
     } else {
         console.log("returning null");
+        res.send(null);
+    }
+});
+router.post('/admin/fetchMeals', function (req, res) {
+    console.log(JSON.parse(req.body.mealIds));
+    var mealIds = JSON.parse(req.body.mealIds);
+    if (mealIds) {
+        Meal.find({_id: {$in: mealIds}}, function (error, meals) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(meals);
+                res.send(meals);
+            }
+        });
+    } else {
         res.send(null);
     }
 });
@@ -249,10 +266,11 @@ router.post('/admin/createFoodItem', function (req, res) {
     var data = JSON.parse(req.body.foodItem);
     var categoryId = req.body.categoryId;
     var response = {};
-    // Create Category
+    // Create Food Item
     var foodItem = new FoodItem();
     foodItem.name = data.name;
     foodItem.price = data.price;
+    foodItem.available = data.available;
     foodItem.description = data.description;
     if (!data.imgPath) {
         data.imgPath = '/images/placeholder-item-img.png';
@@ -313,6 +331,39 @@ router.post('/admin/deleteFoodItem', function (req, res) {
         });
     });
     res.json(response);
+});
+router.post('/admin/createMeal', function (req, res) {
+    var data = JSON.parse(req.body.meal);
+    var categoryId = req.body.categoryId;
+    var response = {};
+    // Create Meal
+    var meal = new Meal();
+    meal.name = data.name;
+    meal.available = data.available;
+    meal.price = data.price;
+    meal.description = data.description;
+    if (!data.imgPath) {
+        data.imgPath = '/images/placeholder-item-img.png';
+    }
+    meal.imgPath = data.imgPath;
+    meal.foodItems = data.foodItems;
+    meal.save(function (err, result) {
+        if (err) {
+            response = {"error": true, "message": "Error adding data"};
+        } else {
+            Category.findById(categoryId, function (error, category) {
+                if (error) {
+                    console.log(error);
+                    response = {"error": true, "message": "Meal creation failed."};
+                } else {
+                    category.meals.push(result._id);
+                    category.save();
+                    response = {"error": false, "message": "Meal added to category successfully.", mealId: result._id};
+                }
+                res.json(response);
+            });
+        }
+    });
 });
 
 

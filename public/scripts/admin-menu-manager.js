@@ -7,6 +7,7 @@ var MenuManagementModel = function () {
     self.newMenu = ko.observable(new MenuModel());
     self.newCategory = ko.observable(new CategoryModel());
     self.newFoodItem = ko.observable(new FoodItemModel());
+    self.newMeal = ko.observable(new MealModel());
     self.currentMenu = ko.observable();
     self.currentCategory = ko.observable();
     self.currentFoodItem = ko.observable();
@@ -161,6 +162,32 @@ var MenuManagementModel = function () {
             }
         });
     };
+    // Meal Methods
+    self.createMeal = function () {
+        console.log(self.newMeal());
+        var currentCategoryId = self.currentCategory().id();
+        if (self.newMeal().name()) {
+            console.log(self.newMeal());
+
+            $.post("/admin/createMeal", {
+                meal: ko.toJSON(self.newMeal),
+                categoryId: currentCategoryId.toString()
+            }, function (result) {
+                console.log(result);
+                if (result.error) {
+                    alert('Error occurred. Please contact us at help@weat.com.')
+                } else {
+                    $('#create-meal-window').modal('hide');
+                    console.log(result.mealId);
+                    self.newMeal().id(result.mealId);
+                    self.currentCategory().meals.push(self.newMeal());
+                    self.newMeal(new MealModel()); // Clear
+                }
+            });
+        } else {
+            alert('Please fill in name.');
+        }
+    };
     // Show/Hide View Methods
     self.showAllMenus = function () {
         self.currentCategory('');
@@ -189,10 +216,14 @@ var MenuManagementModel = function () {
         self.currentCategoryName(category.name());
         self.currentCategory(category);
         $('#food-item-manager').fadeIn();
+        $('.ui.dropdown').dropdown();
     };
     self.showFoodItemEditor = function (foodItem) {
         self.currentFoodItem(foodItem);
         $('#edit-food-item-window').modal('show');
+    }
+    self.showMealsEditor = function () {
+        alert("TODO");
     }
 };
 
@@ -201,7 +232,6 @@ $(document).ready(function () {
     manageModel.fetchMenus();
     ko.applyBindings(manageModel, document.getElementById('menu-manager'));
 });
-
 
 function MenuModel(menu) {
     var self = this;
@@ -237,10 +267,18 @@ function CategoryModel(category) {
     self.description = ko.observable();
     self.restaurantId = ko.observable();
     self.foodItems = ko.observableArray();
+    self.meals = ko.observableArray();
     self.fetchFoodItems = function (category, ids) {
         $.post("/admin/fetchFoodItems", {foodItemIds: JSON.stringify(ids)}, function (items) {
             items.forEach(function (item) {
                 self.foodItems.push(new FoodItemModel(item));
+            });
+        });
+    };
+    self.fetchMeals = function (category, ids) {
+        $.post("/admin/fetchMeals", {mealIds: JSON.stringify(ids)}, function (meals) {
+            meals.forEach(function (meal) {
+                self.meals.push(new MealModel(meal));
             });
         });
     };
@@ -252,6 +290,9 @@ function CategoryModel(category) {
         self.restaurantId(category.restaurantId);
         if (category.foodItems.length > 0) {
             self.fetchFoodItems(category, category.foodItems);
+        }
+        if (category.meals.length > 0) {
+            self.fetchMeals(category, category.meals);
         }
     }
 }
@@ -275,6 +316,31 @@ function FoodItemModel(item) {
         self.description(item.description);
         self.imgPath = item.imgPath;
         self.averagePrepTime = item.averagePrepTime;
+        //self.restaurantId = item.restaurantId;
+    }
+}
+
+function MealModel(meal) {
+    var self = this;
+    self.id = ko.observable();
+    self.name = ko.observable();
+    self.price = ko.observable();
+    self.available = ko.observable();
+    self.description = ko.observable();
+    self.imgPath = ko.observable();
+    self.averagePrepTime = ko.observable();
+    self.foodItems = ko.observableArray();
+    //self.restaurantId = restaurantId;
+    // Initialize
+    if (meal) {
+        self.id(meal._id);
+        self.name(meal.name);
+        self.price(meal.price);
+        self.available(meal.available);
+        self.description(meal.description);
+        self.imgPath = meal.imgPath;
+        self.averagePrepTime = meal.averagePrepTime;
+        self.foodItems(meal.foodItems);
         //self.restaurantId = item.restaurantId;
     }
 }

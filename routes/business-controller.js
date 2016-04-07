@@ -29,6 +29,11 @@ router.get('/marketing_analytics', function (req, res) {
     res.render('marketing_analytics', {title: 'weat: Marketing & Analytics'});
 });
 
+// Custom Reports
+router.get('/custom_reports', function (req, res) {
+    res.render('custom_reports', {title: 'weat: Custom Reports'});
+});
+
 // Fetch Menus, Categories, Food Items
 router.post('/admin/fetchMenus', function (req, res) {
     var restaurantId;

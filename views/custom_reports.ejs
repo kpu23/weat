@@ -1,0 +1,93 @@
+<% include layouts/layout %>
+
+
+<div class="intro">
+    
+        <div class="container">
+        	
+        	<div class="row">
+       		
+                    <h1 class="page-header">Custom Reports</h1>
+
+                    <h3>Choose Date Range</h3>
+
+                    <!-- Date Picker -->
+                    <input type="text" style="color:black;" name="datefilter" value="" />
+ 
+                    <script type="text/javascript">
+                    $(function() {
+
+                    $('input[name="datefilter"]').daterangepicker({
+                    autoUpdateInput: false,
+                     ranges: {
+       'Today': [moment(), moment()],
+       'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+       'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+       'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+       'This Month': [moment().startOf('month'), moment().endOf('month')],
+       'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    },
+                    locale: {
+                    cancelLabel: 'Clear'
+                                    }
+                    });
+
+                    $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+                    });
+
+                    $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+                    $(this).val('');
+                    });
+
+                    });
+                    </script>
+
+
+
+
+                    <!-- Stats for Selected Date Range  -->   
+                
+
+        </div>
+    </div>
+</div>
+
+<!-- Include Required Prerequisites -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+ 
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+
+
+
+                
+                
+                
+
+
+
+
+                
+  
+
+
+
+
+                
+                
+
+                    
+
+
+
+
+                
+                
+                
+           
+

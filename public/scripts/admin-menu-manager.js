@@ -11,6 +11,8 @@ var MenuManagementModel = function () {
     self.currentMenu = ko.observable();
     self.currentCategory = ko.observable();
     self.currentFoodItem = ko.observable();
+    self.currentMeal = ko.observable();
+
 
     // Initial Get Data
     self.fetchMenus = function () {
@@ -188,6 +190,29 @@ var MenuManagementModel = function () {
             alert('Please fill in name.');
         }
     };
+    self.editMeal = function () {
+        $.post("/admin/editMeal", {meal: ko.toJSON(self.currentMeal())}, function (result) {
+            console.log(result);
+            if (result.error) {
+                alert('Error occurred. Please contact us at help@weat.com.')
+            } else {
+                $('#edit-meal-window').modal('hide');
+            }
+        });
+    };
+    self.deleteMeal = function () {
+        $.post("/admin/deleteMeal", {mealId: self.currentMeal().id}, function (result) {
+            console.log(result);
+            if (result.error) {
+                alert('Error occurred. Please contact us at help@weat.com.')
+            } else {
+                $('#edit-meal-window').modal('hide');
+                self.currentCategory().meals.remove(function (meal) {
+                    return meal.id() == self.currentMeal().id();
+                });
+            }
+        });
+    };
     // Show/Hide View Methods
     self.showAllMenus = function () {
         self.currentCategory('');
@@ -221,10 +246,12 @@ var MenuManagementModel = function () {
     self.showFoodItemEditor = function (foodItem) {
         self.currentFoodItem(foodItem);
         $('#edit-food-item-window').modal('show');
-    }
-    self.showMealsEditor = function () {
-        alert("TODO");
-    }
+    };
+    self.showMealsEditor = function (meal) {
+        self.currentMeal(meal);
+        $('.ui.dropdown').dropdown();
+        $('#edit-meal-window').modal('show');
+    };
 };
 
 $(document).ready(function () {

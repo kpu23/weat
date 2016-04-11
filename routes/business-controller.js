@@ -339,6 +339,7 @@ router.post('/admin/deleteFoodItem', function (req, res) {
 });
 router.post('/admin/createMeal', function (req, res) {
     var data = JSON.parse(req.body.meal);
+    console.log(data);
     var categoryId = req.body.categoryId;
     var response = {};
     // Create Meal
@@ -354,7 +355,9 @@ router.post('/admin/createMeal', function (req, res) {
     meal.foodItems = data.foodItems;
     meal.save(function (err, result) {
         if (err) {
+            console.log(err);
             response = {"error": true, "message": "Error adding data"};
+            res.json(response);
         } else {
             Category.findById(categoryId, function (error, category) {
                 if (error) {
@@ -368,6 +371,44 @@ router.post('/admin/createMeal', function (req, res) {
                 res.json(response);
             });
         }
+    });
+});
+router.post('/admin/editMeal', function (req, res) {
+    var data = JSON.parse(req.body.meal);
+    var response = {};
+    // Edit Meal
+    Meal.findById(data.id, function (error, meal) {
+        if (meal) {
+            meal.name = data.name;
+            meal.price = data.price;
+            meal.available = data.available;
+            meal.description = data.description;
+            meal.imgPath = data.imgPath;
+            meal.averagePrepTime = data.averagePrepTime;
+            meal.foodItems = data.foodItems;
+            meal.save();
+            response = {"error": false};
+        } else {
+            response = {"error": true, "message": "Could not find food item."};
+        }
+        res.json(response);
+    });
+});
+router.post('/admin/deleteMeal', function (req, res) {
+    var mealId = req.body.mealId;
+    var response = {};
+    console.log(mealId);
+    // Delete Food Items
+    Meal.findById(mealId, function (error, meal) {
+        meal.remove(function (error) {
+            if (error) {
+                response = {"error": true, "message": "Error deleting meal."};
+                console.log(error);
+            } else {
+                response = {"error": false, "message": "Deleted successfully"};
+            }
+        });
+        res.json(response);
     });
 });
 

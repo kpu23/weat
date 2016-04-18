@@ -10,7 +10,7 @@ var mealSchema  = Schema({
   "name" : String,
   "price" : String,
   "available" : String,
-  "description" : ObjectId,
+  "description" : String,
   "imgPath" : String,
   "averagePrepTime" : Number, // in minutes
   "restaurantId" : ObjectId,

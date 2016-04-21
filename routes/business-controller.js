@@ -34,6 +34,11 @@ router.get('/custom_reports', function (req, res) {
     res.render('custom_reports', {title: 'weat: Custom Reports'});
 });
 
+// View Customers
+router.get('/view_customers', function (req, res) {
+    res.render('view_customers', {title: 'weat: View Customers'});
+});
+
 // Fetch Menus, Categories, Food Items
 router.post('/admin/fetchMenus', function (req, res) {
     var restaurantId;

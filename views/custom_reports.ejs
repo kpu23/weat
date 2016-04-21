@@ -15,22 +15,22 @@
                     <input type="text" style="color:black;" name="datefilter" value="" />
  
                     <script type="text/javascript">
-                    $(function() {
+                        $(function() {
 
-                    $('input[name="datefilter"]').daterangepicker({
-                    autoUpdateInput: false,
-                     ranges: {
-       'Today': [moment(), moment()],
-       'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-       'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-       'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-       'This Month': [moment().startOf('month'), moment().endOf('month')],
-       'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    },
-                    locale: {
-                    cancelLabel: 'Clear'
-                                    }
-                    });
+                            $('input[name="datefilter"]').daterangepicker({
+                                                autoUpdateInput: false,
+                                                ranges: {
+                                                    'Today': [moment(), moment()],
+                                                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                                                    },
+                                                locale: {
+                                                cancelLabel: 'Clear'
+                                                        }
+                                                    });
 
                     $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
                     $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
@@ -42,11 +42,23 @@
 
                     });
                     </script>
+                    <hr>
 
+                    <!-- Stats for Selected Date Range  -->  
 
+                   <h4> Date Range: </h4>
+                    <div class="rows">
+                        <div style="background-color: white; color: black;" class="col-md-3 col-md-offset-3">Total Orders: </div>
+                        <div style="background-color: white; color: black;" class="col-md-3">Total in Sales: </div>
+                        <div style="background-color: white; color: black;" class="col-md-3 col-md-offset-3">Top Selling Item: </div>
+                        <div style="background-color: white; color: black;" class="col-md-3">Day with Most Orders: </div>
+                        <div style="background-color: white; color: black;" class="col-md-3 col-md-offset-3">Day with Highest Sales: </div>
+                        <div style="background-color: white; color: black;" class="col-md-3">Time of Day with Most Orders:</div>
+                    
+                    </div>
 
-
-                    <!-- Stats for Selected Date Range  -->   
+                   
+         
                 
 
         </div>

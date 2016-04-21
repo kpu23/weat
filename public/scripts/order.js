@@ -3,6 +3,7 @@ var OrderModel = function () {
     self.items = ko.observableArray();
     self.paymentInfo = ko.observable();
     self.orderTotal = ko.observable(0);
+    self.restaurantId = '';
     self.fetchOrderData = function () {
         $.get("/getOrderData", function(result){
             console.log(result);
@@ -10,6 +11,7 @@ var OrderModel = function () {
                 alert('Error occurred. Please contact us at help@weat.com.')
             } else
                 // Combine Instructions with Food Item Data
+                self.restaurantId = result.restaurantId;
                 var itemsWithInstructions = [];
                 result.items.forEach(function (dbItem) {
                    result.instructions.forEach(function(item) {
@@ -33,7 +35,8 @@ var OrderModel = function () {
         });
         var orderData = {
             'paymentMethodId': '56c503be9bc2f4cc1396845e',
-            'itemIds': ids
+            'itemIds': ids,
+            restaurantId: self.restaurantId
         };
         console.log(ko.toJSON(orderData));
         $.post('/submitOrder',{order: ko.toJSON(orderData)}, function(response) {

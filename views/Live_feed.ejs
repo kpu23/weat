@@ -24,8 +24,8 @@
                   <div class="col-md-3" data-bind="text: order.user.firstName+' '+order.user.lastName"></div>
                   <div class="col-md-3" data-bind="text: order.user.phone"></div>
                   <div class="col-md-3">
-                    <button type="button" class="btn btn-success">Complete</button>
-                    <button type="button" class="btn btn-danger">Cancel</button>
+                    <button type="button" class="btn btn-success" data-bind="click: $root.updateOrderStatus.bind($data, 'completed'), clickBubble: false">Complete</button>
+                    <button type="button" class="btn btn-danger" data-bind="click: $root.updateOrderStatus.bind($data, 'cancelled'), clickBubble: false">Cancel</button>
                   </div> 
                   </div> 
                 </div>

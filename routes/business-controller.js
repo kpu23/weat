@@ -455,7 +455,7 @@ router.get('/admin/fetchOrderHistory', function (req, res) {
 
 });
 
-router.get('/admin/changeOrderStatus', function (req, res) {
+router.post('/admin/updateOrderStatus', function (req, res) {
     if (req.session) {
         var newStatus = req.body.status;
         var orderId = req.body.orderId;

@@ -20,7 +20,7 @@ router.get('/getOrderData', function (req, res) {
             }
             else {
                 console.log(items);
-                response = {items: items, instructions: req.session.order.items}
+                response = {items: items, instructions: req.session.order.items, restaurantId: req.session.order.restaurantId};
                 res.send(response);
             }
         });
@@ -44,6 +44,7 @@ router.post('/submitOrder', function(req, res) {
         order.userId = req.session.user._id;
         order.submitTime = Date.now();
         order.paymentMethodId = data.paymentMethodId;
+        order.restaurantId = data.restaurantId;
         order.items = req.session.order.items; //instructions
         order.itemIds = data.itemIds;
         order.save(function(err) {

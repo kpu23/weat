@@ -6,8 +6,6 @@ var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session')
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var Account = require('./models/account');
 var mongoose = require('mongoose');
 
 // connect to the db
@@ -37,7 +35,7 @@ var account = require('./routes/account-controller');
 var restaurant = require('./routes/restaurant-controller');
 var customer = require('./routes/customer-controller');
 var business = require('./routes/business-controller');
-
+var analytics = require('./routes/analytics-controller');
 
 var app = express();
 
@@ -67,6 +65,7 @@ app.use('/', account);
 app.use('/', restaurant);
 app.use('/', customer);
 app.use('/', business);
+app.use('/', analytics);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

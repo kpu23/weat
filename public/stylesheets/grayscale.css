@@ -569,3 +569,12 @@ input[type="password"] {
 .text-left {
     text-align: left;
 }
+
+.setting-save-btn {
+    float: right;
+    margin-top: 10px;
+}
+
+.settings-sm-payment-row {
+    margin-top: 10px;
+}

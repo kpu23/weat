@@ -11,37 +11,37 @@
                         <h3 class="panel-title">User Information</h3>
                       </div>
                       <div class="panel-body">
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-3 control-label">Firist Name</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: firstName">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-3 control-label">Last Name</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" value="<%= session.user.lastName %>" data-bind="initWithValue: lastName">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-3 control-label">Date of Birth</label>
                             <div class="col-sm-9">
                               <input type="date" class="form-control" value="<%= session.user.dob %>" data-bind="initWithValue: dob">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-3 control-label">Phone</label>
                             <div class="col-sm-9">
                               <input type="phone" class="form-control" value="<%= session.user.phone %>" data-bind="initWithValue: phone">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-3 control-label">Ethnicity</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" value="<%= session.user.ethnicity %>" data-bind="initWithValue: ethnicity">
                             </div>
                         </div>
-                        <!-- <div class="form-group">
+                        <!-- <div class="row">
                             <label class="col-sm-3 control-label">Gender</label>
                             <div class="col-sm-9">
                                 <select class="form-control" name="gender" required>
@@ -51,7 +51,7 @@
                                 </select>
                             </div>
                         </div> -->
-                        <button type="button" class="btn btn-info" data-bind="click: save">Save</button>
+                        <button type="button" class="btn btn-info setting-save-btn" data-bind="click: save">Save</button>
                       </div>
                     </div>
 
@@ -62,13 +62,13 @@
                         <h3 class="panel-title">Favorites</h3>
                       </div>
                       <div class="panel-body">
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-3 control-label">Favorites</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: favorites">
                             </div>
                         </div>                     
-                        <button type="button" class="btn btn-info" data-bind="click: save">Save</button>
+                        <button type="button" class="btn btn-info setting-save-btn" data-bind="click: save">Save</button>
                       </div>
                     </div> -->
 
@@ -79,13 +79,13 @@
                         <h3 class="panel-title">Change Email/Username</h3>
                       </div>
                       <div class="panel-body">
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-3 control-label">Email</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" value="<%= session.user.email %>" data-bind="initWithValue: email">
                             </div>
                         </div>                     
-                        <button type="button" class="btn btn-info" data-bind="click: save">Save</button>
+                        <button type="button" class="btn btn-info setting-save-btn" data-bind="click: save">Save</button>
                       </div>
                     </div>
                     <div class="panel panel-default" data-bind="with: passwordInfo">
@@ -93,19 +93,19 @@
                         <h3 class="panel-title">Change Password</h3>
                       </div>
                       <div class="panel-body">
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-3 control-label">New Password</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="value: newPassword">
                             </div>
                         </div>     
-                        <div class="form-group">
+                        <div class="row">
                             <label class="col-sm-3 control-label">Confirm Password</label>
                             <div class="col-sm-9">
                               <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="value: confirmPassword">
                             </div>
                         </div>                     
-                        <button type="button" class="btn btn-info" data-bind="click: save">Save</button>
+                        <button type="button" class="btn btn-info setting-save-btn" data-bind="click: save">Save</button>
                       </div>
                     </div>
                     <div class="panel panel-default" data-bind="with: paymentInfo">
@@ -113,51 +113,51 @@
                         <h3 class="panel-title">Payment Information</h3>
                       </div>
                       <div class="panel-body">
-                        <div class="form-group">
-                            <label class="control-label">Name On Card</label>
-                            <div class="">
-                              <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: nameOnCard">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Number</label>
-                            <div class="">
-                              <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: number">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Expiration Date</label>
+                        <div class="row">
+                            <label class="col-sm-3 control-label">Name On Card</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: expirationDate">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">CVV</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: cvv">
-                            </div>
-                        </div>           
-                        <div class="form-group">
-                            <label class="control-label">Address</label>
-                            <div class="">
-                              <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: address">
+                              <input type="text" class="form-control" value="<%= paymentOption.nameOnCard %>" data-bind="initWithValue: nameOnCard">
                             </div>
                         </div>
                         <div class="row">
+                            <label class="col-sm-3 control-label">Number</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" value="<%= paymentOption.number %>" data-bind="initWithValue: number">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-3 control-label">Expiration Date</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" value="<%= paymentOption.expirationDate %>" data-bind="initWithValue: expirationDate">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-3 control-label">CVV</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" value="<%= paymentOption.cvv %>" data-bind="initWithValue: cvv">
+                            </div>
+                        </div>           
+                        <div class="row">
+                            <label class="col-sm-3 control-label">Address</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" value="<%= paymentOption.address %>" data-bind="initWithValue: address">
+                            </div>
+                        </div>
+                        <div class="row settings-sm-payment-row">
                             <div class="col-sm-4">
                                 <label class="control-label">City</label>                               
-                                <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: city">                          
+                                <input type="text" class="form-control" value="<%= paymentOption.city %>" data-bind="initWithValue: city">                          
                             </div>
                             <div class="col-sm-4">
                                 <label class="control-label">State</label>                               
-                                <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: state">                         
+                                <input type="text" class="form-control" value="<%= paymentOption.state %>" data-bind="initWithValue: state">                         
                             </div>
                             <div class="col-sm-4">
                                 <label class="control-label">Zip</label>                               
-                                <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: zip">                          
+                                <input type="text" class="form-control" value="<%= paymentOption.zip %>" data-bind="initWithValue: zip">                          
                             </div>
                         </div>                                                      
-                        <button type="button" class="btn btn-info" data-bind="click: save">Save</button>
+                        <button type="button" class="btn btn-info setting-save-btn" data-bind="click: save">Save</button>
                       </div>
                     </div>
                 </div>

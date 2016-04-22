@@ -174,17 +174,28 @@ router.route("/logout")
   //Login Form
 router.route("/settings")
   .get( function(req, res) {
-      PaymentOption.findOne({acountId: req.session.user._id}, function(err, paymentOption) {
+      PaymentOption.findOne({acountId: req.session.user._id}, function(err, record) {
           if(err){              
               res.render('error', {
                   message: err.message,
                   error: err
               });
-          }else if (paymentOption){
+          }else{
+              var paymentOption = record;
+              if (!paymentOption){
+                  paymentOption = {
+                    "accountId" : "",
+                    "nameOnCard" : "",
+                    "number" : "",
+                    "expirationDate" : "",
+                    "cvv" : "",
+                    "address" : "",
+                    "city" : "",
+                    "state" : "",
+                    "zip" : "",
+                  }
+              }              
               res.render('account/settings',{title: 'weat: settings', validationMessage: '', paymentOption: paymentOption});
-          } else {
-              //no payment option
-              res.render('account/settings',{title: 'weat: settings', validationMessage: ''});
           }
       });
       

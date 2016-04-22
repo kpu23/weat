@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Order = require("../models/order");
+var Restaurant = require("../models/restaurant");
 var FoodItem = require("../models/food-item");
 
 /* GET Order Page */
@@ -60,8 +61,53 @@ router.post('/submitOrder', function(req, res) {
     } else {
         console.log('user is not logged in');
     }
-
-
 });
+
+router.get('/OrderHistory', function (req, res) {
+    console.log('fetch orders for customers', req.session);
+    if (req.session) {
+        var userId = req.session.user._id;
+        if (userId) {
+            Order.find({'user._id': userId}, function (error, orders) {
+                if (error) {
+                    console.log(error);
+                    res.send(null);
+                } else {
+                    console.log("history orders", orders);
+                    getRestaurantInformation(res, orders, 0);                
+                }
+            });
+        } else {
+            res.send(null);
+        }
+    }
+});
+
+function getRestaurantInformation(res, orders, index){   
+    var order = orders[index];
+    if(order){
+        Restaurant.findOne({_id: order.restaurantId}, function(error, restaurant){
+            console.log('resta', error, restaurant);
+            if(error){
+                console.log(error);
+            }else{
+                //rework this 
+                order.restaurantName = restaurant.displayName;
+                order.restaurantPhone = restaurant.phone;
+                order.restaurantImage = restaurant.imgPath;
+                console.log('resta', order);
+                res.send(order);
+                orders[index] = order;
+            }
+            index++;
+            if(index < orders.length){
+                getRestaurantInformation(res, orders, index);
+            }else{
+                res.send(orders);
+            }
+        });
+    }
+
+}
 
 module.exports = router;

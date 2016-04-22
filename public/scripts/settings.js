@@ -51,8 +51,7 @@ var passwordInfo = {
 			});
 		} else {
 			console.log('password does not match');
-		}
-		
+		}		
 	}
 }
 var paymentInfo = {
@@ -64,8 +63,19 @@ var paymentInfo = {
 	city: ko.observable(),
  	state: ko.observable(),
 	zip: ko.observable(),
-	save: function(data, event){
-		
+	save: function(data, event){		
+		$.post('/savePaymentInfo', {
+			nameOnCard: paymentInfo.nameOnCard(),
+			number: paymentInfo.number(),
+			expirationDate: paymentInfo.expirationDate(),
+			cvv: paymentInfo.cvv(),
+			address: paymentInfo.address(),
+			city: paymentInfo.city(),
+		 	state: paymentInfo.state(),
+			zip: paymentInfo.zip()					
+		}, function(res) {
+			console.log('res', res);
+		});		
 	}
 }
 

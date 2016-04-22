@@ -439,26 +439,26 @@ router.get('/admin/fetchLiveOrders', function (req, res) {
 
 });
 
-router.get('/admin/fetchOrderHistory', function (req, res) {
-    console.log('fetch orders ', req.session);
-    if (req.session) {
-        var restaurantId = req.session.user.restaurantId;
-        if (restaurantId) {
-            Order.find({status: {$ne: 'Pending'}}, function (error, orders) {
-                if (error) {
-                    console.log(error);
-                    res.send(null);
-                } else {
-                    console.log("history orders", orders);
-                    res.send(orders);
-                }
-            });
-        } else {
-            res.send(null);
-        }
-    }
+// router.get('/admin/fetchOrderHistory', function (req, res) {
+//     console.log('fetch orders ', req.session);
+//     if (req.session) {
+//         var restaurantId = req.session.user.restaurantId;
+//         if (restaurantId) {
+//             Order.find({status: {$ne: 'Pending'}}, function (error, orders) {
+//                 if (error) {
+//                     console.log(error);
+//                     res.send(null);
+//                 } else {
+//                     console.log("history orders", orders);
+//                     res.send(orders);
+//                 }
+//             });
+//         } else {
+//             res.send(null);
+//         }
+//     }
 
-});
+// });
 
 router.post('/admin/updateOrderStatus', function (req, res) {
     if (req.session) {

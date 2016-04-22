@@ -1,0 +1,55 @@
+<% include layouts/layout %>
+
+<!-- Restaurants -->
+<!-- Page Content -->
+<div id="customer-order-history" class="intro">
+    <div class="intro-body">
+        <div class="container">
+        	<h1 class="page-header">Order History</h1>
+          <h4 class="row">
+                  <div class="col-md-3">Restaurant</div>
+                  <div class="col-md-3">Submit Time</div>
+                  <div class="col-md-3">Phone</div>
+                  <div class="col-md-3">Status</div> 
+          </h4> 
+          <div class="panel-group" data-bind="foreach: orderList">
+            <div class="panel panel-default" data-bind="click: fetchFoodItems">
+              <div data-toggle="collapse" class="panel-heading collapsed click-cursor" data-bind="attr: {href: '#collapse-'+$index()}" aria-expanded="false">
+                <div class="panel-title">
+                  <div class="row">
+                  <div class="col-md-3" data-bind="text: order.submitTime"></div>
+                  <div class="col-md-3" data-bind="text: order.user.firstName+' '+order.user.lastName"></div>
+                  <div class="col-md-3" data-bind="text: order.user.phone"></div>
+                  <div class="col-md-3">
+                    <button type="button" class="btn btn-success" data-bind="click: $root.updateOrderStatus.bind($data, 'completed'), clickBubble: false">Complete</button>
+                    <button type="button" class="btn btn-danger" data-bind="click: $root.updateOrderStatus.bind($data, 'cancelled'), clickBubble: false">Cancel</button>
+                  </div> 
+                  </div> 
+                </div>
+              </div>
+              <div class="panel-collapse collapse" data-bind="attr: {id: 'collapse-'+$index()}" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body">
+                  <table class="table table-striped">
+                      <thead>
+                          <tr>
+                              <th align="left" class="col-md-5">Item Name</th>
+                              <th align="left" class="col-md-5">Special Instructions</th>
+                          </tr>
+                      </thead>
+                      <tbody data-bind="foreach: foodItems">
+                          <tr>
+                              <td class="text-left" data-bind="text: name"></td>
+                              <td class="text-left" data-bind="text: instructions"></td>
+                          </tr>
+                      </tbody>
+                  </table>                 
+                </div>
+              </div>
+            </div>
+          </div>
+		    </div>
+      </div>
+    </div>
+</div>
+
+<script src="/scripts/admin-live-feed.js"></script>

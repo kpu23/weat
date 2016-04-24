@@ -20,8 +20,9 @@
                         <tbody data-bind="foreach: items">
                             <tr>
                                 <td class="col-md-5" data-bind="text: name"></td>
-                                <td class="col-md-5" data-bind="text: instructions"></td>
+                                <td class="col-md-5" data-bind="text: instructions"></td> 
                                 <td class="col-md-2" data-bind="text: '$' + price"></td>
+                                <td class=""> <i class="fa fa-pencil-square-o fa-2x edit-item"></i> </td>
                             </tr>
                         </tbody>
                     </table>
@@ -30,6 +31,17 @@
                         <h4>No items</h4>
                     </div>
                     <!-- /ko -->
+                </div>
+                <div class="row">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-3"> Payment Information: </td>
+                                <td class="col-md-6"><input type="checkbox" name="useDefault" checked/> use default payment method (card ending in <span data-bind="text: paymentInfo"></span>)?</td> 
+                                <!-- <td class="col-md-3"><button class="btn btn-info">Use Different Card</button></td> -->
+                            <tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="panel-footer">

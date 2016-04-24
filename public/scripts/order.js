@@ -47,8 +47,20 @@ var OrderModel = function () {
             }
         });
     };
+
+    self.editItem = function(){
+
+    };
+
     self.fetchPaymentInfo = function () {
-        //TODO
+        $.post('/fetchPaymentInfo',{}, function(response) {
+            console.log(response);
+            var ccNumber = response[0].number;
+            if (!response.error) {
+                console.log('no error');
+                self.paymentInfo(ccNumber);
+            }
+        });
     };
 };
 

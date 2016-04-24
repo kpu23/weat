@@ -3,6 +3,7 @@ var router = express.Router();
 var Order = require("../models/order");
 var Restaurant = require("../models/restaurant");
 var FoodItem = require("../models/food-item");
+var PaymentOption = require("../models/payment-option");
 
 /* GET Order Page */
 router.get('/order', function(req, res) {
@@ -81,6 +82,30 @@ router.get('/OrderHistory', function (req, res) {
             res.send(null);
         }
     }
+});
+
+router.post('/fetchPaymentInfo', function (req, res) {
+
+    console.log('fetch payment info for customer');
+
+    if (req.session) {
+        var userId = req.session.user._id;
+        console.log("user id", userId);
+        if (userId) {
+            PaymentOption.find({acountId: userId}, function (error, payment) {
+                if (error) {
+                    console.log(error);
+                    res.send(null);
+                } else {
+                    console.log("payment option", payment); 
+                    res.send(payment);             
+                }
+            });
+        } else {
+            res.send(null);
+        }
+    }
+    
 });
 
 function getRestaurantInformation(res, orders, index){   

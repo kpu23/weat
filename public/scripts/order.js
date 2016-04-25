@@ -31,11 +31,11 @@ var OrderModel = function () {
         // construct data to send
         var ids = [];
         self.items().forEach(function(item) {
-            ids.push(item._id);
+            ids.push(item.itemId);
         });
         var orderData = {
-            'paymentMethodId': '56c503be9bc2f4cc1396845e',
-            'itemIds': ids,
+            paymentMethodId: '56c503be9bc2f4cc1396845e',
+            itemIds: ids,
             restaurantId: self.restaurantId,
             total: self.orderTotal()
         };

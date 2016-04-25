@@ -57,6 +57,7 @@ var OrderModel = function () {
         $.post('/fetchPaymentInfo',{}, function(response) {
             console.log(response);
             var ccNumber = response[0].number;
+            ccNumber = ccNumber.substring(ccNumber.length - 4, ccNumber.length);
             if (!response.error) {
                 console.log('no error');
                 self.paymentInfo(ccNumber);

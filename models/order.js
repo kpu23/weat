@@ -14,6 +14,7 @@ var orderSchema  = mongoose.Schema({
   "paymentMethodId" : mongoose.Schema.Types.ObjectId,
   "restaurantId" : mongoose.Schema.Types.ObjectId,
   "itemIds" : [mongoose.Schema.Types.ObjectId],
+  "total" : Number,
   "items" : [{ itemId : mongoose.Schema.Types.ObjectId, instructions : String }]
 });
 

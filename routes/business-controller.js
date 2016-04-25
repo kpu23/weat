@@ -24,11 +24,6 @@ router.get('/live_feed', function (req, res) {
     res.render('live_feed', {title: 'weat: live feed'});
 });
 
-// Marketing and Analytics
-router.get('/marketing_analytics', function (req, res) {
-    res.render('marketing_analytics', {title: 'weat: Marketing & Analytics'});
-});
-
 // Custom Reports
 router.get('/custom_reports', function (req, res) {
     res.render('custom_reports', {title: 'weat: Custom Reports'});

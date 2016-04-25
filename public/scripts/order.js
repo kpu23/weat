@@ -9,21 +9,21 @@ var OrderModel = function () {
             console.log(result);
             if (result.error) {
                 alert('Error occurred. Please contact us at help@weat.com.')
-            } else
+            } else {
                 // Combine Instructions with Food Item Data
                 self.restaurantId = result.restaurantId;
-                var itemsWithInstructions = [];
-                result.items.forEach(function (dbItem) {
-                   result.instructions.forEach(function(item) {
-                        if(item.itemId == dbItem._id) {
-                            dbItem.instructions = item.instructions;
-                            itemsWithInstructions.push(dbItem);
-                        }
-                    });
-                    console.log(dbItem);
-                    self.orderTotal(self.orderTotal()+ dbItem.price) ;
+                var orderItems = [];
+                console.log(result.orderItems);
+                var total = 0;
+                result.orderItems.forEach(function(item) {
+                    var price = parseFloat(item.price)
+                    total += price;
+                    orderItems.push(item);
                 });
-                self.items(itemsWithInstructions);
+                total = total.toFixed(2);
+                self.orderTotal(total);
+                self.items(orderItems);
+            }
         });
     };
     // Members

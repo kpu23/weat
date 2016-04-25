@@ -11,7 +11,7 @@ router.get('/order', function(req, res) {
 });
 router.get('/getOrderData', function (req, res) {
     var response = {};
-    console.log('getorderdata', req.session.order.itemIds);
+    console.log('getorderdata', req.session.order);
     if(req.session.order != null) {
         //grab items
         FoodItem.find({_id: {$in: req.session.order.itemIds}}, function (error, items){
@@ -22,7 +22,7 @@ router.get('/getOrderData', function (req, res) {
             }
             else {
                 console.log(items);
-                response = {items: items, instructions: req.session.order.items, restaurantId: req.session.order.restaurantId};
+                response = {orderItems: req.session.order.items, restaurantId: req.session.order.restaurantId};
                 res.send(response);
             }
         });

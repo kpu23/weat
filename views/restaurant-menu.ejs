@@ -38,7 +38,7 @@
                                             <div data-bind="foreach: foodItems">
                                                 <div class="menu-item col-md-4" data-bind="click: $root.clickItem, attr:{id: id}">
                                                     <h4 data-bind="text: name" title="item-name"></h4>
-                                                    <h4 data-bind="text: price" title="item-price"></h4>
+                                                    <h4 data-bind="text: ('$' + price())" title="item-price"></h4>
                                                     <img width="300" height="200" data-bind="attr:{src: imgPath}">
                                                     <h4 style="margin:10px;" data-bind="text: description" title="decription"></h4>
                                                 </div>

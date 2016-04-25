@@ -71,6 +71,8 @@ router.route("/restaurants/AddItemToOrder").post(function(req, res) {
     var quantity = req.body.quantity;
     var instructions = req.body.instructions;
     var price = req.body.price;
+    var name = req.body.name;
+
     console.log('HELLO');
     console.log(price);
     if(itemId && restaurantId) {
@@ -89,7 +91,7 @@ router.route("/restaurants/AddItemToOrder").post(function(req, res) {
         }
         for (var i = 0; i < quantity; i++) {
             console.log(price);
-            req.session.order.items.push({itemId: itemId, instructions: instructions, price: price});
+            req.session.order.items.push({itemId: itemId, instructions: instructions, name: name, price: price});
             console.log(req.session.order.items);
         }
         res.send({success: true, message: "item added to new order"});

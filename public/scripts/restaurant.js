@@ -93,7 +93,7 @@ var MenuViewModel = function() {
         var instructions = $("#special-instructions-text").val();
         //Add item to order
         console.log(item.price());
-        $.post("/restaurants/AddItemToOrder", {itemId: item.id(), restaurantId: restaurantId, quantity: quantity, instructions: instructions, price: item.price()}, function(response){
+        $.post("/restaurants/AddItemToOrder", {itemId: item.id(), restaurantId: restaurantId, quantity: quantity, name: item.name(), instructions: instructions, price: item.price()}, function(response){
             console.log(response.message);
             $("#show-food-item-options").modal("hide");
 

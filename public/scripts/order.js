@@ -30,13 +30,16 @@ var OrderModel = function () {
     self.submitOrder = function () {
         // construct data to send
         var ids = [];
+        var total = 0;
         self.items().forEach(function(item) {
             ids.push(item._id);
+            total += item.price;
         });
         var orderData = {
             'paymentMethodId': '56c503be9bc2f4cc1396845e',
             'itemIds': ids,
-            restaurantId: self.restaurantId
+            restaurantId: self.restaurantId,
+            total: total
         };
         console.log(ko.toJSON(orderData));
         $.post('/submitOrder',{order: ko.toJSON(orderData)}, function(response) {

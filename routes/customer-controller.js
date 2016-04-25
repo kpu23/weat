@@ -47,6 +47,7 @@ router.post('/submitOrder', function(req, res) {
         order.submitTime = Date.now();
         order.paymentMethodId = data.paymentMethodId;
         order.restaurantId = data.restaurantId;
+        order.total = data.total;
         order.items = req.session.order.items; //instructions
         order.itemIds = data.itemIds;
         order.save(function(err) {

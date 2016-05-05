@@ -28,34 +28,46 @@ var OrderModel = function () {
     };
     // Members
     self.submitOrder = function () {
-        // construct data to send
-        var ids = [];
-        self.items().forEach(function(item) {
-            ids.push(item._id);
-        });
-        var orderData = {
-            'paymentMethodId': '56c503be9bc2f4cc1396845e',
-            'itemIds': ids,
-            restaurantId: self.restaurantId
-        };
-        console.log(ko.toJSON(orderData));
-        $.post('/submitOrder',{order: ko.toJSON(orderData)}, function(response) {
-            console.log(response);
-            if (!response.error) {
-                $('#my-order').hide();
-                $('#thank-you').fadeIn();
-            }
-        });
+        if(!$("#cc-num").val()) //$("#cc_num").is(":visible") && 
+        {
+            alert("Please enter a payment method to continue!");
+        }
+        else
+        {
+
+            // construct data to send
+            var ids = [];
+            self.items().forEach(function(item) {
+                ids.push(item._id);
+            });
+            var orderData = {
+                'paymentMethodId': '56c503be9bc2f4cc1396845e',
+                'itemIds': ids,
+                restaurantId: self.restaurantId
+            };
+            console.log(ko.toJSON(orderData));
+            $.post('/submitOrder',{order: ko.toJSON(orderData)}, function(response) {
+                console.log(response);
+                if (!response.error) {
+                    $('#my-order').hide();
+                    $('#thank-you').fadeIn();
+                }
+            });
+        }
     };
 
-    self.editItem = function(){
-
+    self.showPaymentMethod = function(){
+        $("#payment-method").show();
     };
 
     self.fetchPaymentInfo = function () {
         $.post('/fetchPaymentInfo',{}, function(response) {
             console.log(response);
-            var ccNumber = response[0].number;
+            if(response[0] && response[0].number) 
+            { 
+                var ccNumber = response[0].number.substr(response[0].number.length - 4); 
+                console.log(ccNumber);
+            }
             if (!response.error) {
                 console.log('no error');
                 self.paymentInfo(ccNumber);
@@ -69,5 +81,9 @@ $(document).ready(function(){
     orderModel.fetchOrderData();
     orderModel.fetchPaymentInfo();
     ko.applyBindings(orderModel, document.getElementById('my-order'));
+
+    $("#new-card").on("click", function(){
+        $("#payment-method").show();
+    });
 });
 

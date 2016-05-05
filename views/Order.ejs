@@ -22,7 +22,8 @@
                                 <td class="col-md-5" data-bind="text: name"></td>
                                 <td class="col-md-5" data-bind="text: instructions"></td> 
                                 <td class="col-md-2" data-bind="text: '$' + price"></td>
-                                <td class=""> <i class="fa fa-pencil-square-o fa-2x edit-item"></i> </td>
+                                <td class="edit-item"> <span title="edit item"><i class="fa fa-pencil-square-o fa-2x edit-item"></i> </span></td>
+                                <td class="edit-item"> <span title="delete item"><i class="fa fa-minus-circle fa-2x edit-item"></i></span> </td>
                             </tr>
                         </tbody>
                     </table>
@@ -32,16 +33,136 @@
                     </div>
                     <!-- /ko -->
                 </div>
+                <!-- ko if: !paymentInfo() -->
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                           <h3 class="panel-title">Please enter a payment method to continue:</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <label class="col-sm-3 control-label">Name On Card</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">Number</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="ccnum">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">Expiration Date</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">CVV</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>           
+                            <div class="row">
+                                <label class="col-sm-3 control-label">Address</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">City</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">State</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">Zip</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+                <!-- ko if: paymentInfo() -->
                 <div class="row">
                     <table class="table">
                         <tbody>
                             <tr>
                                 <td class="col-md-3"> Payment Information: </td>
                                 <td class="col-md-6"><input type="checkbox" name="useDefault" checked/> use default payment method (card ending in <span data-bind="text: paymentInfo"></span>)?</td> 
-                                <!-- <td class="col-md-3"><button class="btn btn-info">Use Different Card</button></td> -->
+                                <td class="col-md-3"><button id="new-card" class="btn btn-info" data-bind="click: showPaymentMethod">Use Different Card</button></td>
                             <tr>
                         </tbody>
                     </table>
+                </div>
+                <!-- /ko -->
+
+
+                <div class="row" style="display:none;" id="payment-method">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                           <h3 class="panel-title">Please enter a payment method to continue:</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <label class="col-sm-3 control-label">Name On Card</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">Number</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="ccnum">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">Expiration Date</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">CVV</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>           
+                            <div class="row">
+                                <label class="col-sm-3 control-label">Address</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">City</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">State</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-3 control-label">Zip</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="panel-footer">
@@ -59,3 +180,8 @@
 </div>
 
 <script src="/scripts/order.js"></script>
+<style>
+.edit-item{
+    cursor:pointer;
+}
+</style>

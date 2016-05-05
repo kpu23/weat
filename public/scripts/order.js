@@ -4,6 +4,7 @@ var OrderModel = function () {
     self.paymentInfo = ko.observable();
     self.orderTotal = ko.observable(0);
     self.restaurantId = '';
+
     self.fetchOrderData = function () {
         $.get("/getOrderData", function(result){
             console.log(result);
@@ -26,6 +27,7 @@ var OrderModel = function () {
             }
         });
     };
+
     // Members
     self.submitOrder = function () {
         // construct data to send
@@ -49,17 +51,19 @@ var OrderModel = function () {
         });
     };
 
-    self.editItem = function(){
 
+    self.showPaymentMethod = function(){
+        $("#payment-method").show();
+        $("#default-payment").attr("checked", false);
     };
 
     self.fetchPaymentInfo = function () {
         $.post('/fetchPaymentInfo',{}, function(response) {
             console.log(response);
-            var ccNumber = response[0].number;
-            ccNumber = ccNumber.substring(ccNumber.length - 4, ccNumber.length);
-            if (!response.error) {
-                console.log('no error');
+            if(!response.error && response[0] && response[0].number) 
+            { 
+                var ccNumber = response[0].number.substr(response[0].number.length - 4); 
+                console.log(ccNumber);
                 self.paymentInfo(ccNumber);
             }
         });

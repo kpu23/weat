@@ -4,57 +4,53 @@ var OrderModel = function () {
     self.paymentInfo = ko.observable();
     self.orderTotal = ko.observable(0);
     self.restaurantId = '';
+
     self.fetchOrderData = function () {
         $.get("/getOrderData", function(result){
             console.log(result);
             if (result.error) {
                 alert('Error occurred. Please contact us at help@weat.com.')
-            } else
+            } else {
                 // Combine Instructions with Food Item Data
                 self.restaurantId = result.restaurantId;
-                var itemsWithInstructions = [];
-                result.items.forEach(function (dbItem) {
-                   result.instructions.forEach(function(item) {
-                        if(item.itemId == dbItem._id) {
-                            dbItem.instructions = item.instructions;
-                            itemsWithInstructions.push(dbItem);
-                        }
-                    });
-                    console.log(dbItem);
-                    self.orderTotal(self.orderTotal()+ dbItem.price) ;
+                var orderItems = [];
+                console.log(result.orderItems);
+                var total = 0;
+                result.orderItems.forEach(function(item) {
+                    var price = parseFloat(item.price)
+                    total += price;
+                    orderItems.push(item);
                 });
-                self.items(itemsWithInstructions);
+                total = total.toFixed(2);
+                self.orderTotal(total);
+                self.items(orderItems);
+            }
         });
     };
+
     // Members
     self.submitOrder = function () {
-        if(!$("#cc-num").val()) //$("#cc_num").is(":visible") && 
-        {
-            alert("Please enter a payment method to continue!");
-        }
-        else
-        {
-
-            // construct data to send
-            var ids = [];
-            self.items().forEach(function(item) {
-                ids.push(item._id);
-            });
-            var orderData = {
-                'paymentMethodId': '56c503be9bc2f4cc1396845e',
-                'itemIds': ids,
-                restaurantId: self.restaurantId
-            };
-            console.log(ko.toJSON(orderData));
-            $.post('/submitOrder',{order: ko.toJSON(orderData)}, function(response) {
-                console.log(response);
-                if (!response.error) {
-                    $('#my-order').hide();
-                    $('#thank-you').fadeIn();
-                }
-            });
-        }
+        // construct data to send
+        var ids = [];
+        self.items().forEach(function(item) {
+            ids.push(item.itemId);
+        });
+        var orderData = {
+            paymentMethodId: '56c503be9bc2f4cc1396845e',
+            itemIds: ids,
+            restaurantId: self.restaurantId,
+            total: self.orderTotal()
+        };
+        console.log(ko.toJSON(orderData));
+        $.post('/submitOrder',{order: ko.toJSON(orderData)}, function(response) {
+            console.log(response);
+            if (!response.error) {
+                $('#my-order').hide();
+                $('#thank-you').fadeIn();
+            }
+        });
     };
+
 
     self.showPaymentMethod = function(){
         $("#payment-method").show();
@@ -63,12 +59,10 @@ var OrderModel = function () {
     self.fetchPaymentInfo = function () {
         $.post('/fetchPaymentInfo',{}, function(response) {
             console.log(response);
-            if(response[0] && response[0].number) 
+            if(!response.error & response[0] && response[0].number) 
             { 
                 var ccNumber = response[0].number.substr(response[0].number.length - 4); 
-                console.log(ccNumber);
-            }
-            if (!response.error) {
+                console.log(ccNumber);                
                 console.log('no error');
                 self.paymentInfo(ccNumber);
             }
@@ -81,9 +75,5 @@ $(document).ready(function(){
     orderModel.fetchOrderData();
     orderModel.fetchPaymentInfo();
     ko.applyBindings(orderModel, document.getElementById('my-order'));
-
-    $("#new-card").on("click", function(){
-        $("#payment-method").show();
-    });
 });
 

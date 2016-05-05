@@ -33,7 +33,7 @@
                     </div>
                     <!-- /ko -->
                 </div>
-                <!-- ko if: !paymentInfo() && items().length > 1-->
+                <!-- ko if: !paymentInfo() && items().length > 1 -->
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -92,13 +92,13 @@
                     </div>
                 </div>
                 <!-- /ko -->
-                <!-- ko if: paymentInfo() && items().length > 1 -->
+                <!-- ko if: paymentInfo() -->
                 <div class="row">
                     <table class="table">
                         <tbody>
                             <tr>
                                 <td class="col-md-3"> Payment Information: </td>
-                                <td class="col-md-6"><input type="checkbox" name="useDefault" checked/> use default payment method (card ending in <span data-bind="text: paymentInfo"></span>)?</td> 
+                                <td class="col-md-6"><input type="checkbox" name="useDefault" id='default-payment' checked/> use default payment method (card ending in <span data-bind="text: paymentInfo"></span>)?</td> 
                                 <td class="col-md-3"><button id="new-card" class="btn btn-info" data-bind="click: showPaymentMethod">Use Different Card</button></td>
                             <tr>
                         </tbody>

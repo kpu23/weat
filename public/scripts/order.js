@@ -54,16 +54,16 @@ var OrderModel = function () {
 
     self.showPaymentMethod = function(){
         $("#payment-method").show();
+        $("#default-payment").attr("checked", false);
     };
 
     self.fetchPaymentInfo = function () {
         $.post('/fetchPaymentInfo',{}, function(response) {
             console.log(response);
-            if(!response.error & response[0] && response[0].number) 
+            if(!response.error && response[0] && response[0].number) 
             { 
                 var ccNumber = response[0].number.substr(response[0].number.length - 4); 
-                console.log(ccNumber);                
-                console.log('no error');
+                console.log(ccNumber);
                 self.paymentInfo(ccNumber);
             }
         });

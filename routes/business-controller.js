@@ -24,11 +24,6 @@ router.get('/live_feed', function (req, res) {
     res.render('live_feed', {title: 'weat: live feed'});
 });
 
-// Custom Reports
-router.get('/custom_reports', function (req, res) {
-    res.render('custom_reports', {title: 'weat: Custom Reports'});
-});
-
 // View Customers
 router.get('/view_customers', function (req, res) {
     res.render('view_customers', {title: 'weat: View Customers'});

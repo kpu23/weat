@@ -130,7 +130,7 @@ router.get('/marketing_analytics', function (req, res) {
     var today = new Date();
     console.log(today);
     //get daily orders
-    Order.find({}, function(error, orders) {       
+    Order.find({restaurantId: restaurantId}, function(error, orders) {       
         if (orders) {
             data.numbOfOrders = orders.length;
             console.log(orders);   

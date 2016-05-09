@@ -8,107 +8,113 @@ var FoodItem = require("../models/food-item");
 
 // Custom Reports
 router.get('/custom_reports', function (req, res) {
-    var model = {
-        totalOrders: 0,
-        totalSales: 0,
-        topSellingItem: '',
-        dayOfMostOrders: '',
-        dayOfHighestSales: '',
-        timeOfMostOrders: ''
-    };
+    if(req.session){
+        var model = {
+            totalOrders: 0,
+            totalSales: 0,
+            topSellingItem: '',
+            dayOfMostOrders: '',
+            dayOfHighestSales: '',
+            timeOfMostOrders: ''
+        };
 
-    var restaurantId = req.session.user.restaurantId;
-    var fromDate = req.body.fromDate;
-    var toDate = req.body.toDate;
-    Order.find({}, function(error, orders) {
-        //var orderCountByHours = new Array(24); //each index = an hour
-        var foodItemHash = {};
-        var dayOfMostOrdersHash = {};
-        var dayOfHighestSalesHash = {};
-        var timeOfMostOrdersHash = {};
-        if (orders) {
-            for(i = 0; i < orders.length; i++) {
-                //get total orders
-                model.totalOrders++;
-                //get total sales
-                model.totalSales += orders[i].total;
-                //get top selling item
-                for(j = 0; j < orders[i].itemIds.length; j++){
+        var restaurantId = req.session.user.restaurantId;
+        var fromDate = req.body.fromDate;
+        var toDate = req.body.toDate;
+        console.log("range", fromDate, toDate);
+        Order.find({}, function(error, orders) {
+            //var orderCountByHours = new Array(24); //each index = an hour
+            var foodItemHash = {};
+            var dayOfMostOrdersHash = {};
+            var dayOfHighestSalesHash = {};
+            var timeOfMostOrdersHash = {};
+            if (orders) {
+                for(i = 0; i < orders.length; i++) {
+                    //get total orders
+                    model.totalOrders++;
+                    //get total sales
+                    model.totalSales += orders[i].total;
+                    //get top selling item
+                    for(j = 0; j < orders[i].itemIds.length; j++){
+                        
+                        if(foodItemHash[orders[i].itemIds[j]]) {
+                            foodItemHash[orders[i].itemIds[j]] ++;
+                        } else {
+                            foodItemHash[orders[i].itemIds[j]] = 1                       
+                        };
+                    }  
+                    //day of most orders
+                    if(dayOfMostOrdersHash[orders[i].submitTime]) {
+                            dayOfMostOrdersHash[orders[i].submitTime] ++;
+                        } else {
+                            dayOfMostOrdersHash[orders[i].submitTime] = 1                       
+                        };
+                    //day of highest sales
+                    if(dayOfHighestSalesHash[orders[i].submitTime]) {
+                            dayOfHighestSalesHash[orders[i].submitTime] += orders[i].total;  
+                        } else {
+                            dayOfHighestSalesHash[orders[i].submitTime] = orders[i].total;                       
+                        };
+                    //time of most orders
+                    var hour = orders[i].submitTime.getHours();
+                    if(timeOfMostOrdersHash[hour]) {
+                            timeOfMostOrdersHash[hour] ++;
+                        } else {
+                            timeOfMostOrdersHash[hour] = 1                       
+                        };
                     
-                    if(foodItemHash[orders[i].itemIds[j]]) {
-                        foodItemHash[orders[i].itemIds[j]] ++;
-                    } else {
-                        foodItemHash[orders[i].itemIds[j]] = 1                       
-                    };
-                }  
-                //day of most orders
-                if(dayOfMostOrdersHash[orders[i].submitTime]) {
-                        dayOfMostOrdersHash[orders[i].submitTime] ++;
-                    } else {
-                        dayOfMostOrdersHash[orders[i].submitTime] = 1                       
-                    };
-                //day of highest sales
-                if(dayOfHighestSalesHash[orders[i].submitTime]) {
-                        dayOfHighestSalesHash[orders[i].submitTime] += orders[i].total;  
-                    } else {
-                        dayOfHighestSalesHash[orders[i].submitTime] = orders[i].total;                       
-                    };
-                //time of most orders
-                var hour = order.submitTime.getHours();
-                if(timeOfMostOrdersHash[hour]) {
-                        timeOfMostOrdersHash[hour] ++;
-                    } else {
-                        timeOfMostOrdersHash[hour] = 1                       
-                    };
-                
-                // if(!orderCountByHours[hour]) {
-                //     orderCountByHours[hour] = 1
-                // } else {
-                //     orderCountByHours[hour] ++;
-                // };
-                //console.log(orderCountByHours);
-            }
+                    // if(!orderCountByHours[hour]) {
+                    //     orderCountByHours[hour] = 1
+                    // } else {
+                    //     orderCountByHours[hour] ++;
+                    // };
+                    //console.log(orderCountByHours);
+                }
 
-            //get top seller
-            var topSellerItemId;
-            for(var key in itemIdHashmap){
-                if(!topSellerItemId || foodItemHash[key] > foodItemHash[topSellerItemId]){
-                    topSellerItemId = key;
+                //get top seller
+                var topSellerItemId;
+                for(var key in foodItemHash){
+                    if(!topSellerItemId || foodItemHash[key] > foodItemHash[topSellerItemId]){
+                        topSellerItemId = key;
+                    }
                 }
-            }
-            var dayOfMostOrders;
-            for(var key in dayOfMostOrdersHash){
-                if(!dayOfMostOrders || dayOfMostOrdersHash[key] > dayOfMostOrdersHash[dayOfMostOrders]){
-                    dayOfMostOrders = key;
+                var dayOfMostOrders;
+                for(var key in dayOfMostOrdersHash){
+                    if(!dayOfMostOrders || dayOfMostOrdersHash[key] > dayOfMostOrdersHash[dayOfMostOrders]){
+                        dayOfMostOrders = key;
+                    }
                 }
-            }
-            var dayOfHighestSales;
-            for(var key in dayOfHighestSalesHash){
-                if(!dayOfHighestSales || dayOfHighestSalesHash[key] > dayOfHighestSalesHash[dayOfHighestSales]){
-                    dayOfHighestSales = key;
+                var dayOfHighestSales;
+                for(var key in dayOfHighestSalesHash){
+                    if(!dayOfHighestSales || dayOfHighestSalesHash[key] > dayOfHighestSalesHash[dayOfHighestSales]){
+                        dayOfHighestSales = key;
+                    }
                 }
-            }
-            var timeOfMostOrders;
-            for(var key in timeOfMostOrdersHash){
-                if(!timeOfMostOrders || timeOfMostOrdersHash[key] > timeOfMostOrdersHash[timeOfMostOrders]){
-                    timeOfMostOrders = key;
+                var timeOfMostOrders;
+                for(var key in timeOfMostOrdersHash){
+                    if(!timeOfMostOrders || timeOfMostOrdersHash[key] > timeOfMostOrdersHash[timeOfMostOrders]){
+                        timeOfMostOrders = key;
+                    }
                 }
-            }
-            //set result to model
-            model.dayOfMostOrders = dayOfMostOrders;
-            model.dayOfHighestSales = dayOfHighestSales;
-            model.timeOfMostOrders = timeOfMostOrders;
+                //set result to model
+                var domo = new Date(dayOfMostOrders);
+                var dohs = new Date(dayOfHighestSales);
+                model.dayOfMostOrders = (domo.getMonth()+1) +'/'+ domo.getDate() +'/'+ domo.getFullYear();
+                model.dayOfHighestSales = (dohs.getMonth()+1) +'/'+ dohs.getDate() +'/'+ dohs.getFullYear();
+                model.timeOfMostOrders = timeOfMostOrders;
 
-            FoodItem.findOne({_id: topSellerItemId}, function (error, item){
-                if(item){
-                    model.topSellingItem = item.name;
-                    console.log(item);
-                }              
-                res.render('custom_reports', {title: 'weat: Custom Reports', modelData: model});
-            });
-        }
-        //res.render('custom_reports', {title: 'weat: Custom Reports'});
-    });
+                FoodItem.findOne({_id: topSellerItemId}, function (error, item){
+                    if(item){
+                        model.topSellingItem = item.name;
+                    }              
+                    res.render('custom_reports', {title: 'weat: Custom Reports', model: model});
+                });
+            }
+            //res.render('custom_reports', {title: 'weat: Custom Reports'});
+        });
+    } else {
+
+    }
 });
 
 // Marketing and Analytics

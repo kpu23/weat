@@ -183,4 +183,31 @@ router.post('/admin/getDailyOrderData', function (req, res) {
     });
 });
 
+router.get('/admin/getCustomerHistory', function (req, res) {
+    var restaurantId = req.session.user.restaurantId;
+    Order.find({}, function(error, orders) {
+        var customers = [];
+        if (orders) {
+            orders.forEach(function (order) {
+                console.log(customers[0], order.user);
+                addToArrayIfNotExists(customers, order.user);
+            });
+        }
+        res.send(customers);
+    });
+});
+
+function addToArrayIfNotExists(array, item) {
+    var exists = false;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i]._id == item._id) {
+            exists = true;
+            break;
+        }
+    }
+    if (!exists) {
+        array.push(item);
+    }
+};
+
 module.exports = router;

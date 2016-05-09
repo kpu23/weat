@@ -30,8 +30,41 @@ var AnalyticsModel = function () {
     };
 };
 
+
+var CustomerHistoryModel = function () {
+    var self = this;
+    self.customers = ko.observableArray();
+    self.getCustomerHistory = function () {
+        $.get('admin/getCustomerHistory', function(customers) {
+            customers.forEach(function(customer) {
+                if (!customer.gender) {
+                    customer.gender = '';
+                }
+                if (!customer.occupation) {
+                    customer.occupation = '';
+                }
+                if (customer.dob) {
+                    var dob = new Date(customer.dob).getFullYear();
+                    console.log(customer);
+                    customer.dob = new Date().getFullYear() - dob;    
+                }
+            });
+            self.customers(customers);
+        });        
+    }
+
+};
+
+
 $(document).ready(function(){
-    var analyticsModel = new AnalyticsModel();
-    ko.applyBindings(analyticsModel);
-    analyticsModel.getDailyOrderData();
+    if ($('#analytics-home').length > 0) {
+       var analyticsModel = new AnalyticsModel();
+        ko.applyBindings(analyticsModel);
+        analyticsModel.getDailyOrderData();     
+    }
+    if ($('#customer-history').length > 0) {
+       var customerHistoryModel = new CustomerHistoryModel();
+        ko.applyBindings(customerHistoryModel);
+        customerHistoryModel.getCustomerHistory();     
+    }
 });

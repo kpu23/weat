@@ -2,22 +2,38 @@
 
 <!-- Restaurants -->
 <!-- Page Content -->
-<div id="live-feed" class="intro">
-    <div class="intro-body">
+<div id="customer-history" class="weat-content">
         <div class="container">
-
-        	<h1 class="page-header">Customer History</h1>
-
-          <h4 class="row">
-                  <div class="col-md-2">Name</div>
-                  <div class="col-md-2">Email</div>
-                  <div class="col-md-2">Age</div>
-                  <div class="col-md-2">Gender</div>
-                  <div class="col-md-2">Ethnicity</div>
-                  <div class="col-md-2">Occupation</div>   
-          </h4> 
-        </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3>Customer History</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped">
+                <thead>
+                    <tr>
+                      <td>Name</td>
+                      <td>Email</td>
+                      <td>Age</td>
+                      <td>Gender</td>
+                      <td>Ethnicity</td>
+                      <td>Occupation</td>                      
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: customers">
+                    <tr>
+                        <td data-bind="text: firstName + ' ' + lastName"></td>
+                        <td data-bind="text: email"></td>
+                        <td data-bind="text: dob"></td>
+                        <td data-bind="text: gender"></td>
+                        <td data-bind="text: ethnicity"></td>
+                        <td data-bind="text: occupation"></td>
+                    </tr>
+                </tbody>
+              </table> 
+            </div>
+          </div> 
       </div>
           
 
-<script src="/scripts/admin-live-feed.js"></script>
+<script src="/scripts/admin-analytics.js"></script>

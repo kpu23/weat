@@ -14,39 +14,11 @@
                     <!-- Date Picker -->
                     <input id="dateRange" type="text" style="color:black;" name="datefilter" value="" />
  
-                    <script type="text/javascript">
-                        $(function() {
-
-                            $('input[name="datefilter"]').daterangepicker({
-                                                autoUpdateInput: false,
-                                                ranges: {
-                                                    'Today': [moment(), moment()],
-                                                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                                                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                                                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                                                    },
-                                                locale: {
-                                                cancelLabel: 'Clear'
-                                                        }
-                                                    });
-
-                    $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-                    $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-                    });
-
-                    $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-                    $(this).val('');
-                    });
-
-                    });
-                    </script>
                     <hr>
 
                     <!-- Stats for Selected Date Range  -->  
 
-                   <h4> Date Range: </h4>
+                   <h4>My Report</h4>
                     <div class="rows">
                         <div id="totalOrders" style="background-color: white; color: black;" class="col-md-3 col-md-offset-3">Total Orders: <%= model.totalOrders %></div>
                         <div id="totalSales" style="background-color: white; color: black;" class="col-md-3">Total in Sales: <%= model.totalSales %></div>
@@ -64,11 +36,6 @@
                     <div class="col-md-12">
                     <a href="javascript:demoTwoPageDocument()" style="background-color:#5dade2" class="btn btn-info btn-lg" role="button">Save Report</a>
                     </div>
-
-                   
-         
-                
-
         </div>
     </div>
 </div>

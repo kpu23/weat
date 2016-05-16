@@ -62,6 +62,7 @@ router.post('/submitOrder', function(req, res) {
         });
     } else {
         console.log('user is not logged in');
+        res.json({"error": true, "message": "user is not logged in."});
     }
 });
 

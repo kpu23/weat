@@ -2,7 +2,14 @@ var OrderModel = function () {
     var self = this;
     self.items = ko.observableArray();
     self.paymentInfo = ko.observable();
-    self.orderTotal = ko.observable(0);
+    self.orderTotal = ko.computed(function()  {
+        var total = 0;
+        self.items().forEach(function(item) {
+            var price = parseFloat(item.price)
+            total += price;
+        });
+        return total.toFixed(2);
+    });
     self.restaurantId = '';
 
     self.fetchOrderData = function () {
@@ -15,17 +22,16 @@ var OrderModel = function () {
                 self.restaurantId = result.restaurantId;
                 var orderItems = [];
                 console.log(result.orderItems);
-                var total = 0;
                 result.orderItems.forEach(function(item) {
-                    var price = parseFloat(item.price)
-                    total += price;
                     orderItems.push(item);
                 });
-                total = total.toFixed(2);
-                self.orderTotal(total);
                 self.items(orderItems);
             }
         });
+    };
+
+    self.deleteItem = function (item) {
+        self.items.remove(item);
     };
 
     // Members
@@ -47,6 +53,8 @@ var OrderModel = function () {
             if (!response.error) {
                 $('#my-order').hide();
                 $('#thank-you').fadeIn();
+            } else {
+                alert('Please login to order.');
             }
         });
     };

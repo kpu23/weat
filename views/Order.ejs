@@ -14,16 +14,16 @@
                             <tr>
                                 <th align="left" class="col-md-5">Item Name</th>
                                 <th align="left" class="col-md-5">Special Instructions</th>
-                                <th align="left" class="col-md-2">Price</th>
+                                <th align="left" class="col-md-1">Price</th>
+                                <th align="left" class="col-md-1"></th>
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: items">
                             <tr>
                                 <td class="col-md-5" data-bind="text: name"></td>
                                 <td class="col-md-5" data-bind="text: instructions"></td> 
-                                <td class="col-md-2" data-bind="text: '$' + price"></td>
-                                <td class="edit-item"> <span title="edit item"><i class="fa fa-pencil-square-o fa-2x edit-item"></i> </span></td>
-                                <td class="edit-item"> <span title="delete item"><i class="fa fa-minus-circle fa-2x edit-item"></i></span> </td>
+                                <td class="col-md-1" data-bind="text: '$' + price"></td>
+                                <td class="col-md-1" data-bind="click: $root.deleteItem"><i title="delete item" class="fa fa-minus-circle fa-2x edit-item text-danger"></i></td>
                             </tr>
                         </tbody>
                     </table>
@@ -167,7 +167,7 @@
             </div>
             <div class="panel-footer">
                 <div class="alert alert-info">Order Total: $<span data-bind="text: orderTotal"></span></div>
-                <button class="btn btn-info" data-bind="click: submitOrder">Submit Order</button>
+                <button class="btn btn-info" data-bind="click: submitOrder, enable: items().length > 0 ">Submit Order</button>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@ var PaymentOption = require("../models/payment-option");
 
 /* GET Order Page */
 router.get('/order', function(req, res) {
-    res.render("Order", {title: "weat: your order"});
+    res.render("Order.ejs", {title: "weat: your order"});
 });
 router.get('/getOrderData', function (req, res) {
     var response = {};

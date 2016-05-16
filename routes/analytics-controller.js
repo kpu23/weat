@@ -107,7 +107,7 @@ router.get('/custom_reports', function (req, res) {
                     if(item){
                         model.topSellingItem = item.name;
                     }              
-                    res.render('custom_reports', {title: 'weat: Custom Reports', model: model});
+                    res.render('custom_reports.ejs', {title: 'weat: Custom Reports', model: model});
                 });
             }
             //res.render('custom_reports', {title: 'weat: Custom Reports'});
@@ -161,7 +161,7 @@ router.get('/marketing_analytics', function (req, res) {
                     data.topSeller = item.name;
                     console.log(item);
                 }              
-                res.render('marketing_analytics', {title: 'weat: Marketing & Analytics', analyticData: data});
+                res.render('marketing_analytics.ejs', {title: 'weat: Marketing & Analytics', analyticData: data});
             });
         }
     });

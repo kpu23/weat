@@ -9,7 +9,7 @@ var passport = require('passport');
 //Customer Registration
 router.route("/register")
   .get(function(req,res) {
-      res.render('account/register', {title: 'Weat: Register'});
+      res.render('account/register.ejs', {title: 'Weat: Register'});
   })
   .post(function(req,res){
       var response = {title: 'Weat: Register'};
@@ -19,11 +19,11 @@ router.route("/register")
           if (err) {
               response.error = true;
               response.message = "Error fetching data";
-              res.render('account/register', response);
+              res.render('account/register.ejs', response);
           } else if (data.length > 0){
               response.error = true;
               response.message = "Sorry, that email is already in use.";
-              res.render('account/register', response);          
+              res.render('account/register.ejs', response);          
           } else {
               // Create Account
               var account = new Account();
@@ -48,7 +48,7 @@ router.route("/register")
                       response.error = true;
                       response.message = "Error adding account data";
                       console.log('error1', err, response);
-                      res.render('account/register', response);
+                      res.render('account/register.ejs', response);
                   }else{
                       //SUCCESS
                       req.session.user = record;
@@ -62,7 +62,7 @@ router.route("/register")
 //Business Registration
 router.route("/register_business")
   .get(function(req,res) {
-      res.render('account/register_business', {title: 'Weat: Register Business'});
+      res.render('account/register_business.ejs', {title: 'Weat: Register Business'});
   })
   .post(function(req,res){
       var response = {title: 'Weat: Register Business'};
@@ -72,11 +72,11 @@ router.route("/register_business")
           if (err) {
               response.error = true;
               response.message = "Error fetching data";
-              res.render('account/register_business', response);
+              res.render('account/register_business.ejs', response);
           } else if (data.length > 0){
               response.error = true;
               response.message = "Sorry, that email is already in use.";
-              res.render('account/register_business', response);
+              res.render('account/register_business.ejs', response);
           } else {
               // Create Account
               var account = new Account();
@@ -112,7 +112,7 @@ router.route("/register_business")
                   if(err){
                       response.error = true;
                       response.message = "Error adding restaurant data";
-                      res.render('account/register_business', response);
+                      res.render('account/register_business.ejs', response);
                   } else {
                       //save account with newly created restaurantId
                       account.restaurantId = record.id;
@@ -120,7 +120,7 @@ router.route("/register_business")
                           if (err) {
                               response.error = true;
                               response.message = "Error adding account data";
-                              res.render('account/register_business', response);
+                              res.render('account/register_business.ejs', response);
                           } else {
                               //SUCCESS
                               req.session.user = record;
@@ -136,13 +136,13 @@ router.route("/register_business")
 //Login Form
 router.route("/login")
   .get( function(req, res) {
-      res.render('account/login',{title: 'weat: sign-in', validationMessage: ''});
+      res.render('account/login.ejs',{title: 'weat: sign-in', validationMessage: ''});
   })
   .post(function(req, res) {
       //search for user in Database
       Account.findOne({email: req.body.username}, function(err, record){
           if (!record) {
-              res.render('account/login',{validationMessage: 'Email or password is incorrect.', title: 'weat: sign-in'});
+              res.render('account/login.ejs',{validationMessage: 'Email or password is incorrect.', title: 'weat: sign-in'});
           } else {
               // encrypt password for comparison
               var password = crypto.createHash('sha1')
@@ -151,7 +151,7 @@ router.route("/login")
 
               if (err || password != record.password) {
                   console.log(err);
-                  res.render('account/login',{validationMessage: 'Email or password is incorrect.', title: 'weat: sign-in'});
+                  res.render('account/login.ejs',{validationMessage: 'Email or password is incorrect.', title: 'weat: sign-in'});
               } else {
                   req.session.user = record;
                   //redirect based on user type
@@ -176,7 +176,7 @@ router.route("/settings")
   .get( function(req, res) {
       PaymentOption.findOne({acountId: req.session.user._id}, function(err, record) {
           if(err){              
-              res.render('error', {
+              res.render('error.ejs', {
                   message: err.message,
                   error: err
               });
@@ -195,7 +195,7 @@ router.route("/settings")
                     "zip" : "",
                   }
               }              
-              res.render('account/settings',{title: 'weat: settings', validationMessage: '', paymentOption: paymentOption});
+              res.render('account/settings.ejs',{title: 'weat: settings', validationMessage: '', paymentOption: paymentOption});
           }
       });
       

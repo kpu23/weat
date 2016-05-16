@@ -28,7 +28,7 @@ router.route("/restaurants")
                     console.log("Results: ");
                     console.log(results);
                     console.log(typeof(results));
-                    res.render('Restaurants',{title: pageTitle, restaurants: results});
+                    res.render('Restaurants.ejs',{title: pageTitle, restaurants: results});
                 }
             });
         }
@@ -42,7 +42,7 @@ router.route("/restaurants")
                 {
                     console.log("Results: ");
                     console.log(results);
-                    res.render('Restaurants',{title: pageTitle, restaurants: results});
+                    res.render('Restaurants.ejs',{title: pageTitle, restaurants: results});
                 }
             });
         }
@@ -60,7 +60,7 @@ router.route("/restaurants/:restaurant").get(function(req,res) {
             console.log(error);
         }
         else {
-            res.render("restaurant-menu", {title: pageTitle, restaurant: restaurant});
+            res.render("restaurant-menu.ejs", {title: pageTitle, restaurant: restaurant});
         }
     });
 });

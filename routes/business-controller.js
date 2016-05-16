@@ -11,26 +11,26 @@ var Meal = require('../models/meal');
 
 // Admin Home
 router.get('/admin', function (req, res) {
-    res.render('admin_home', {title: 'weat: home'});
+    res.render('admin_home.ejs', {title: 'weat: home'});
 });
 
 // Menu Manager
 router.get('/menu_manager', function (req, res) {
-    res.render('menu_manager', {title: 'weat: admin panel'});
+    res.render('menu_manager.ejs', {title: 'weat: admin panel'});
 });
 
 // Live Feed
 router.get('/live_feed', function (req, res) {
-    res.render('live_feed', {title: 'weat: live feed'});
+    res.render('live_feed.ejs', {title: 'weat: live feed'});
 });
 
 // View Customers
 router.get('/view_customers', function (req, res) {
-    res.render('view_customers', {title: 'weat: View Customers'});
+    res.render('view_customers.ejs', {title: 'weat: View Customers'});
 });
 
 // Fetch Menus, Categories, Food Items
-router.post('/admin/fetchMenus', function (req, res) {
+router.post('/admin/fetchMenus.ejs', function (req, res) {
     var restaurantId;
     if (req.body.restaurantId) {
         restaurantId = req.body.restaurantId

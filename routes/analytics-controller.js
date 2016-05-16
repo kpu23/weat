@@ -161,7 +161,7 @@ router.get('/marketing_analytics', function (req, res) {
                     data.topSeller = item.name;
                     console.log(item);
                 }              
-                res.render('marketing_analytics.ejs', {title: 'weat: Marketing & Analytics', analyticData: data});
+                res.render('Marketing_analytics.ejs', {title: 'weat: Marketing & Analytics', analyticData: data});
             });
         }
     });

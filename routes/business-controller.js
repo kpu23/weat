@@ -30,7 +30,7 @@ router.get('/view_customers', function (req, res) {
 });
 
 // Fetch Menus, Categories, Food Items
-router.post('/admin/fetchMenus.ejs', function (req, res) {
+router.post('/admin/fetchMenus', function (req, res) {
     var restaurantId;
     if (req.body.restaurantId) {
         restaurantId = req.body.restaurantId

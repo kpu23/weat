@@ -30,12 +30,26 @@ $(function() {
     });
 
     $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-    	$(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+    	$(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));      
+        $.post("/getReportData", 
+            {
+                fromDate: picker.startDate.format('MM/DD/YYYY'),
+                toDate: picker.endDate.format('MM/DD/YYYY')
+            }, 
+            function (result) {
+                console.log(result);
+                $('#totalOrders').text('Total Orders: ' + result.totalOrders);
+                $('#totalSales').text('Total in Sales: ' + result.totalSales);
+                $('#topSellingItem').text('Top Selling Item: ' + result.topSellingItem);
+                $('#dayOfMostOrders').text('Day with Most Orders: ' + result.dayOfMostOrders);
+                $('#dayOfHighestSales').text('Day with Highest Sales: ' + result.dayOfHighestSales);
+                $('#timeOfMostOrders').text('Time of Day with Most Orders: ' + result.timeOfMostOrders);
+            });
     });
 
     $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
     	$(this).val('');
     });
-    $('input[name="datefilter"]').val(moment() + ' - '+ moment());
+    $('input[name="datefilter"]').val(moment().format('MM/DD/YYYY') + ' - '+ moment().format('MM/DD/YYYY'));
 
 });

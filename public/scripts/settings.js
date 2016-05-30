@@ -26,7 +26,7 @@ var restaurantInfo = {
 	}
 }
 var emailInfo = {
-	email: ko.observableArray(),
+	email: ko.observable(),
 	save: function(data, event){
 		if(emailInfo.email()){
 			$.post('/saveUserInfo', {
@@ -88,6 +88,26 @@ function SettingsViewModel(){
 
 	//business user
 	self.restaurantInfo = restaurantInfo;
+
+	//load settings
+	$.get("/getSettingsData", 
+		function(data){
+			console.log("data", data);
+			self.userInfo.firstName(data.user.firstName);
+            self.userInfo.lastName(data.user.lastName);
+            self.userInfo.dob(data.user.dob);
+            self.userInfo.phone(data.user.phone);
+            self.userInfo.ethnicity(data.user.ethnicity);
+            self.emailInfo.email(data.user.email);
+            self.paymentInfo.nameOnCard(data.paymentOption.nameOnCard);
+            self.paymentInfo.number(data.paymentOption.number);
+            self.paymentInfo.expirationDate(data.paymentOption.expirationDate);
+            self.paymentInfo.cvv(data.paymentOption.cvv);
+    		self.paymentInfo.address(data.paymentOption.address);
+    		self.paymentInfo.city(data.paymentOption.city);
+    		self.paymentInfo.state(data.paymentOption.state);
+    		self.paymentInfo.zip(data.paymentOption.zip);   	
+    });
 }
 
 $(document).ready(function(){

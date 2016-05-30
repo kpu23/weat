@@ -14,31 +14,31 @@
                         <div class="row">
                             <label class="col-sm-3 control-label">Firist Name</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: firstName">
+                              <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="value: firstName">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-3 control-label">Last Name</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= session.user.lastName %>" data-bind="initWithValue: lastName">
+                              <input type="text" class="form-control" value="<%= session.user.lastName %>" data-bind="value: lastName">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-3 control-label">Date of Birth</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= session.user.dob %>" data-bind="initWithValue: dob">
+                              <input type="text" class="form-control" value="<%= session.user.dob %>" data-bind="value: dob">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-3 control-label">Phone</label>
                             <div class="col-sm-9">
-                              <input type="phone" class="form-control" value="<%= session.user.phone %>" data-bind="initWithValue: phone">
+                              <input type="phone" class="form-control" value="<%= session.user.phone %>" data-bind="value: phone">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-3 control-label">Ethnicity</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= session.user.ethnicity %>" data-bind="initWithValue: ethnicity">
+                              <input type="text" class="form-control" value="<%= session.user.ethnicity %>" data-bind="value: ethnicity">
                             </div>
                         </div>
                         <!-- <div class="row">
@@ -65,7 +65,7 @@
                         <div class="row">
                             <label class="col-sm-3 control-label">Favorites</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="initWithValue: favorites">
+                              <input type="text" class="form-control" value="<%= session.user.firstName %>" data-bind="value: favorites">
                             </div>
                         </div>                     
                         <button type="button" class="btn btn-info setting-save-btn" data-bind="click: save">Save</button>
@@ -82,7 +82,7 @@
                         <div class="row">
                             <label class="col-sm-3 control-label">Email</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= session.user.email %>" data-bind="initWithValue: email">
+                              <input type="text" class="form-control" value="<%= session.user.email %>" data-bind="value: email">
                             </div>
                         </div>                     
                         <button type="button" class="btn btn-info setting-save-btn" data-bind="click: save">Save</button>
@@ -116,45 +116,45 @@
                         <div class="row">
                             <label class="col-sm-3 control-label">Name On Card</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= paymentOption.nameOnCard %>" data-bind="initWithValue: nameOnCard">
+                              <input type="text" class="form-control" value="<%= paymentOption.nameOnCard %>" data-bind="value: nameOnCard">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-3 control-label">Number</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= paymentOption.number %>" data-bind="initWithValue: number">
+                              <input type="text" class="form-control" value="<%= paymentOption.number %>" data-bind="value: number">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-3 control-label">Expiration Date</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= paymentOption.expirationDate %>" data-bind="initWithValue: expirationDate">
+                              <input type="text" class="form-control" value="<%= paymentOption.expirationDate %>" data-bind="value: expirationDate">
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-sm-3 control-label">CVV</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= paymentOption.cvv %>" data-bind="initWithValue: cvv">
+                              <input type="text" class="form-control" value="<%= paymentOption.cvv %>" data-bind="value: cvv">
                             </div>
                         </div>           
                         <div class="row">
                             <label class="col-sm-3 control-label">Address</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" value="<%= paymentOption.address %>" data-bind="initWithValue: address">
+                              <input type="text" class="form-control" value="<%= paymentOption.address %>" data-bind="value: address">
                             </div>
                         </div>
                         <div class="row settings-sm-payment-row">
                             <div class="col-sm-4">
                                 <label class="control-label">City</label>                               
-                                <input type="text" class="form-control" value="<%= paymentOption.city %>" data-bind="initWithValue: city">                          
+                                <input type="text" class="form-control" value="<%= paymentOption.city %>" data-bind="value: city">                          
                             </div>
                             <div class="col-sm-4">
                                 <label class="control-label">State</label>                               
-                                <input type="text" class="form-control" value="<%= paymentOption.state %>" data-bind="initWithValue: state">                         
+                                <input type="text" class="form-control" value="<%= paymentOption.state %>" data-bind="value: state">                         
                             </div>
                             <div class="col-sm-4">
                                 <label class="control-label">Zip</label>                               
-                                <input type="text" class="form-control" value="<%= paymentOption.zip %>" data-bind="initWithValue: zip">                          
+                                <input type="text" class="form-control" value="<%= paymentOption.zip %>" data-bind="value: zip">                          
                             </div>
                         </div>                                                      
                         <button type="button" class="btn btn-info setting-save-btn" data-bind="click: save">Save</button>

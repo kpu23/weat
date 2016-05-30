@@ -194,17 +194,46 @@ router.route("/settings")
                     "state" : "",
                     "zip" : "",
                   }
-              }              
+              }         
               res.render('account/Settings.ejs',{title: 'weat: settings', validationMessage: '', paymentOption: paymentOption});
           }
       });
       
   });
 
+router.route("/getSettingsData")
+  .get( function(req, res) {
+      PaymentOption.findOne({acountId: req.session.user._id}, function(err, record) {
+          if(err){              
+              res.render('Error.ejs', {
+                  message: err.message,
+                  error: err
+              });
+          }else{
+              var paymentOption = record;
+              if (!paymentOption){
+                  paymentOption = {
+                    "accountId" : "",
+                    "nameOnCard" : "",
+                    "number" : "",
+                    "expirationDate" : "",
+                    "cvv" : "",
+                    "address" : "",
+                    "city" : "",
+                    "state" : "",
+                    "zip" : "",
+                  }
+              }         
+              res.send({user: req.session.user, paymentOption: paymentOption});
+          }
+      });
+  });
+
 router.route("/saveUserInfo")
   .post(function(req, res){
+    console.log(req.body);
       var response = {status: 'error'};      
-      Account.findOneAndUpdate({email: req.session.user.email}, req.body, function(err, record) {
+      Account.findOneAndUpdate({email: req.session.user.email}, req.body, {new: true}, function(err, record) {
           if(err){              
               response.message = 'error saving user info';
               res.send(response);

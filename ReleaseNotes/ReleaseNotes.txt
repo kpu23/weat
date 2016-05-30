@@ -35,7 +35,6 @@ Features not Included:
    1. For a restaurant:
       1. Add an image to the “/public/images” folder
       2. Update the database (restaurants) and set the imgPath attribute to “/public/images/<image name>”
-1. No report downloads: the data analytics piece does not allow you to download reports in any format. There are currently no work-arounds.
 How to run:
 1. Install Node and NPM (https://nodejs.org/en/)
 2. Open CMD line 

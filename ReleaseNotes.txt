@@ -1,0 +1,64 @@
+﻿05/30/2016
+
+*for a more user-friendly version of the ReleaseNotes see ReleaseNotes.pdf*
+
+
+Release Notes: weat v1.0
+
+
+Features:
+1. Signup & Account Management
+   1. Create new accounts (as a business user or a consumer)
+   2. Login/logout
+   3. Update personal account information
+1. Menu Management
+   1. Create new menus, update, and delete them
+   2. Create categories within menus, update and delete them
+   3. Create meals or food items within menu categories, update and delete them
+1. Business View of Orders
+   1. View orders as they come into a restaurant, mark them as canceled or completed
+1. Data Analytics
+   1. View customer’s data (e.g. email, name, age)
+   2. View graph of customer ordering 
+   3. View graph of most popular ordered food items
+1. Customer Ordering
+   1. Search for restaurants
+   2. Add items/meals to an order
+   3. Complete an order
+
+
+Features not Included:
+1. Image uploading: business users are not able to upload images of their restaurant or food items. Each item/restaurant will be given a default image. There is a technical work around if you’d like a custom image:
+   1. For food items:
+      1. Add an image to the “/public/images/<restaurant name>” folder (may have to create the folder)
+      2. Update the database (fooditems) and set the imgPath attribute to “/public/images/<restaurant name>/<image name>”
+   1. For a restaurant:
+      1. Add an image to the “/public/images” folder
+      2. Update the database (restaurants) and set the imgPath attribute to “/public/images/<image name>”
+1. No report downloads: the data analytics piece does not allow you to download reports in any format. There are currently no work-arounds.
+How to run:
+1. Install Node and NPM (https://nodejs.org/en/)
+2. Open CMD line 
+3. Run <npm install -g bower> to install bower on your machine
+4. Run <npm install -g nodemon> to install nodemon on your machine
+5. Clone the github repository (instructions for cloning at https://help.github.com/articles/cloning-a-repository/).
+6. Github repo can be found at https://github.com/kpu23/weat
+7. Navigate to the checked out directory on the CMD line
+8. Run <npm install> 
+9. Run <bower install> 
+10. Run <nodemon> to build the project (make sure you’re in project directory still)
+11. Nodemon will recompile source files as they change and refresh the server
+12. Navigate to localhost:3000 in your browser and the weat homepage should appear
+                Note 1: text between carrots (e.g. <text>) are verbatim CMD line commands
+Note 2: without data, the website will have very little functionality. At the bottom of this document there are instructions to populate the database with test data.
+Explanation of Basic Architecture:
+        Weat is a web-based online ordering system. It is based on the MEAN stack, meaning we run MongoDB, Express.js, front-end javascript (knockout.js), and Node.js. MongoDB is the database, Express.js is a back-end javascript framework for communication with the server, knockout.js is a front-end javascript framework (that we are using instead of Angular, the “A” in “MEAN”), and Node.js runs a server and includes package management capabilities.
+Database Script:
+To run this database script:
+1. Open the command line
+2. Type <mongo> to enter mongo shell
+3. Type <use weat> to access the correct db (this will create the db if it’s the first time)
+4. Open any text viewer file and locate the file “03-11_1_PopulateMongoDatabase.txt” in the root directory of the weat source code
+5. Copy the entire script into the command line and run it 
+6. Type <show collections;> to verify the script ran successfully.                          
+7. Type <exit> to quit the mongo shell. You should now be able to use the website’s full functionality.

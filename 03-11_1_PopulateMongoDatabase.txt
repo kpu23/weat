@@ -1,6 +1,6 @@
 
 //Start restaurants script
-db.restaurants.insertMany(
+db.restaurants.insert(
 [{
     "_id" : ObjectId("56c503be9bc2f4cc1396845e"),
     "location" : "philly",
@@ -50,7 +50,7 @@ db.restaurants.insertMany(
 //End restaurants script
 
 //Start menus script
-db.menus.insertMany([
+db.menus.insert([
 {
     "_id" : ObjectId("56cb95c45215d491e4ca528e"),
     "restaurantId" : ObjectId("56c503be9bc2f4cc1396845e"),
@@ -74,7 +74,7 @@ db.menus.insertMany([
 //End Menus Script
 
 //Start Menu Categories script
-db.menucategories.insertMany([
+db.menucategories.insert([
 {
     "_id" : ObjectId("56cb964c5215d491e4ca528f"),
     "name" : "First Bites",
@@ -105,7 +105,7 @@ db.menucategories.insertMany([
 //End Menu Categories script
 
 //Start food items script
-db.fooditems.insertMany([
+db.fooditems.insert([
 {
     "_id" : ObjectId("56ce2290be160950d3cf0e7d"),
     "name" : "Chips & Salsa",

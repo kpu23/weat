@@ -1,5 +1,7 @@
 function demoTwoPageDocument() {
-    var sales = $('#totalSales').val().toFixed(2);
+    var sales = $('#totalSales').val();
+    sales = parseInt(sales);
+    sales = sales.toFixed(2);
 
 	var doc = new jsPDF();
 	doc.text(80, 20, 'Date Range: ' + $('#dateRange').val());

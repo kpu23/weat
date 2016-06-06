@@ -42,7 +42,7 @@ $(function() {
             function (result) {
                 console.log(result);
                 $('#totalOrders').text('Total Orders: ' + result.totalOrders);
-                $('#totalSales').text('Total in Sales: ' + result.totalSales);
+                $('#totalSales').text('Total in Sales: ' + result.totalSales.toFixed(2));
                 $('#topSellingItem').text('Top Selling Item: ' + result.topSellingItem);
                 $('#dayOfMostOrders').text('Day with Most Orders: ' + result.dayOfMostOrders);
                 $('#dayOfHighestSales').text('Day with Highest Sales: ' + result.dayOfHighestSales);

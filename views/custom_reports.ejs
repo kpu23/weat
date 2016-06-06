@@ -21,7 +21,7 @@
                    <h4>My Report</h4>
                     <div class="rows">
                         <div id="totalOrders" style="background-color: white; color: black;" class="col-md-3 col-md-offset-3">Total Orders: <%= model.totalOrders %></div>
-                        <div id="totalSales" style="background-color: white; color: black;" class="col-md-3">Total in Sales: <%= model.totalSales %></div>
+                        <div id="totalSales" style="background-color: white; color: black;" class="col-md-3">Total in Sales: <%= model.totalSales.toFixed(2) %></div>
                         <div id="topSellingItem" style="background-color: white; color: black;" class="col-md-3 col-md-offset-3">Top Selling Item: <%= model.topSellingItem %></div>
                         <div id="dayOfMostOrders" style="background-color: white; color: black;" class="col-md-3">Day with Most Orders: <%= model.dayOfMostOrders %></div>
                         <div id="dayOfHighestSales" style="background-color: white; color: black;" class="col-md-3 col-md-offset-3">Day with Highest Sales: <%= model.dayOfHighestSales %></div>

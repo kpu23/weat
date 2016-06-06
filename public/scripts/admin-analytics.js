@@ -43,6 +43,9 @@ var CustomerHistoryModel = function () {
                 if (!customer.occupation) {
                     customer.occupation = '';
                 }
+                if (!customer.ethnicity) {
+                    customer.ethnicity = '';
+                }
                 if (customer.dob) {
                     var dob = new Date(customer.dob).getFullYear();
                     console.log(customer);

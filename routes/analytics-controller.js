@@ -251,7 +251,10 @@ router.get('/marketing_analytics', function (req, res) {
                         itemIdHashmap[orders[i].itemIds[j]] = 1                       
                     };
                 }  
-            } 
+            }
+            //round total sales
+            data.totalSales = data.totalSales.toFixed(2);
+console.log(data.totalSales);
             //get top seller
             var topSellerItemId;
             //var topSellerCount = 0;

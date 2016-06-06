@@ -2,7 +2,7 @@ function demoTwoPageDocument() {
 	var doc = new jsPDF();
 	doc.text(80, 20, 'Date Range: ' + $('#dateRange').val());
 	doc.text(20, 30, $('#totalOrders').text());
-	doc.text(20, 40, $('#totalSales').text());
+	doc.text(20, 40, $('#totalSales').val().toFixed(2).text());
 	doc.text(20, 50, $('#topSellingItem').text());
 	doc.text(20, 60, $('#dayOfMostOrders').text());
 	doc.text(20, 70, $('#dayOfHighestSales').text());
@@ -39,7 +39,7 @@ $(function() {
             function (result) {
                 console.log(result);
                 $('#totalOrders').text('Total Orders: ' + result.totalOrders);
-                $('#totalSales').text('Total in Sales: ' + result.totalSales);
+                $('#totalSales').text('Total in Sales: ' + result.totalSales.toFixed(2));
                 $('#topSellingItem').text('Top Selling Item: ' + result.topSellingItem);
                 $('#dayOfMostOrders').text('Day with Most Orders: ' + result.dayOfMostOrders);
                 $('#dayOfHighestSales').text('Day with Highest Sales: ' + result.dayOfHighestSales);
